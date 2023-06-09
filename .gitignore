@@ -35,4 +35,4 @@ yarn-error.log*
 next-env.d.ts
 
 #config 
-game-website\src\app\config.js
+\src\app\config.js
