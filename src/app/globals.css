@@ -3,25 +3,89 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light ) {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --foreground-rgb: 0, 0, 0;
+    --background-start-rgb: 214, 219, 220;
+    --background-end-rgb: 255, 255, 255;
   }
 }
 
 body {
+  min-height: 100%;
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
       transparent,
       rgb(var(--background-end-rgb))
-    )
+    ) 
     rgb(var(--background-start-rgb));
+    background-attachment: fixed;
+    
+}
+html,body {
+  height: 100%;
+}
+
+@font-face {
+  font-family: 'Rajdhani';
+  src: local('Rajdhani'), url(./fonts/Rajdhani-Medium.ttf) format(truetype);
+}
+@layer base {
+  body{
+    @apply dark:bg-slate-800
+  }
+
+  .gameDiv {
+    @apply dark:bg-slate-600
+  }
+
+  .pagination>li.active>a {
+    @apply dark:bg-slate-600
+  }
+
+  .pagination>li>a:hover {
+    @apply dark:bg-slate-600
+  }
+}
+
+/* React Transition Group animation styles */
+
+.slideGameFilter-enter {
+  transform: translateY(-1vh);
+}
+
+.slideGameFilter-enter-active {
+  transform: translateY(0vh);
+  transition: transform 300ms ease-in-out;
+}
+
+.slideGameFilter-exit {
+  transform: translateY(0%);
+}
+
+.slideGameFilter-exit-active {
+  transform: translateY(-2vh);
+  transition: transform 300ms ease-in-out;
+}
+
+.slideDownGamesDiv-enter {
+  transform: translateY(-2vh);
+}
+
+.slideDownGamesDiv-enter-active {
+  transform: translateY(0vh);
+  transition: transform 300ms ease-in-out;
+}
+
+.slideDownGamesDiv-exit {
+  transform: translateY(0vh);
+}
+
+.slideDownGamesDiv-exit-active {
+  transform: translateY(-5vh);
+  transition: transform 300ms ease-in-out;
 }

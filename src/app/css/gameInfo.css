@@ -1,0 +1,37 @@
+.pagination>li>a,
+.pagination>li>span {
+    float: left;
+    padding: 8px 20px;
+    /* line-height: 1.5; */
+    border: 1px solid #ddd;
+    /* margin-left: -1px; */
+    border-radius: 5px;
+}
+
+.pagination>li.active>a {
+    color: #fff;
+    background-color: #484386;
+    border-color: #ffffff;
+}
+
+.pagination>li>a:hover {
+    background-color: #190368;
+    color: white;
+    cursor: pointer;
+}
+
+.pagination>li:first-child>a,
+.pagination>li:first-child>span {
+    margin-left: 0;
+}
+
+.pagination ul {
+    display: flex;
+    justify-content: center;
+}
+
+@media (max-width:767px) {
+    .pagination {
+        width: 100%;
+    }
+}
