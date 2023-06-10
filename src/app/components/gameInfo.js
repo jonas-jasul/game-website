@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from "react";
 import LoadingSpinner from "./loadingSpinner";
-import { ClientID, Authorization } from "../config"
+import { ClientID, Authorization } from "../config";
 // import ReactPaginate from "react-paginate";
 import ResponsivePagination from "react-responsive-pagination";
 import "../css/gameInfo.css";
@@ -112,9 +112,15 @@ export default function GameInfo({ searchTerm, genreFilterValue }) {
 
         <div className="p-5 flex flex-wrap justify-center items-center">
             {gameData.map((game) => (
-                <div className="gameDiv dark:hover:bg-slate-700 hover:bg-slate-300 flex p-2 w-full sm:w-1/2 md:w-1/3 lg:w-1/5 border border-blue-800 rounded-lg m-1 bg-slate-200">
-                    <img className="flex justify-start w-1/2 ml-3" src={game.coverUrl}></img>
-                    <div className="flex pl-3 justify-end items-center" key={game.id} style={{ fontFamily: 'Rajdhani, sans-serif' }} >{game.name}</div>
+                <div className="card lg:card-side bg-base-100 shadow-xl border border-primary" key={game.id}>
+                    <figure className="h-60 w-44"><img className="h-full w-full object-cover" src={game.coverUrl} alt="cover" /></figure>
+                    <div className="card-body w-60">
+                        <h2 className="card-title">{game.name}</h2>
+                        <p>Description.</p>
+                        <div className="card-actions justify-end">
+                            <button className="btn btn-primary">More info</button>
+                        </div>
+                    </div>
                 </div>
             ))}
         </div>

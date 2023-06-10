@@ -4,7 +4,7 @@ import Select from 'react-select';
 import { Authorization, ClientID } from "../config";
 import { useEffect } from "react";
 import { useRef } from "react";
-
+import { RxCrossCircled, RxCheckCircled } from "react-icons/rx";
 export default function ShowHideFilterGameBar({ onFilterApply }) {
 
     const [selectedGenres, setSelectedGenres] = useState(null);
@@ -51,7 +51,7 @@ export default function ShowHideFilterGameBar({ onFilterApply }) {
         setSelectedGenres(null);
     }
 
-    const handleGenreChange =(selectedGenres) =>{
+    const handleGenreChange = (selectedGenres) => {
         const genreId = selectedGenres ? selectedGenres.value : null;
         setSelectedGenreIndex(genreId);
     }
@@ -60,25 +60,30 @@ export default function ShowHideFilterGameBar({ onFilterApply }) {
         fetchAllGameGenres();
     }, []);
     return (
-        <div className="flex bg-slate-300 mt-3 w-10/12 mx-auto p-2 dark:bg-slate-600">
+        <div className="alert flex bg-accent mt-3 w-10/12 mx-auto p-2">
             <div className="flex mx-auto">
                 <div className="genreDiv flex justify-center align-middle ">
                     <p className="my-auto mx-2">Genre: </p>
-                    <Select options={gameGenreOptions}
+                    <Select className="text-secondary" options={gameGenreOptions}
                         placeholder="Select genre"
                         isClearable={true}
                         ref={genreSelectRef}
                         onChange={handleGenreChange}
-                            
+
                     />
                 </div>
             </div>
 
             <div className="mx-2">
-                <button onClick={clearFilters} className="bg-red-500 p-1 rounded-md hover:bg-red-600">Clear</button>
+                <button onClick={clearFilters} className="btn bg-error p-1 hover:bg-red-600">Clear
+                    <RxCrossCircled size={'1.4em'} />
+                </button>
             </div>
-            <div>
-                <button onClick={applyGenre} className="bg-green-400 p-1 rounded-md hover:bg-green-500">Apply</button>
+            <div className="">
+                <button onClick={applyGenre} className="btn button bg-success p-1 hover:bg-green-500">Apply
+                    <RxCheckCircled size={'1.4em'} />
+                </button>
+
             </div>
         </div>
     )

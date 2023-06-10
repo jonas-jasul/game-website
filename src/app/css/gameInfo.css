@@ -1,3 +1,8 @@
+@import 'daisyui/dist/full.css';
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
 .pagination>li>a,
 .pagination>li>span {
     float: left;
@@ -10,12 +15,14 @@
 
 .pagination>li.active>a {
     color: #fff;
-    background-color: #484386;
+    /* background-color: #484386; */
+    @apply bg-primary;
     border-color: #ffffff;
 }
 
 .pagination>li>a:hover {
-    background-color: #190368;
+    /* background-color: #190368; */
+    @apply bg-primary-focus;
     color: white;
     cursor: pointer;
 }

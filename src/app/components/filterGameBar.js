@@ -12,7 +12,7 @@ const FilterGameBar = ({onFilterClick}) => {
     return (
         <>
             <div className="">
-                <button onClick={(handleFilterClick)} className="flex items-center">Filter<RxDropdownMenu size='1.4rem' className="m-1" /> </button>
+                <button onClick={(handleFilterClick)} className="btn button flex items-center">Filter<RxDropdownMenu size='1.4rem' className="m-1" /> </button>
             </div>
 
             <div>

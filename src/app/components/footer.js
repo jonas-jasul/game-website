@@ -3,7 +3,7 @@ import { BsGithub } from "react-icons/bs"
 import { BsLinkedin } from "react-icons/bs"
 export default function Footer() {
     return (
-        <div className="footer-cont sticky top-[100vh] p-2 bg-slate-400 mt-1 " style={{ fontFamily: 'Rajdhani, sans-serif' }}>
+        <div className="footer-cont sticky top-[100vh] p-2 bg-primary mt-1 " style={{ fontFamily: 'Rajdhani, sans-serif' }}>
             <div className="footer flex justify-center items-center">
                 <>Jonas Jasulevičius</>
             </div>

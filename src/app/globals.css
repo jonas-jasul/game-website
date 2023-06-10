@@ -6,13 +6,13 @@
   
 }
 
-@media (prefers-color-scheme: light ) {
+/* @media (prefers-color-scheme: light ) {
   :root {
     --foreground-rgb: 0, 0, 0;
     --background-start-rgb: 214, 219, 220;
     --background-end-rgb: 255, 255, 255;
   }
-}
+} */
 
 body {
   min-height: 100%;
@@ -34,7 +34,7 @@ html,body {
   font-family: 'Rajdhani';
   src: local('Rajdhani'), url(./fonts/Rajdhani-Medium.ttf) format(truetype);
 }
-@layer base {
+/* @layer base {
   body{
     @apply dark:bg-slate-800
   }
@@ -50,7 +50,7 @@ html,body {
   .pagination>li>a:hover {
     @apply dark:bg-slate-600
   }
-}
+} */
 
 /* React Transition Group animation styles */
 
