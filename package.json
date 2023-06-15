@@ -1,5 +1,5 @@
 {
-  "name": "game-website",
+  "name": "gameWebsite",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -14,27 +14,38 @@
     "@supabase/auth-ui-react": "^0.4.2",
     "@supabase/auth-ui-shared": "^0.1.6",
     "@supabase/supabase-js": "^2.25.0",
+    "accept-language": "^3.0.18",
     "autoprefixer": "10.4.14",
     "classnames": "^2.3.2",
     "cors-anywhere": "^0.4.4",
+    "encoding": "^0.1.13",
     "eslint": "8.42.0",
     "eslint-config-next": "13.4.4",
-    "next": "13.4.5",
-    "next-intl": "^2.15.0-beta.5",
+    "formik": "^2.4.2",
+    "i18next": "^23.0.1",
+    "i18next-browser-languagedetector": "^7.0.2",
+    "i18next-resources-to-backend": "^1.1.4",
+    "next": "^13.4.5",
     "next-themes": "^0.2.1",
+    "next-translate": "^2.0.6",
     "postcss": "8.4.24",
     "proxy-from-env": "^1.1.0",
-    "react": "18.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-i18next": "^13.0.0",
     "react-icons": "^4.9.0",
     "react-intl": "^6.4.4",
     "react-paginate": "^8.2.0",
     "react-responsive-pagination": "^2.2.0",
     "tailwindcss": "3.3.2",
     "theme-change": "^2.5.0",
-    "use-local-storage": "^3.0.0"
+    "use-local-storage": "^3.0.0",
+    "yup": "^1.2.0"
   },
   "devDependencies": {
+    "@tailwindcss/forms": "^0.5.3",
     "@tailwindcss/typography": "^0.5.9",
-    "daisyui": "^3.0.22"
+    "daisyui": "^3.0.22",
+    "next-translate-plugin": "^2.0.5"
   }
 }
