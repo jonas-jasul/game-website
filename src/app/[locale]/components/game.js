@@ -1,11 +1,11 @@
 "use client";
 import GameInfo from "./gameInfo";
-import SearchGameBar from "./searchGame";
-import FilterGameBar from "./filterGameBar";
+import SearchGameBar from "./ui/searchGame";
+import FilterGameBar from "./ui/filterGameBar";
 import React, { useState } from "react";
 import ShowHideFilterGameBar from "./showHideFilterGameBar";
 // import { CSSTransition } from 'react-transition-group';
-import SortGameBar from "./sortGameBar";
+import SortGameBar from "./ui/sortGameBar";
 
 
 const Game = () => {

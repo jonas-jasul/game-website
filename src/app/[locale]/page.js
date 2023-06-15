@@ -1,10 +1,15 @@
-'use client'; 
-import { useRouter } from "next/navigation";
-import Footer from "./components/footer";
+'use client';
+import { redirect, useRouter } from "next/navigation";
+import Footer from "./components/common/footer";
 import { useTranslations } from "next-intl";
 import Link from "next-intl/link";
+import { useEffect } from "react";
+import Auth from "./components/auth";
+import { useAuth, VIEWS } from "./components/AuthProvider";
+// import {usePathname} from 'next-intl/client';
+
 export default function Home() {
-  const t =useTranslations('Index');
+  const t = useTranslations('Index');
   const router =useRouter();
   return (
     <>
@@ -22,4 +27,5 @@ export default function Home() {
       <Footer />
     </>
   )
+  
 }

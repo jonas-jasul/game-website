@@ -1,0 +1,60 @@
+{
+    "Index": {
+        "heroGameOn": "Game on!",
+        "heroDesc": "Welcome to my website! Here you can check your favorite video games and more!",
+        "heroBegin": "Begin",
+        "loading": "Loading..."
+    },
+    "Navbar": {
+        "catalogue": "Catalogue",
+        "chooseTheme": "Choose a theme",
+        "lightTheme": "Light",
+        "darkTheme": "Dark",
+        "cyberpunkTheme": "Cyberpunk",
+        "halloweenTheme": "Halloween",
+        "wireframeTheme": "Wireframe",
+        "businessTheme": "Business (dark)"
+    },
+    "FilterBar": {
+        "filterBtn": "Filter",
+        "gameFilterOptTitle": "Game filtering options",
+        "gameFilterGameGenre": "Game genre",
+        "gameFilterGameSelectPlaceh": "Select a genre",
+        "gameFilterMinRatings": "Minimum amount of ratings",
+        "gameFilterApply": "Apply",
+        "gameFilterClear": "Clear",
+        "searchGamePlaceholder": "Search for a game"
+    },
+    "SortDropdown": {
+        "rating": "Rating",
+        "releaseDate": "Release date",
+        "title": "Title"
+    },
+    "GameInfo": {
+        "moreInfoBtn": "More info"
+    },
+    "Auth": {
+        "loginHeading": "Login",
+        "loginEmail": "Email address",
+        "loginPass": "Password",
+        "loginEmailPlaceholder" : "Enter your email address",
+        "loginPassPlaceholder": "Enter your password",
+        "loginSubmitButton": "Login",
+        "loginLoadingButtonLabel": "Logging in...",
+        "loginSocialProviderText": "Log in with {{provider}}",
+        "loginLinkToSignUp": "Don't have an account? Register",
+
+        "registerHeading": "Register",
+        "registerEmail": "Email address",
+        "registerPass": "Create a Password",
+        "registerEmailPlaceholder": "Your email address",
+        "registerPassPlaceholder": "Your password",
+        "registerSubmitButton": "Sign up",
+        "registerLoadingButtonLabel": "Signing up ...",
+        "registerSocialProviderText": "Sign in with {{provider}}",
+        "registerLinkTo": "Have an account? Log in",
+        "confirmation_text": "Check your email for the confirmation link",
+    
+        "forgotPassHeading": "Forgot password"
+    }
+}

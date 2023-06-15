@@ -1,6 +1,6 @@
 
 import { RxDropdownMenu } from "react-icons/rx"
-import ShowHideFilterGameBar from "./showHideFilterGameBar";
+import ShowHideFilterGameBar from "../showHideFilterGameBar";
 import { useState } from "react";
 const FilterGameBar = ({onFilterClick}) => {
     const [filterGameBar, setFilterGameBar] = useState(false);

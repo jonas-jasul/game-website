@@ -1,5 +1,5 @@
 import Game from "../components/game"
-import Footer from "../components/footer"
+import Footer from "../components/common/footer"
 export default function Page() {
     return (
         <>

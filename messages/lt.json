@@ -1,0 +1,70 @@
+{
+    "Index": {
+        "heroGameOn": "Pažaiskim!",
+        "heroDesc": "Sveiki atvykę į mano svetainę! Čia galite sužinoti apie savo mėgstamiausius žaidimus ir daugiau!",
+        "heroBegin": "Pradėti",
+        "loading": "Kraunama..."
+    },
+
+    "Navbar": {
+        "catalogue": "Katalogas",
+        "chooseTheme": "Pasirinkite stilių",
+        "lightTheme": "Šviesi",
+        "darkTheme": "Tamsi",
+        "cyberpunkTheme": "Kiberpankas",
+        "halloweenTheme": "Helovynas",
+        "wireframeTheme": "Wireframe",
+        "businessTheme": "Verslas (tamsi)"
+
+    },
+
+    "FilterBar": {
+        "filterBtn": "Filtruoti",
+        "gameFilterOptTitle": "Žaidimų filtravimo nustatymai",
+        "gameFilterGameGenre": "Žaidimo žanras",
+        "gameFilterGameSelectPlaceh": "Pasirinkite žanrą",
+        "gameFilterMinRatings": "Minimalus įvertinimų skaičius",
+        "gameFilterApply": "Patvirtinti",
+        "gameFilterClear": "Išvalyti",
+        "searchGamePlaceholder": "Ieškoti žaidimo"
+
+    },
+
+    "SortDropdown": {
+        "rating": "Įvertinimas",
+        "releaseDate": "Išleidimo data",
+        "title": "Pavadinimas"
+    },
+
+    "GameInfo": {
+        "moreInfoBtn": "Daugiau info"
+    },
+
+    "Auth": {
+        "loginHeading": "Prisijungimas",
+        "loginEmail": "El. paštas",
+        "loginPass": "Slaptažodis",
+        "loginEmailPlaceholder" : "Įveskite savo el. paštą",
+        "loginPassPlaceholder": "Įveskite savo slaptažodį",
+        "loginSubmitButton": "Prisijungti",
+        "loginLoadingButtonLabel": "Jungiamasi...",
+        "loginSocialProviderText": "Prisijungti su ",
+        "loginLinkToSignUp": "Neturite paskyros? Prisiregistruoti",
+
+        "registerHeading": "Registracija",
+        "registerEmail": "El. paštas",
+        "registerPass": "Slaptažodis",
+        "registerEmailPlaceholder": "Jūsų el. paštas",
+        "registerPassPlaceholder": "Jūsų slaptažodis",
+        "registerSubmitButton": "Registruotis",
+        "registerLoadingButtonLabel": "Registruojamasi ...",
+        "registerSocialProviderText": "Registruotis su {{provider}}",
+        "registerLinkTo": "Turite paskyrą? Prisijunkite",
+        "confirmation_text": "Pasitikrinkite el. paštą ir patvirtinkite paskyrą",
+    
+        "loginSocialProviderGoogle": "Prisijungti su Google",
+        "loginSocialProviderFacebook": "Prisijungti su Facebook",
+        "loginSocialProviderTwitter": "Prisijungti su Twitter"
+    }
+
+}

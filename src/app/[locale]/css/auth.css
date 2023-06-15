@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+   h2 {
+    @apply py-4 text-4xl text-base-content;
+  }
+
+  /* .button {
+    @apply custom-focus rounded-full border-2 border-green-400 bg-white px-8 py-2 font-bold text-green-400 hover:bg-green-400 hover:text-white focus:bg-green-400 focus:text-white;
+  } */
+
+  /* .button-inverse {
+    @apply custom-focus rounded-full border-2 border-white bg-primary px-8 py-2 font-bold text-white hover:border-green-400 hover:bg-white hover:text-green-400 focus:border-green-400 focus:bg-white focus:text-green-400;
+  } */
+
+  .card {
+    @apply min-w-[20rem] items-center gap-8 rounded-2xl bg-base-100 py-8 px-4 shadow-md sm:min-w-[24rem] sm:px-10;
+  }
+
+  .custom-focus {
+    @apply focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
+  }
+
+  .heading {
+    @apply text-lg font-semibold text-gray-700;
+  }
+
+  .highlight {
+    @apply ml-1 rounded-lg bg-gray-100 p-2 font-mono;
+  }
+
+  .error {
+    @apply w-full text-center text-red-600;
+  }
+
+  .link {
+    @apply custom-focus rounded-md font-semibold text-primary;
+  }
+
+  
+}

@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { useRef } from "react";
 import { RxCrossCircled, RxCheckCircled } from "react-icons/rx";
 import { RxDropdownMenu } from "react-icons/rx";
-import GameGenreDropdown from "./gameGenreDropdown";
+import GameGenreDropdown from "./ui/gameGenreDropdown";
 import { useTranslations } from "next-intl";
 export default function ShowHideFilterGameBar({ onFilterApply, onMinRatingFilterApply }) {
 

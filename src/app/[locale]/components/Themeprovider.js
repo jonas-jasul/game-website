@@ -1,13 +1,12 @@
 "use client";
-import { ThemeProvider } from "next-themes";
-import { ReactNode } from "react";
+import { useEffect } from "react";
+import { themeChange } from "theme-change";
+const ThemeProvider = ({ children }) => {
+    useEffect(() => {
+        themeChange(true);
+    }, []);
 
-const Providers =({children}) => {
-    return (
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            {children}
-        </ThemeProvider>
-    )
+    return children
 }
 
-export default Providers;
+export default ThemeProvider;

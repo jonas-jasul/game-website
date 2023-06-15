@@ -4,18 +4,20 @@ import React from "react";
 import Link from "next-intl/link";
 import { useRouter } from "next/navigation";
 import { Rubik } from "next/font/google";
-import Themechanger from "./Themechanger";
-import ThemeSwitcher from "./themeSwitcher";
-import LangToggler from "./langToggler";
+import ThemeSwitcher from "../ui/themeSwitcher";
+import LangToggler from "../ui/langToggler";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import Avatar from "../ui/avatar";
+
+
 const rubik = Rubik({ subsets: ['latin'] })
 const Navbar = () => {
     const router = useRouter();
     const t = useTranslations('Navbar');
     return (
         <main className={rubik.className}>
-            <div className="navbar bg-primary">
+            <div className="navbar bg-primary h-20 lg:h-auto">
                 <div className="navbar-start">
                     <div className="dropdown">
                         <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -52,17 +54,13 @@ const Navbar = () => {
                 </div>
 
                 <div className="navbar-end hidden lg:flex">
-                    <ul className="menu menu-horizontal px-1">
 
-                        <li tabIndex={0}>
+                    <Avatar />
 
-                        </li>
-                        <li>
-                            <LangToggler />
-                        </li>
+                    <LangToggler />
 
-                        <li><ThemeSwitcher /></li>
-                    </ul>
+                    <ThemeSwitcher />
+
                 </div>
 
             </div>

@@ -1,11 +1,12 @@
 'use client';
 import { useEffect, useState } from "react";
-import LoadingSpinner from "./loadingSpinner";
+import LoadingSpinner from "./common/loadingSpinner";
 import { ClientID, Authorization } from "../../config";
 // import ReactPaginate from "react-paginate";
 import ResponsivePagination from "react-responsive-pagination";
 import "../css/gameInfo.css";
-import SearchGameBar from "./searchGame";
+import SearchGameBar from "./ui/searchGame";
+import StarRating from "./ui/starRating";
 import { useTranslations } from "next-intl";
 
 export default function GameInfo({ searchTerm, genreFilterValue, minRatingsFilterValue, sortGameVal}) {
@@ -122,6 +123,7 @@ export default function GameInfo({ searchTerm, genreFilterValue, minRatingsFilte
           return {
             id: game.id,
             name: game.name,
+            rating: game.rating,
             coverUrl: cover
               ? `https://images.igdb.com/igdb/image/upload/t_cover_big/${cover.image_id}.jpg`
               : null,
@@ -141,7 +143,7 @@ export default function GameInfo({ searchTerm, genreFilterValue, minRatingsFilte
                     <figure className="h-60"><img className="h-full w-full object-cover" src={game.coverUrl} alt="cover" /></figure>
                     <div className="card-body w-60">
                         <h2 className="card-title">{game.name}</h2>
-                        <p>Description.</p>
+                        <p><StarRating rating={game.rating}/></p>
                         <div className="card-actions justify-end">
                             <button className="btn btn-primary">{t('moreInfoBtn')}</button>
                         </div>
