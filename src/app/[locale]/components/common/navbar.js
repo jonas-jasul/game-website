@@ -8,13 +8,18 @@ import ThemeSwitcher from "../ui/themeSwitcher";
 import LangToggler from "../ui/langToggler";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import { useState, useEffect } from "react";
 import Avatar from "../ui/avatar";
-
-
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createClient } from "@supabase/supabase-js";
+import { createPagesBrowserClient } from "@supabase/auth-helpers-nextjs";
 const rubik = Rubik({ subsets: ['latin'] })
-const Navbar = () => {
+const Navbar = ({ user }) => {
+
     const router = useRouter();
     const t = useTranslations('Navbar');
+
+
     return (
         <main className={rubik.className}>
             <div className="navbar bg-primary h-20 lg:h-auto">
@@ -36,12 +41,17 @@ const Navbar = () => {
                             <li><ThemeSwitcher /></li>
                             <li><a>Item</a></li>
                         </ul>
+
                     </div>
+
                     <Link href="/" locale={router.locale} className="btn btn-ghost normal-case text-xl">
                         <div className="flex items-center justify-center">
                             <Image src="/../public/playInfiniteTransparent(cropped).png" height={105} width={105} alt="Play Infinite" />
                         </div>
                     </Link>
+                </div>
+                <div className="flex ml-auto justify-end items-end lg:hidden">
+                    <Avatar user={user} />
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1">
@@ -55,7 +65,7 @@ const Navbar = () => {
 
                 <div className="navbar-end hidden lg:flex">
 
-                    <Avatar />
+                    <Avatar user={user} />
 
                     <LangToggler />
 

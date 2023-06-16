@@ -1,8 +1,10 @@
-'use client';
+// 'use client';
 
 import { useAuth } from "../AuthProvider";
+import { useTranslations } from "next-intl";
 
 export default function SignOut() {
+    const t = useTranslations('Navbar')
     const {signOut} = useAuth();
 
     async function handleSignOut() {
@@ -14,7 +16,7 @@ export default function SignOut() {
     }
 
     return (
-        <button type="button" className="button-inverse" onClick={handleSignOut}>
-        Sign out</button>
+        <button type="button" className="button-inverse bg-error" onClick={handleSignOut}>
+        {t('navAvatarSignOut')}</button>
     )
 }

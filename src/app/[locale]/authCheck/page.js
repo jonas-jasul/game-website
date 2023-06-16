@@ -1,6 +1,6 @@
 "use client";
 import Auth from "../components/auth";
-import {useRouter } from "next/navigation";
+import { useRouter } from "next-intl/client";
 import { useAuth, VIEWS } from "../components/AuthProvider";
 
 export default function AuthPage() {
@@ -12,7 +12,7 @@ export default function AuthPage() {
   }
 
   if (user) {
-    router.push(`/${router.locale}/profile`);
+    router.push('/profile');
     
   }
 

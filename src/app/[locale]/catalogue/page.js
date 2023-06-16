@@ -5,7 +5,6 @@ export default function Page() {
         <>
         <Game></Game>
         
-        <Footer></Footer>
         </>
     )
 }

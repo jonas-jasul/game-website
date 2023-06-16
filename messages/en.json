@@ -13,7 +13,10 @@
         "cyberpunkTheme": "Cyberpunk",
         "halloweenTheme": "Halloween",
         "wireframeTheme": "Wireframe",
-        "businessTheme": "Business (dark)"
+        "businessTheme": "Business (dark)",
+        "avatarLoginSignup": "Log In / Sign Up",
+        "navAvatarProfile": "Profile",
+        "navAvatarSignOut": "Sign out"
     },
     "FilterBar": {
         "filterBtn": "Filter",
@@ -56,5 +59,20 @@
         "confirmation_text": "Check your email for the confirmation link",
     
         "forgotPassHeading": "Forgot password"
+    },
+
+    "Profile": {
+        "profileHeading": "Profile",
+        "profileAvatarHeading": "Avatar",
+        "emailProfile": "Email",
+        "fullNameProfile": "Full Name",
+        "usernameProfile": "Username",
+        "birthdateProfile": "Birthdate",
+        "updateProfile": "Update",
+        "uploadImageProfile": "Upload image",
+
+        "profileSuccessModHead": "Success!",
+        "profileSuccessModBody": "You have successfully updated your profile!"
+
     }
 }

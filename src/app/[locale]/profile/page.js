@@ -2,17 +2,21 @@ import { Link } from "next-intl/link";
 import { redirect, useRouter } from "next/navigation";
 import createClient from '../lib/supabase-server';
 import AccountForm from "./accountEditForm";
+import Avatar from "../components/ui/avatar";
 export default async function Profile() {
-    const supabase =createClient();
+    const supabase = createClient();
     const {
-        data: {user},
+        data: { user },
     } = await supabase.auth.getUser();
 
-    if(!user) {
+    if (!user) {
         redirect(`/`);
     }
 
     return (
-        <AccountForm />
+        <>
+            <AccountForm user={user} />
+
+        </>
     )
 }

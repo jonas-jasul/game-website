@@ -14,7 +14,11 @@
         "cyberpunkTheme": "Kiberpankas",
         "halloweenTheme": "Helovynas",
         "wireframeTheme": "Wireframe",
-        "businessTheme": "Verslas (tamsi)"
+        "businessTheme": "Verslas (tamsi)",
+        "avatarLoginSignup": "Prisijungti / Registruotis",
+        "navAvatarProfile": "Profilis",
+        "navAvatarSignOut": "Atsijungti"
+
 
     },
 
@@ -65,6 +69,21 @@
         "loginSocialProviderGoogle": "Prisijungti su Google",
         "loginSocialProviderFacebook": "Prisijungti su Facebook",
         "loginSocialProviderTwitter": "Prisijungti su Twitter"
+    },
+    "Profile": {
+        "profileHeading": "Profilis",
+        "profileAvatarHeading": "Profilio nuotrauka",
+        "emailProfile": "El. paštas",
+        "fullNameProfile": "Vardas ir pavardė",
+        "usernameProfile": "Slapyvardis",
+        "birthdateProfile": "Gimimo data",
+        "updateProfile": "Atnaujinti",
+        "uploadImageProfile": "Įkelti nuotrauką",
+
+        "profileSuccessModHead": "Valio!",
+        "profileSuccessModBody": "Sėkmingai atnaujinote savo profilį!"
+
+
     }
 
 }

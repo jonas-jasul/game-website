@@ -34,6 +34,9 @@ const SignUp = () => {
         } else {
             setSuccessMsg('Success! Please check your email for further instructions.');
         }
+        if (formData?.user?.identities?.length === 0) {
+            return { formData, error: "Please sign in with your existing account" };
+          }
     }
 
     return (

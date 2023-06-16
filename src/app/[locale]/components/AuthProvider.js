@@ -1,11 +1,13 @@
 'use client';
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import supabase from "../lib/supabase-browser";
-
+export const useAuth = () => useContext(AuthContext);
 export const EVENTS = {
     PASSWORD_RECOVERY: 'PASSWORD_RECOVERY',
     SIGNED_OUT: 'SIGNED_OUT',
     USER_UPDATED: 'USER_UPDATED',
+    SIGNED_IN: 'SIGNED_IN',
+
 };
 
 export const VIEWS = {
@@ -21,6 +23,7 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children, ...props }) => {
     const [session, setSession] = useState(null);
     const [user, setUser] = useState(null);
+    const [auth, setAuth] = useState(false);
     const [view, setView] = useState(VIEWS.SIGN_IN);
     const [initial, setInitial] = useState(true);
 
@@ -46,10 +49,14 @@ export const AuthProvider = ({ children, ...props }) => {
                 case EVENTS.PASSWORD_RECOVERY:
                     setView(VIEWS.UPDATE_PASSWORD);
                     break;
+                case EVENTS.SIGNED_IN:
+                    setAuth(true);
                 case EVENTS.SIGNED_OUT:
+                    setAuth(false);
                 case EVENTS.USER_UPDATED:
                     setView(VIEWS.SIGN_IN);
                     break;
+
                 default:
             }
         });
@@ -74,12 +81,5 @@ export const AuthProvider = ({ children, ...props }) => {
         {children}
     </AuthContext.Provider>;
 }
+export default AuthProvider;
 
-export const useAuth = () => {
-    const context = useContext(AuthContext);
-
-    if (context === undefined) {
-        throw new Error('useAuth must be used withing an AuthProvider');
-    }
-    return context;
-}
