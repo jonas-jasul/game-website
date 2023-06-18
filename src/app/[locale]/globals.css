@@ -2,19 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/* :root {
   
-}
-
-/* @media (prefers-color-scheme: light ) {
-  :root {
-    --foreground-rgb: 0, 0, 0;
-    --background-start-rgb: 214, 219, 220;
-    --background-end-rgb: 255, 255, 255;
-  }
 } */
 
-body {
+/* @layer base {
+  h2{
+    @apply text-3xl;
+  }
+
+} */
+
+/* body {
   min-height: 100%;
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
@@ -25,32 +24,16 @@ body {
     rgb(var(--background-start-rgb));
     background-attachment: fixed;
     
-}
+} */
 html,body {
   height: 100%;
 }
+
 
 @font-face {
   font-family: 'Rajdhani';
   src: local('Rajdhani'), url(../fonts/Rajdhani-Medium.ttf) format(truetype);
 }
-/* @layer base {
-  body{
-    @apply dark:bg-slate-800
-  }
-
-  .gameDiv {
-    @apply dark:bg-slate-600
-  }
-
-  .pagination>li.active>a {
-    @apply dark:bg-slate-600
-  }
-
-  .pagination>li>a:hover {
-    @apply dark:bg-slate-600
-  }
-} */
 
 /* React Transition Group animation styles */
 

@@ -1,19 +1,22 @@
-// 'use client';
-
+import { useRouter } from "next/navigation";
 import { useAuth } from "../AuthProvider";
 import { useTranslations } from "next-intl";
 
 export default function SignOut() {
-    const t = useTranslations('Navbar')
     const {signOut} = useAuth();
+    const router = useRouter();
 
     async function handleSignOut() {
         const {error} = await signOut();
 
-        if(error ) {
-            //TODO error
+        if(!error) {
+            router.push('/');
+
         }
+       //TODO error
     }
+    const t = useTranslations('Navbar')
+
 
     return (
         <button type="button" className="button-inverse bg-error" onClick={handleSignOut}>

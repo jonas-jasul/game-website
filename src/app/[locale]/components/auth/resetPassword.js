@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 
 import { useAuth, VIEWS } from '../AuthProvider';
 import supabase from '../../lib/supabase-browser';
+import { useTranslations } from 'next-intl';
 
 const ResetPasswordSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Required'),
@@ -16,6 +17,7 @@ const ResetPassword = () => {
     const { setView } = useAuth();
     const [errorMsg, setErrorMsg] = useState(null);
     const [successMsg, setSuccessMsg] = useState(null);
+    const t = useTranslations('Auth');
 
     async function resetPassword(formData) {
         const { error } = await supabase.auth.resetPasswordForEmail(formData?.email, {
@@ -30,8 +32,8 @@ const ResetPassword = () => {
     }
 
     return (
-        <div className="card flex justify-center items-center mx-auto w-32">
-            <h2 className="w-full text-center">Forgot Password</h2>
+        <div className="card flex justify-center items-center mx-auto w-32 ">
+            <h2 className="w-full text-center text-2xl">{t('forgotPassRecovery')}</h2>
             <Formik
                 initialValues={{
                     email: '',
@@ -42,7 +44,7 @@ const ResetPassword = () => {
                 {({ errors, touched }) => (
                     <Form className="w-full">
                     <div className='col col-flex'>
-                        <label htmlFor="email" className="m-1">Email</label>
+                        <label htmlFor="email" className="m-1">{t('forgotPassEmail')}</label>
                         <Field
                             className={cn('input input-bordered', errors.email && 'bg-red-50')}
                             id="email"
@@ -55,7 +57,7 @@ const ResetPassword = () => {
                             <div className="text-red-600">{errors.email}</div>
                         ) : null}
                         <button className="btn btn-primary w-full mt-5" type="submit">
-                            Send Instructions
+                            {t('forgotPassSendInstruct')}
                         </button>
                     </Form>
                 )}
@@ -63,7 +65,7 @@ const ResetPassword = () => {
             {errorMsg && <div className="text-center text-red-600">{errorMsg}</div>}
             {successMsg && <div className="text-center text-black">{successMsg}</div>}
             <button className="link" type="button" onClick={() => setView(VIEWS.SIGN_IN)}>
-                Remember your password? Sign In.
+                {t('forgotPassLinkBack')}
             </button>
         </div>
     );

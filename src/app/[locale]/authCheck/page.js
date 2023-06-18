@@ -13,8 +13,14 @@ export default function AuthPage() {
 
   if (user) {
     router.push('/profile');
-    
+
   }
 
-  return <Auth view={view} />;
+  return (
+    <div className="mt-20 lg:mt-3">
+      <Auth view={view} />
+
+    </div>
+
+  )
 }

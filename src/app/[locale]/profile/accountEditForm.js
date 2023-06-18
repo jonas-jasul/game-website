@@ -122,7 +122,7 @@ export default function AccountForm({ user }) {
         <h1 style={{ fontSize: 26 }}>{t('profileHeading')}</h1>
       </div>
 
-      <div className="flex mx-auto justify-center items-center flex-col lg:flex-row w-full">
+      <div className="flex mx-auto justify-center items-center flex-col lg:flex-row w-full mt-8">
         <div className=''>
           <div className='flex flex-col justify-center items-center'>
             <label htmlFor="email">{t('emailProfile')}</label>

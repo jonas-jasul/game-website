@@ -14,6 +14,7 @@
         "halloweenTheme": "Halloween",
         "wireframeTheme": "Wireframe",
         "businessTheme": "Business (dark)",
+        "pastelTheme": "Pastel",
         "avatarLoginSignup": "Log In / Sign Up",
         "navAvatarProfile": "Profile",
         "navAvatarSignOut": "Sign out"
@@ -46,6 +47,7 @@
         "loginLoadingButtonLabel": "Logging in...",
         "loginSocialProviderText": "Log in with {{provider}}",
         "loginLinkToSignUp": "Don't have an account? Register",
+        "requiredError":"Required",
 
         "registerHeading": "Register",
         "registerEmail": "Email address",
@@ -57,8 +59,13 @@
         "registerSocialProviderText": "Sign in with {{provider}}",
         "registerLinkTo": "Have an account? Log in",
         "confirmation_text": "Check your email for the confirmation link",
-    
-        "forgotPassHeading": "Forgot password"
+        "rememberMe": "Remember me",
+        "forgotPassHeading": "Forgot your password?",
+
+        "forgotPassRecovery": "Recover your password",
+        "forgotPassSendInstruct" : "Confirm",
+        "forgotPassLinkBack": "Remember your password? Sign In",
+        "forgotPassEmail": "Email"
     },
 
     "Profile": {

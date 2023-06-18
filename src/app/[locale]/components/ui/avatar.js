@@ -38,27 +38,31 @@ export default function Avatar({ user }) {
                 const url = firstData.avatar_url;
                 console.log(url);
 
-                try {
+                if (url) {
+
                     const { data, error } = await
                         supabase.storage.from('avatars').download(url);
-                    const newUrl = URL.createObjectURL(data)
-                    console.log(data);
-                    setAvatarUrl(newUrl);
+
+                    if (error) {
+                        throw error;
+                    }
+                    const imageUrl = URL.createObjectURL(data);
+                    setAvatarUrl(imageUrl);
                 }
-                
-                catch (error) {
-                    console.log("error")
-                }
-              
-                
+
             }
             catch (error) {
                 console.log("Error while downloading image: ", error)
+            } finally {
+                setLoading(false);
             }
         }
-        downloadImage()
+        if (authUser) {
+            downloadImage()
 
-    }, [])
+        }
+
+    }, [authUser])
 
 
     return (

@@ -16,6 +16,7 @@ const ThemeSwitcher = () => {
                 <option value="halloween">{t('halloweenTheme')}</option>
                 <option value="wireframe">{t('wireframeTheme')}</option>
                 <option value="business">{t('businessTheme')}</option>
+                <option value="pastel">{t('pastelTheme')}</option>
 
             </select>
         </div>

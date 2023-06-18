@@ -4,11 +4,10 @@ import { useState } from 'react';
 import cn from 'classnames';
 import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
-
 import { useAuth, VIEWS } from '../AuthProvider';
 import supabase from '../../lib/supabase-browser';
 import { useTranslations } from 'next-intl';
-
+import {SlNote} from "react-icons/sl";
 
 const SignUpSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Required'),
@@ -41,7 +40,10 @@ const SignUp = () => {
 
     return (
         <div className="flex justify-center items-center shadow-md mx-auto card w-64">
-            <h2 className="text-center">{t('registerHeading')}</h2>
+            <h2 className="text-center text-2xl">{t('registerHeading')}</h2>
+            <div className='mx-auto flex justify-center items-center'>
+                    <SlNote className='' style={{ fontSize: 40 }} />
+                </div>
             <Formik
                 initialValues={{
                     email: '',
@@ -53,7 +55,7 @@ const SignUp = () => {
                 {({ errors, touched }) => (
                     <div className="flex justify-center items-center">
                         <Form className="w-full">
-                            <div className="flex flex-col">
+                            <div className="flex flex-col w-64">
 
                                 <label htmlFor="email">{t('registerEmail')}</label>
                                 <Field
@@ -80,7 +82,7 @@ const SignUp = () => {
                                     <div className="text-red-600">{errors.password}</div>
                                 ) : null}
                             </div>
-                            <button className="btn btn-primary w-full mt-5" type="submit">
+                            <button className="btn btn-primary w-full mt-8" type="submit">
                                 {t('registerSubmitButton')}
                             </button>
                         </Form>

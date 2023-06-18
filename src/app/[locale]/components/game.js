@@ -38,6 +38,11 @@ const Game = () => {
         setGameSortVal(sort);
     }
 
+    const [pageNumber, setPageNumber]=useState(1);
+    const handlePageChange=(newPageNr)=>{
+        setPageNumber(newPageNr);
+    }
+
     return (
         <>
             <div className="flex flex-wrap">
@@ -54,28 +59,9 @@ const Game = () => {
                 </div>
             </div>
 
-
-
-            {/* <CSSTransition
-                in={showFilterDiv}
-                timeout={300}
-                classNames="slideGameFilter"
-                unmountOnExit
-            > */}
-
-                {/* <ShowHideFilterGameBar onFilterApply={handeFiltering} /> */}
-            {/* </CSSTransition> */}
-
-            {/* <CSSTransition
-                in={showFilterDiv}
-                timeout={300}
-                classNames="slideDownGamesDiv"
-
-            > */}
                 <div>
-                    <GameInfo searchTerm={searchTerm} genreFilterValue={genreFilter} minRatingsFilterValue={minRatingsFilterVal} sortGameVal={gameSortVal}></GameInfo>
+                    <GameInfo onPageChange={handlePageChange} pageNumber={pageNumber} searchTerm={searchTerm} genreFilterValue={genreFilter} minRatingsFilterValue={minRatingsFilterVal} sortGameVal={gameSortVal}></GameInfo>
                 </div>
-            {/* </CSSTransition> */}
 
         </>
     )
