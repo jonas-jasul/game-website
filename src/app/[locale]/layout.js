@@ -12,6 +12,7 @@ import HeadComponent from './head';
 import ThemeProvider from './components/Themeprovider';
 import Footer from './components/common/footer';
 import createClient from './lib/supabase-server';
+import QueryProviders from './utils/queryProvider';
 
 function staticParams() {
   return [{ locale: 'en' }, { locale: 'lt' }];
@@ -44,8 +45,10 @@ export default async function RootLayout({ children, params: { locale } }) {
           <ThemeProvider>
 
             <AuthProvider>
+            <QueryProviders>
               <Navbar user={user} />
               {children}
+              </QueryProviders>
             </AuthProvider>
 
             <Footer />

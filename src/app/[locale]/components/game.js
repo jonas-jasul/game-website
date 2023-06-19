@@ -8,7 +8,7 @@ import ShowHideFilterGameBar from "./showHideFilterGameBar";
 import SortGameBar from "./ui/sortGameBar";
 
 
-const Game = () => {
+const Game = ({searchParams}) => {
     const [searchTerm, setSearchTerm] = useState('');
     const handleSearch = (term) => {
         setSearchTerm(term);
@@ -38,8 +38,8 @@ const Game = () => {
         setGameSortVal(sort);
     }
 
-    const [pageNumber, setPageNumber]=useState(1);
-    const handlePageChange=(newPageNr)=>{
+    const [pageNumber, setPageNumber] = useState(1);
+    const handlePageChange = (newPageNr) => {
         setPageNumber(newPageNr);
     }
 
@@ -47,7 +47,7 @@ const Game = () => {
         <>
             <div className="flex flex-wrap">
                 <div className="flex mx-auto items-center">
-                    <ShowHideFilterGameBar onFilterApply={handeFiltering}  onMinRatingFilterApply={handleMinRatingsFiltering}/>
+                    <ShowHideFilterGameBar searchParams={searchParams} onFilterApply={handeFiltering} onMinRatingFilterApply={handleMinRatingsFiltering} />
 
                 </div>
 
@@ -59,10 +59,9 @@ const Game = () => {
                 </div>
             </div>
 
-                <div>
-                    <GameInfo onPageChange={handlePageChange} pageNumber={pageNumber} searchTerm={searchTerm} genreFilterValue={genreFilter} minRatingsFilterValue={minRatingsFilterVal} sortGameVal={gameSortVal}></GameInfo>
-                </div>
-
+            <div>
+                <GameInfo searchParams={searchParams} onPageChange={handlePageChange} pageNumber={pageNumber} searchTerm={searchTerm} genreFilterValue={genreFilter} minRatingsFilterValue={minRatingsFilterVal} sortGameVal={gameSortVal}></GameInfo>
+            </div>
         </>
     )
 }
