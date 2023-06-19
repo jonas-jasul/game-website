@@ -52,10 +52,10 @@ const Game = ({searchParams}) => {
                 </div>
 
                 <div className="flex mx-auto items-center">
-                    <SortGameBar onSortGames={handleGameSorting} />
+                    <SortGameBar searchParams={searchParams} onSortGames={handleGameSorting} />
                 </div>
                 <div className="flex mx-auto">
-                    <SearchGameBar onSearch={handleSearch}></SearchGameBar>
+                    <SearchGameBar searchParams={searchParams} onSearch={handleSearch}></SearchGameBar>
                 </div>
             </div>
 

@@ -1,15 +1,22 @@
 import { useTranslations } from "next-intl";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useState } from "react";
 
-const SortGameBar = ({onSortGames}) => {
+const SortGameBar = ({onSortGames, searchParams}) => {
     const t = useTranslations('SortDropdown');
     const [sortValue, setSortValue] = useState("rating");
+    const router= useRouter();
+    const pathname = usePathname();
 
     const handleSortChange = (e) =>{
         setSortValue(e.target.value);
         // console.log(sortValue);
-        
+        const url = new URLSearchParams(searchParams);
+        url.set("sort", e.target.value);
+        const urlStr=url.toString();
+
+        router.push(`${pathname}?${urlStr}`);
     };
 
     useEffect(()=> {

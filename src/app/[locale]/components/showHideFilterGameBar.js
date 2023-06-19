@@ -54,7 +54,8 @@ export default function ShowHideFilterGameBar({ onFilterApply, onMinRatingFilter
         if (selectedGenres) {
             onFilterApply(selectedGenres?.id);
             const current = new URLSearchParams(searchParams);
-            current.set("genre", selectedGenres?.name);
+            current.set("genre", selectedGenres?.name.toLowerCase());
+            current.set("page", 1);
             const urlStr = current.toString();
             // const urlStr = current.toString();
             // const query = urlStr ? `?${urlStr}` : "";
@@ -68,11 +69,20 @@ export default function ShowHideFilterGameBar({ onFilterApply, onMinRatingFilter
 
     const applyMinRatingFilter = () => {
         onMinRatingFilterApply(gameMinRatings);
+        const url=new URLSearchParams(searchParams);
+        url.set("min_ratings", gameMinRatings);
+        const urlStr = url.toString();
+        router.push(`${pathname}?${urlStr}`);
     }
 
     const clearFilters = () => {
         setGameGenreValue('');
         setGameMinRatings(25);
+        const current = new URLSearchParams(searchParams);
+        current.delete("genre");
+        current.set("page", 1);
+        const urlStr=current.toString();
+        router.push(`${pathname}?${urlStr}`)
     }
 
 
@@ -112,6 +122,7 @@ export default function ShowHideFilterGameBar({ onFilterApply, onMinRatingFilter
                         {t('gameFilterMinRatings')}
                         <input type="range" min={0} max={150} value={gameMinRatings} onChange={handleRatingSliderChange} className="range range-primary" />{gameMinRatings}
                     </li>
+
 
                     <div className="flex justify-end">
                         <li>

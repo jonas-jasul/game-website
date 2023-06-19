@@ -13,27 +13,24 @@ import { usePathname, useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 
-export default function GameInfo({ searchParams, searchTerm, genreFilterValue, minRatingsFilterValue, sortGameVal }) {
+export default function GameInfo({ searchParams, searchTerm, minRatingsFilterValue, sortGameVal }) {
   const t = useTranslations('GameInfo');
   const [pageCount, setPageCount] = useState(0);
   const pageSize = 20;
-  const [pageNumber, setPageNumber] = useState(1);
+  // const [pageNumber, setPageNumber] = useState(1);
   const router = useRouter();
   const pathname = usePathname();
   const queryClient = useQueryClient()
 
   useEffect(() => {
     if (searchParams.page) {
-      const parsedPage = Number(searchParams.page);
-      if (parsedPage !== pageNumber) {
-        setPageNumber(parsedPage);
-      }
+
     } else if (!searchParams.page) {
-      if (pageNumber === 1) {
-        router.push(`${pathname}?page=1`, undefined, { shallow: true });
-      }
+
+      router.push(`${pathname}?page=1`, undefined, { shallow: true });
+
     }
-  }, [searchParams.page, pageNumber, searchParams.genre]);
+  }, [searchParams.page, searchParams.genre]);
 
 
   const handlePageClick = (data) => {
@@ -42,15 +39,42 @@ export default function GameInfo({ searchParams, searchTerm, genreFilterValue, m
     const pageStr = current.toString();
     const query = pageStr ? `?${pageStr}` : "";
     router.push(`${pathname}${query}`);
-    setPageNumber(data);
+    // setPageNumber(data);
+  }
+
+  async function fetchGameGenres() {
+    const genreResponse = await fetch('http://localhost:8080/https://api.igdb.com/v4/genres', {
+      method: 'post',
+      headers: {
+        'Client-ID': ClientID,
+        'Authorization': Authorization,
+        'Accept': "application/json",
+      },
+      body: 'fields name; limit 50;'
+    });
+
+    const dataGenres = await genreResponse.json();
+    console.log(dataGenres);
+    const genreArr = dataGenres.map((game) => ({
+      id: game.id,
+      name: game.name.toLowerCase(),
+    }));
+
+    return genreArr;
   }
 
 
+
   const fetchTotalGameCount = async () => {
+
+    const genreArr = await fetchGameGenres();
+
     let countQuery = `where rating_count>=${minRatingsFilterValue}`;
 
-    if (genreFilterValue) {
-      countQuery += ` & genres = ${genreFilterValue}`;
+    if (searchParams.genre) {
+      const genreQuery = genreArr.find((genre) => genre.name === searchParams.genre);
+
+      countQuery += ` & genres = ${genreQuery.id}`;
     }
 
     if (searchTerm) {
@@ -77,23 +101,35 @@ export default function GameInfo({ searchParams, searchTerm, genreFilterValue, m
 
   useEffect(() => {
     fetchTotalGameCount();
-  }, [searchTerm, genreFilterValue, minRatingsFilterValue]);
+  }, [searchParams.search, searchParams.genre, searchParams.page, searchParams.min_ratings]);
 
 
   async function fetchGameData() {
-    const offset = (searchParams.page - 1) * pageSize
-    let gameDataQuery = `fields id, name, rating, cover, genres, slug; where rating != null & rating_count >= ${minRatingsFilterValue}`;
+    const genreArr = await fetchGameGenres();
 
-    if (searchTerm) {
-      gameDataQuery += ` & name ~ *"${searchTerm}"*`;
+    console.log("genre param", searchParams.genre)
+    const offset = (searchParams.page - 1) * pageSize
+
+    
+    const minRatings = searchParams.min_ratings ?? 25;
+
+
+    let gameDataQuery = `fields id, name, rating, cover, genres, slug; where rating != null & rating_count >= ${minRatings}`;
+
+    if (searchParams.search) {
+      gameDataQuery += ` & name ~ *"${searchParams.search}"*`;
     }
 
     if (searchParams.genre) {
-      gameDataQuery += ` & genres = ${searchParams.genre}`;
+      const genreQuery = genreArr.find((genre) => genre.name === searchParams.genre);
+      console.log("genre query", genreQuery);
+      gameDataQuery += ` & genres = ${genreQuery.id}`;
     }
 
-    if (sortGameVal) {
-      gameDataQuery += `; sort ${sortGameVal} desc`;
+    if (searchParams.sort) {
+      gameDataQuery += `; sort ${searchParams.sort} desc`;
+    } else {
+      gameDataQuery += `; sort rating desc`
     }
 
     gameDataQuery += `; limit ${pageSize}; offset ${offset};`;
@@ -156,7 +192,7 @@ export default function GameInfo({ searchParams, searchTerm, genreFilterValue, m
   }
 
   const { data: gameQuery, isLoading: gameQueryIsLoading, isFetching: gameQueryIsFetching, refetch: gameRefetch } = useQuery({
-    queryKey: ['games', searchParams.page, searchParams.genre],
+    queryKey: ['games', searchParams.page, searchParams.genre, searchParams.sort, searchParams.search, searchParams.min_ratings],
     queryFn: fetchGameData, refetchOnWindowFocus: false
   })
 
@@ -189,7 +225,7 @@ export default function GameInfo({ searchParams, searchTerm, genreFilterValue, m
       </div>
       <div className="flex w-40 mx-auto pagination justify-center items-center">
         <ResponsivePagination
-          current={pageNumber}
+          current={parseInt(searchParams.page)}
           total={pageCount}
           onPageChange={handlePageClick}
           maxVisiblePages={5}
