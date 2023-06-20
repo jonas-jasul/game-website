@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import LoadingSpinner from "./common/loadingSpinner";
 import { ClientID, Authorization } from "../../config";
 // import ReactPaginate from "react-paginate";
@@ -12,7 +12,9 @@ import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
-
+import Link from "next/link";
+import { RxArrowLeft, RxArrowRight } from "react-icons/rx";
+import { dropEllipsisThenNav, dropEllipsis } from "react-responsive-pagination/narrowBehaviour";
 export default function GameInfo({ searchParams, searchTerm, minRatingsFilterValue, sortGameVal }) {
   const t = useTranslations('GameInfo');
   const [pageCount, setPageCount] = useState(0);
@@ -68,8 +70,8 @@ export default function GameInfo({ searchParams, searchTerm, minRatingsFilterVal
   const fetchTotalGameCount = async () => {
 
     const genreArr = await fetchGameGenres();
-
-    let countQuery = `where rating_count>=${minRatingsFilterValue}`;
+    const minRating=searchParams.min_ratings ?? 25;
+    let countQuery = `where total_rating_count>=${minRating}`;
 
     if (searchParams.genre) {
       const genreQuery = genreArr.find((genre) => genre.name === searchParams.genre);
@@ -110,11 +112,11 @@ export default function GameInfo({ searchParams, searchTerm, minRatingsFilterVal
     console.log("genre param", searchParams.genre)
     const offset = (searchParams.page - 1) * pageSize
 
-    
+
     const minRatings = searchParams.min_ratings ?? 25;
 
 
-    let gameDataQuery = `fields id, name, rating, cover, genres, slug; where rating != null & rating_count >= ${minRatings}`;
+    let gameDataQuery = `fields id, name, total_rating, cover, genres, slug; where total_rating != null & total_rating_count >= ${minRatings}`;
 
     if (searchParams.search) {
       gameDataQuery += ` & name ~ *"${searchParams.search}"*`;
@@ -129,7 +131,7 @@ export default function GameInfo({ searchParams, searchTerm, minRatingsFilterVal
     if (searchParams.sort) {
       gameDataQuery += `; sort ${searchParams.sort} desc`;
     } else {
-      gameDataQuery += `; sort rating desc`
+      gameDataQuery += `; sort total_rating desc`
     }
 
     gameDataQuery += `; limit ${pageSize}; offset ${offset};`;
@@ -176,19 +178,14 @@ export default function GameInfo({ searchParams, searchTerm, minRatingsFilterVal
         id: game.id,
         name: game.name,
         slug: game.slug,
-        rating: game.rating,
-        coverUrl: cover
+        rating: game.total_rating,
+        coverUrl: cover && cover !== "null"
           ? `https://images.igdb.com/igdb/image/upload/t_cover_big/${cover.image_id}.jpg`
-          : null,
+          : `https://images.igdb.com/igdb/image/upload/t_cover_big/nocover.png`,
       };
     });
     console.log("games with covers", gamesWithCovers);
     return gamesWithCovers;
-  }
-
-
-  const handleMoreInfoBtn = (gameId) => {
-    router.push(`/catalogue/${gameId}`)
   }
 
   const { data: gameQuery, isLoading: gameQueryIsLoading, isFetching: gameQueryIsFetching, refetch: gameRefetch } = useQuery({
@@ -196,6 +193,14 @@ export default function GameInfo({ searchParams, searchTerm, minRatingsFilterVal
     queryFn: fetchGameData, refetchOnWindowFocus: false
   })
 
+  const customPageRef = useRef(null);
+
+  function setCustomPageNr() {
+      const url= new URLSearchParams(searchParams);
+      url.set("page", parseInt(customPageRef.current.value));
+      const urlStr=url.toString();
+      router.push(`${pathname}?${urlStr}`)
+  }
 
   if (gameQueryIsLoading || gameQueryIsFetching) {
     return <LoadingSpinner />
@@ -204,18 +209,19 @@ export default function GameInfo({ searchParams, searchTerm, minRatingsFilterVal
     <div className="p-5 flex flex-wrap justify-center items-center">
       {gameQuery.map((game) => (
         <div className="card lg:card-side bg-base-100 shadow-xl border border-primary p-0" key={game.id}>
-          <figure className="h-60"><img className="h-full w-full object-cover" src={game.coverUrl} alt="cover" /></figure>
+          <figure className="h-60"><img className="h-full w-full object-cover" src={game.coverUrl } alt="cover" /></figure>
           <div className="card-body w-60">
             <h2 className="card-title text-xl">{game.name}</h2>
-            <p><StarRating rating={game.rating} /></p>
+            <p><StarRating starSize={20} rating={game.rating} /></p>
             <div className="card-actions justify-end">
-              <button onClick={() => { handleMoreInfoBtn(game.slug) }} className="btn btn-primary">{t('moreInfoBtn')}</button>
+              <Link href={`/catalogue/${game.slug}`} className="btn btn-primary">{t('moreInfoBtn')}</Link>
             </div>
           </div>
         </div>
       )
       )}
     </div>
+    
   );
 
   return (
@@ -223,13 +229,23 @@ export default function GameInfo({ searchParams, searchTerm, minRatingsFilterVal
       <div className="flex">
         {renderGames}
       </div>
-      <div className="flex w-40 mx-auto pagination justify-center items-center">
+      <div className="flex flex-col mx-auto pagination justify-center items-center w-full lg:w-1/2">
         <ResponsivePagination
           current={parseInt(searchParams.page)}
           total={pageCount}
           onPageChange={handlePageClick}
-          maxVisiblePages={5}
+          nextLabel={<RxArrowRight className="h-6" />}
+          previousLabel={<RxArrowLeft className="h-6" />}
+          narrowBehaviour={dropEllipsisThenNav}
         />
+        <div className="form-control ml-4 mt-2">
+          <div className="input-group">
+            <input type="number" placeholder={t('customPagePlaceholder')} ref={customPageRef} className="input input-bordered border-primary w-20" />
+            <button className="btn btn-square border-primary" onClick={setCustomPageNr}>
+              {t('customPageGo')}
+            </button>
+          </div>
+        </div>
       </div>
 
     </>

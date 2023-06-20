@@ -35,7 +35,9 @@
         "title": "Title"
     },
     "GameInfo": {
-        "moreInfoBtn": "More info"
+        "moreInfoBtn": "More info",
+        "customPageGo":"Go",
+        "customPagePlaceholder": "Page"
     },
     "Auth": {
         "loginHeading": "Login",
@@ -81,5 +83,37 @@
         "profileSuccessModHead": "Success!",
         "profileSuccessModBody": "You have successfully updated your profile!"
 
+    },
+
+    "GamePage": {
+        "gamePageDescTitle": "Description",
+        "gamePageRatingTitle" :"Game rating"
+    },
+
+    "Genres": {
+        "fighting": "Fighting",
+        "shooter" : "Shooter",
+        "music": "Music",
+        "platform": "Platform",
+        "puzzle": "Puzzle",
+        "racing": "Racing",
+        "real-time-strategy-rts": "Real Time Strategy (RTS)",
+        "role-playing-rpg": "Role-playing (RPG)",
+        "simulator": "Simulator",
+        "sport": "Sport",
+        "strategy": "Strategy",
+        "turn-based-strategy-tbs": "Turn-based strategy (TBS)",
+        "tactical": "Tactical",
+        "quiz-trivia": "Quiz/Trivia",
+        "hack-and-slash-beat-em-up": "Hack and slash/Beat 'em up",
+        "pinball": "Pinball",
+        "adventure": "Adventure",
+        "arcade": "Arcade",
+        "visual-novel": "Visual Novel",
+        "indie": "Indie",
+        "card-and-board-game": "Card & Board Game",
+        "moba": "MOBA",
+        "point-and-click": "Point-and-click"
     }
+    
 }

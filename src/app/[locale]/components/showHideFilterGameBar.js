@@ -1,6 +1,6 @@
+"use client";
 import { useState } from "react";
 import React from "react";
-// import Select from 'react-select';
 import { Authorization, ClientID } from "../../config";
 import { useEffect } from "react";
 import { useRef } from "react";
@@ -9,6 +9,7 @@ import { RxDropdownMenu } from "react-icons/rx";
 import GameGenreDropdown from "./ui/gameGenreDropdown";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
 export default function ShowHideFilterGameBar({ onFilterApply, onMinRatingFilterApply, searchParams }) {
 
     const t = useTranslations('FilterBar');
@@ -32,7 +33,7 @@ export default function ShowHideFilterGameBar({ onFilterApply, onMinRatingFilter
                 'Authorization': Authorization,
                 'Accept': "application/json",
             },
-            body: 'fields name; limit 100;'
+            body: 'fields name,slug; limit 100;'
         }
         );
 
@@ -41,47 +42,45 @@ export default function ShowHideFilterGameBar({ onFilterApply, onMinRatingFilter
         const genreArr = dataGenres.map((game) => ({
             id: game.id,
             name: game.name,
+            slug: game.slug,
         }));
 
         setGameGenres(genreArr)
         console.log(gameGenres);
+        return genreArr;
     }
 
-    const applyFilter = () => {
-        const selectedGenres = gameGenres.find((genre) => genre.name === gameGenreValue);
+    const { data: genreData, isLoading: genreIsLoading, isFetching: genreIsFetching } = useQuery({
+        queryKey: ["genre-dropdown-query"],
+        queryFn: fetchAllGameGenres
+    })
 
+
+    const applyFilter = (e) => {
+
+        const selectedGenres = genreData?.find((genre) => genre.name === gameGenreValue);
+        const current = new URLSearchParams(searchParams);
 
         if (selectedGenres) {
-            onFilterApply(selectedGenres?.id);
-            const current = new URLSearchParams(searchParams);
-            current.set("genre", selectedGenres?.name.toLowerCase());
+            // onFilterApply(selectedGenres?.id);
+            current.set("genre", selectedGenres?.name);
             current.set("page", 1);
-            const urlStr = current.toString();
-            // const urlStr = current.toString();
-            // const query = urlStr ? `?${urlStr}` : "";
-            router.push(`${pathname}?${urlStr}`);
-            console.log(urlStr);
-        } else {
-            onFilterApply(null);
         }
 
-    }
-
-    const applyMinRatingFilter = () => {
-        onMinRatingFilterApply(gameMinRatings);
-        const url=new URLSearchParams(searchParams);
-        url.set("min_ratings", gameMinRatings);
-        const urlStr = url.toString();
+        current.set("min_ratings", gameMinRatings);
+        const urlStr = current.toString().toLowerCase();
         router.push(`${pathname}?${urlStr}`);
     }
 
-    const clearFilters = () => {
+
+    function clearFilters() {
         setGameGenreValue('');
         setGameMinRatings(25);
         const current = new URLSearchParams(searchParams);
         current.delete("genre");
         current.set("page", 1);
-        const urlStr=current.toString();
+        current.set("min_ratings", 25);
+        const urlStr = current.toString();
         router.push(`${pathname}?${urlStr}`)
     }
 
@@ -102,6 +101,9 @@ export default function ShowHideFilterGameBar({ onFilterApply, onMinRatingFilter
         setGameGenreDropdownItems(newGenres);
     }, [gameGenres, gameGenreValue]);
 
+    function submitFilters() {
+        applyFilter();
+    }
 
     return (
         <div className="drawer" style={{ zIndex: 2 }}>
@@ -136,7 +138,7 @@ export default function ShowHideFilterGameBar({ onFilterApply, onMinRatingFilter
                         </li>
 
                         <li>
-                            <button onClick={() => { applyFilter(), applyMinRatingFilter() }} className="btn bg-success flex flex-col items-center justify-center">
+                            <button onClick={submitFilters} className="btn bg-success flex flex-col items-center justify-center">
                                 <div className="flex items-center">
                                     {t('gameFilterApply')}
                                     <RxCheckCircled size={'1.4em'} />

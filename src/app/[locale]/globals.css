@@ -35,6 +35,10 @@ html,body {
   src: local('Rajdhani'), url(../fonts/Rajdhani-Medium.ttf) format(truetype);
 }
 
+.game-font {
+  font-family: 'Rajdhani';
+}
+
 /* React Transition Group animation styles */
 
 .slideGameFilter-enter {

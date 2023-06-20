@@ -19,8 +19,6 @@
         "avatarLoginSignup": "Prisijungti / Registruotis",
         "navAvatarProfile": "Profilis",
         "navAvatarSignOut": "Atsijungti"
-
-
     },
 
     "FilterBar": {
@@ -42,7 +40,9 @@
     },
 
     "GameInfo": {
-        "moreInfoBtn": "Daugiau info"
+        "moreInfoBtn": "Daugiau info",
+        "customPageGo":"Eiti",
+        "customPagePlaceholder": "Psl."
     },
 
     "Auth": {
@@ -93,6 +93,37 @@
         "profileSuccessModBody": "Sėkmingai atnaujinote savo profilį!"
 
 
+    },
+
+    "GamePage": {
+        "gamePageDescTitle": "Aprašymas",
+        "gamePageRatingTitle" :"Žaidimo įvertinimas"
+    },
+
+    "Genres": {
+        "fighting": "Muštynių",
+        "shooter" : "Šaudyklė",
+        "music": "Muzikinis",
+        "platform": "Platformeris",
+        "puzzle": "Galvosūkių",
+        "racing": "Lenktynių",
+        "real-time-strategy-rts": "Realaus laiko strategijos (RTS)",
+        "role-playing-rpg": "Vaidmenų (RPG)",
+        "simulator": "Simulatorius",
+        "sport": "Sporto",
+        "strategy": "Strategijos",
+        "turn-based-strategy-tbs": "Ėjimų strategijos (TBS)",
+        "tactical": "Taktikos",
+        "quiz-trivia": "Viktorinos",
+        "hack-and-slash-beat-em-up": "Hack and slash/Beat 'em up",
+        "pinball": "Pinball'as",
+        "adventure": "Nuotykių",
+        "arcade": "Arkadinis",
+        "visual-novel": "Vizualinis romanas",
+        "indie": "Indie",
+        "card-and-board-game": "Kortų / stalo ",
+        "moba": "MOBA", 
+        "point-and-click": "Point-and-click"
     }
 
 }
