@@ -15,6 +15,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 import { RxArrowLeft, RxArrowRight } from "react-icons/rx";
 import { dropEllipsisThenNav, dropEllipsis } from "react-responsive-pagination/narrowBehaviour";
+
 export default function GameInfo({ searchParams, searchTerm, minRatingsFilterValue, sortGameVal }) {
   const t = useTranslations('GameInfo');
   const [pageCount, setPageCount] = useState(0);
@@ -65,18 +66,41 @@ export default function GameInfo({ searchParams, searchTerm, minRatingsFilterVal
     return genreArr;
   }
 
+  const categoryLookupTable = {
+    "main game": 0,
+    'dlc / add-on': 1,
+    'expansion': 2,
+    'bundle': 3,
+    'standalone expansion': 4,
+    'mod': 5,
+    'episode': 6,
+    'season': 7,
+    'remake': 8,
+    'remaster': 9,
+    'expanded game': 10,
+    'port': 11,
+    'fork': 12,
+    'pack': 13,
+    'update': 14,
+  };
+  
+  
 
-
+  const categoryMapper = (category) =>categoryLookupTable[category]; 
   const fetchTotalGameCount = async () => {
 
     const genreArr = await fetchGameGenres();
-    const minRating=searchParams.min_ratings ?? 25;
+    const minRating = searchParams.min_ratings ?? 25;
     let countQuery = `where total_rating_count>=${minRating}`;
 
     if (searchParams.genre) {
       const genreQuery = genreArr.find((genre) => genre.name === searchParams.genre);
 
       countQuery += ` & genres = ${genreQuery.id}`;
+    }
+
+    if(searchParams.category) {
+      countQuery += ` & category = ${categoryMapper(searchParams.category)}`
     }
 
     if (searchTerm) {
@@ -103,7 +127,7 @@ export default function GameInfo({ searchParams, searchTerm, minRatingsFilterVal
 
   useEffect(() => {
     fetchTotalGameCount();
-  }, [searchParams.search, searchParams.genre, searchParams.page, searchParams.min_ratings]);
+  }, [searchParams.search, searchParams.genre, searchParams.category, searchParams.page, searchParams.min_ratings]);
 
 
   async function fetchGameData() {
@@ -126,6 +150,13 @@ export default function GameInfo({ searchParams, searchTerm, minRatingsFilterVal
       const genreQuery = genreArr.find((genre) => genre.name === searchParams.genre);
       console.log("genre query", genreQuery);
       gameDataQuery += ` & genres = ${genreQuery.id}`;
+    }
+
+    if (searchParams.category) {
+      console.log('categ from ulr', searchParams.category);
+      const mappedCategory = categoryMapper(searchParams.category)
+      gameDataQuery += ` & category = '${mappedCategory}' `;
+      console.log('game cateogry', mappedCategory);
     }
 
     if (searchParams.sort) {
@@ -189,17 +220,18 @@ export default function GameInfo({ searchParams, searchTerm, minRatingsFilterVal
   }
 
   const { data: gameQuery, isLoading: gameQueryIsLoading, isFetching: gameQueryIsFetching, refetch: gameRefetch } = useQuery({
-    queryKey: ['games', searchParams.page, searchParams.genre, searchParams.sort, searchParams.search, searchParams.min_ratings],
+    queryKey: ['games', searchParams.page, searchParams.genre, searchParams.category, searchParams.sort,
+      searchParams.search, searchParams.min_ratings],
     queryFn: fetchGameData, refetchOnWindowFocus: false
   })
 
   const customPageRef = useRef(null);
 
   function setCustomPageNr() {
-      const url= new URLSearchParams(searchParams);
-      url.set("page", parseInt(customPageRef.current.value));
-      const urlStr=url.toString();
-      router.push(`${pathname}?${urlStr}`)
+    const url = new URLSearchParams(searchParams);
+    url.set("page", parseInt(customPageRef.current.value));
+    const urlStr = url.toString();
+    router.push(`${pathname}?${urlStr}`)
   }
 
   if (gameQueryIsLoading || gameQueryIsFetching) {
@@ -209,7 +241,7 @@ export default function GameInfo({ searchParams, searchTerm, minRatingsFilterVal
     <div className="p-5 flex flex-wrap justify-center items-center">
       {gameQuery.map((game) => (
         <div className="card lg:card-side bg-base-100 shadow-xl border border-primary p-0" key={game.id}>
-          <figure className="h-60"><img className="h-full w-full object-cover" src={game.coverUrl } alt="cover" /></figure>
+          <figure className="h-60"><img className="h-full w-full object-cover" src={game.coverUrl} alt="cover" /></figure>
           <div className="card-body w-60">
             <h2 className="card-title text-xl">{game.name}</h2>
             <p><StarRating starSize={20} rating={game.rating} /></p>
@@ -221,7 +253,7 @@ export default function GameInfo({ searchParams, searchTerm, minRatingsFilterVal
       )
       )}
     </div>
-    
+
   );
 
   return (

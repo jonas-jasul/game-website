@@ -2,25 +2,24 @@ import React, { memo, useRef, useState } from "react";
 import classNames from "classnames";
 import { RxCross2 } from "react-icons/rx";
 import { useTranslations } from "next-intl";
-const GameGenreDropdown = ({items, value, onChange }) => {
+const GameCategoryDropdown = ({items, value, onChange }) => {
 
     const t = useTranslations('FilterBar');
-    const ref = useRef();
-
-    const [open, setOpen] = useState(false);
+    const refCateg = useRef();
+    const [openCatDropd, setOpenCatDropd] = useState(false);
 
     const resetDropdown = () => {
-        ref.current.value="";
+        refCateg.current.value="";
         onChange("");
     }
     return (
         <div
             className={classNames({
                 "dropdown w-full": true,
-                "dropdown-open": open,
+                "dropdown-open": openCatDropd,
             })}
 
-            ref={ref}
+            ref={refCateg}
         >
 
             <input type="text" className="input w-full" value={value} onChange={(event) => onChange(event.target.value)}
@@ -30,17 +29,16 @@ const GameGenreDropdown = ({items, value, onChange }) => {
             <div className="dropdown-content bg-base-200 border border-primary top-14 max-h-96 overflow-auto flex-col rounded-md" style={{ zIndex: 1 }}>
 
                 <ul
-                    className="menu menu-compact "
-                    style={{ width: ref.current?.clientWidth }}
+                    className="menu menu-compact"
+                    style={{ width: refCateg.current?.clientWidth }}
                 >
 
                     {items.map((item, index) => {
                         return (
                             <li key={index}
-                                tabIndex={index + 1}
                                 onClick={() => {
                                     onChange(item);
-                                    setOpen(false);
+                                    setOpenCatDropd(false);
                                 }}
                                 className="border w-full rounded-full"
                             >
@@ -55,4 +53,4 @@ const GameGenreDropdown = ({items, value, onChange }) => {
     )
 }
 
-export default memo(GameGenreDropdown);
+export default memo(GameCategoryDropdown);

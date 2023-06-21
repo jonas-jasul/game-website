@@ -11,8 +11,14 @@ import { useQuery } from "@tanstack/react-query";
 import LoadingSpinner from "../../components/common/loadingSpinner";
 import StarRating from "../../components/ui/starRating";
 import { useTranslations } from "next-intl";
+import { DeepL_Key } from "@/app/config";
 export default function GamePage({ params }) {
-    const [gameId, setGameId] = useState();
+    // console.log('locale', params.locale);
+    const currentLocale = params.locale;
+    const shouldShowTranslateButton = currentLocale === 'lt';
+    const [gameDescr, setGameDescrip] = useState('');
+    const [translatedGameDescrip, setTranslatedGameDescrip] = useState('');
+    const [isTranslated, setIsTranslated] = useState('false');
     const [artworks, setArtworks] = useState();
     const t = useTranslations('GamePage');
     const t_g = useTranslations('Genres');
@@ -96,8 +102,14 @@ export default function GamePage({ params }) {
             setArtworks(screenshotUrl)
             console.log("otherGamedata", otherGameData);
             console.log("cover id");
+
+            if(otherGameData) {
+                const gameDescription = otherGameData[0].summary;
+                    setGameDescrip(gameDescription);
+
+            }
         }
-    }, [data])
+    }, [data, otherGameData]);
 
     if (isLoading || isFetching || otherDataIsLoading || otherDataIsFetching) {
         return <LoadingSpinner />
@@ -136,6 +148,27 @@ export default function GamePage({ params }) {
         console.log('t_g[genre.slug]:', t_g(`${_genre}`));
         return t_g(`${_genre}`) || genre.name;
     });
+
+
+    const translateDescription = async (description) => {
+        const apiUrl = `http://localhost:8080/https://api-free.deepl.com/v2/translate?auth_key=${DeepL_Key}&text=${encodeURIComponent(description)}&target_lang=lt`;
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        return data;
+    }
+    const handleTranslateButton = async() => {
+        try {
+            const response =await translateDescription(gameDescription);
+            setTranslatedGameDescrip(response.translations[0].text);
+            setIsTranslated(true);
+            console.log("translated summary", translatedGameDescrip);
+        } catch (error) {
+            console.error("Error", error);
+            alert("Pasiekta DeepL vertimų kvota. Bandykite vėliau")
+        }
+    }
+
+   
 
     console.log("translated genres", translatedGenres);
     const coverUrl = `https://images.igdb.com/igdb/image/upload/t_cover_big/${gameCover}.jpg`
@@ -177,7 +210,8 @@ export default function GamePage({ params }) {
                                 {t('gamePageDescTitle')}
                             </div>
                             <div className="collapse-content">
-                                <p>{gameDescription}</p>
+                            {shouldShowTranslateButton && <button className="btn btn-secondary btn-sm" disabled={translatedGameDescrip!==''} onClick={handleTranslateButton}>Išversti</button>}
+                                <p>{translatedGameDescrip || gameDescription}</p>
                             </div>
                         </div>
 
@@ -200,7 +234,9 @@ export default function GamePage({ params }) {
                                 {t('gamePageDescTitle')}
                             </div>
                             <div className="collapse-content">
-                                <p>{gameDescription}</p>
+                            {shouldShowTranslateButton && <button className="btn btn-secondary btn-sm" disabled={translatedGameDescrip!==''} onClick={handleTranslateButton}>Išversti</button>}
+
+                                <p>{ translatedGameDescrip || gameDescription}</p>
                             </div>
                         </div>
                     </div>

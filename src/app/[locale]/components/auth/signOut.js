@@ -19,7 +19,7 @@ export default function SignOut() {
 
 
     return (
-        <button type="button" className="button-inverse bg-error" onClick={handleSignOut}>
+        <button type="button" className="button-inverse bg-error pl-4 p-1" onClick={handleSignOut}>
         {t('navAvatarSignOut')}</button>
     )
 }
