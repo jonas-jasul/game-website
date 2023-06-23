@@ -17,7 +17,8 @@
         "pastelTheme": "Pastel",
         "avatarLoginSignup": "Log In / Sign Up",
         "navAvatarProfile": "Profile",
-        "navAvatarSignOut": "Sign out"
+        "navAvatarSignOut": "Sign out",
+        "noOptionsMessage": "No options"
     },
     "FilterBar": {
         "filterBtn": "Filter",
@@ -87,7 +88,10 @@
 
     "GamePage": {
         "gamePageDescTitle": "Description",
-        "gamePageRatingTitle" :"Game rating"
+        "gamePageRatingTitle" :"Game rating",
+        "gamePageReleasedOn": "Released on",
+        "gamePageDevelopedBy": "Developed by",
+        "gamePagePlatformsH": "Platforms"
     },
 
     "Genres": {

@@ -2,6 +2,8 @@ import React, { memo, useRef, useState } from "react";
 import classNames from "classnames";
 import { RxCross2 } from "react-icons/rx";
 import { useTranslations } from "next-intl";
+
+
 const GameGenreDropdown = ({items, value, onChange }) => {
 
     const t = useTranslations('FilterBar');

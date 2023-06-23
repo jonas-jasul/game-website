@@ -18,7 +18,9 @@
         "pastelTheme": "Pastelinė",
         "avatarLoginSignup": "Prisijungti / Registruotis",
         "navAvatarProfile": "Profilis",
-        "navAvatarSignOut": "Atsijungti"
+        "navAvatarSignOut": "Atsijungti",
+        "noOptionsMessage": "Nėra pasirinkimų"
+
     },
 
     "FilterBar": {
@@ -97,7 +99,10 @@
 
     "GamePage": {
         "gamePageDescTitle": "Aprašymas",
-        "gamePageRatingTitle" :"Žaidimo įvertinimas"
+        "gamePageRatingTitle" :"Žaidimo įvertinimas",
+        "gamePageReleasedOn": "Išleidimo data",
+        "gamePageDevelopedBy": "Kūrėjas",
+        "gamePagePlatformsH": "Platformos"
     },
 
     "Genres": {

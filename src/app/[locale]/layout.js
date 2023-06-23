@@ -10,6 +10,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { AuthProvider } from './components/AuthProvider';
 import HeadComponent from './head';
 import ThemeProvider from './components/Themeprovider';
+// import { ThemeProvider } from 'next-themes';
 import Footer from './components/common/footer';
 import createClient from './lib/supabase-server';
 import QueryProviders from './utils/queryProvider';

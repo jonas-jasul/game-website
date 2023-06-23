@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* :root {
-  
+ 
 } */
 
 /* @layer base {
@@ -12,6 +12,7 @@
   }
 
 } */
+
 
 /* body {
   min-height: 100%;
@@ -29,6 +30,9 @@ html,body {
   height: 100%;
 }
 
+.react-select__input:focus {
+  outline: none !important;
+}
 
 @font-face {
   font-family: 'Rajdhani';

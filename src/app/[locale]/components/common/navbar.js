@@ -46,7 +46,7 @@ const Navbar = ({ user }) => {
 
                     <Link href="/" locale={router.locale} className="btn btn-ghost normal-case text-xl">
                         <div className="flex items-center justify-center">
-                            <Image src="/../public/playInfiniteTransparent(cropped).png" height={105} width={105} alt="Play Infinite" />
+                            <Image src="/../public/playInfiniteTransparent(cropped).png" height={90} width={90} alt="Play Infinite" />
                         </div>
                     </Link>
                 </div>

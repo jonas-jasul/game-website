@@ -36,6 +36,7 @@
     "react-intl": "^6.4.4",
     "react-paginate": "^8.2.0",
     "react-responsive-pagination": "^2.2.0",
+    "react-select": "^5.7.3",
     "simple-line-icons": "^2.5.5",
     "swiper": "^9.4.1",
     "tailwindcss": "3.3.2",
