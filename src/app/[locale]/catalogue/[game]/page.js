@@ -11,7 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import LoadingSpinner from "../../components/common/loadingSpinner";
 import StarRating from "../../components/ui/starRating";
 import { useTranslations } from "next-intl";
-import { DeepL_Key } from "../../../config";
+// import { DeepL_Key } from "../../../config";
 import moment from "moment";
 import 'moment/locale/lt';
 
@@ -363,7 +363,7 @@ export default function GamePage({ params }) {
 
 
     const translateDescription = async (description) => {
-        const apiUrl = process.env.NEXT_PUBLIC_DEEPL_API_URL.toString() + `?auth_key=${DeepL_Key}&text=${encodeURIComponent(description)}&target_lang=lt`
+        const apiUrl = process.env.NEXT_PUBLIC_DEEPL_API_URL.toString() + `?auth_key=${process.env.NEXT_PUBLIC_DEEPL_KEY}&text=${encodeURIComponent(description)}&target_lang=lt`
         console.log("apie url", apiUrl)
         const response = await fetch(apiUrl);
         const data = await response.json();
