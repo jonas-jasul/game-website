@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useRef, useState } from "react";
 import LoadingSpinner from "./common/loadingSpinner";
-import { ClientID, Authorization } from "../../config";
+// import { ClientID, Authorization } from "../../config";
 // import ReactPaginate from "react-paginate";
 import ResponsivePagination from "react-responsive-pagination";
 import "../css/gameInfo.css";
@@ -49,8 +49,8 @@ export default function GameInfo({ searchParams, searchTerm, minRatingsFilterVal
     const genreResponse = await fetch(process.env.NEXT_PUBLIC_GAMES_GENRES_FETCH, {
       method: 'post',
       headers: {
-        'Client-ID': ClientID,
-        'Authorization': Authorization,
+        'Client-ID': process.env.NEXT_PUBLIC_CLIENT_ID,
+        'Authorization': process.env.NEXT_PUBLIC_AUTHORIZATION,
         'Accept': "application/json",
       },
       body: 'fields name; limit 50;'
@@ -112,8 +112,8 @@ export default function GameInfo({ searchParams, searchTerm, minRatingsFilterVal
     const countResponse = await fetch(process.env.NEXT_PUBLIC_GAMES_COUNT_FETCH, {
       method: 'post',
       headers: {
-        'Client-ID': ClientID,
-        'Authorization': Authorization,
+        'Client-ID': process.env.NEXT_PUBLIC_CLIENT_ID,
+        'Authorization': process.env.NEXT_PUBLIC_AUTHORIZATION,
         'Accept': 'application/json',
       },
       body: countQuery,
@@ -172,8 +172,8 @@ export default function GameInfo({ searchParams, searchTerm, minRatingsFilterVal
       {
         method: 'post',
         headers: {
-          'Client-ID': ClientID,
-          'Authorization': Authorization,
+          'Client-ID': process.env.NEXT_PUBLIC_CLIENT_ID,
+          'Authorization': process.env.NEXT_PUBLIC_AUTHORIZATION,
           'Accept': 'application/json',
         },
         body: gameDataQuery,
@@ -189,8 +189,8 @@ export default function GameInfo({ searchParams, searchTerm, minRatingsFilterVal
       {
         method: 'post',
         headers: {
-          'Client-ID': ClientID,
-          'Authorization': Authorization,
+          'Client-ID': process.env.NEXT_PUBLIC_CLIENT_ID,
+          'Authorization': process.env.NEXT_PUBLIC_AUTHORIZATION,
           'Accept': 'application/json',
         },
         body: `fields game, image_id; where game = (${imageIds.join(

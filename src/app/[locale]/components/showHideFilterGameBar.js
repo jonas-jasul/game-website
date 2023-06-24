@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import React from "react";
-import { Authorization, ClientID } from "../../config";
+// import { Authorization, ClientID } from "../../config";
 import { useEffect } from "react";
 import { useRef } from "react";
 import { RxCrossCircled, RxCheckCircled } from "react-icons/rx";
@@ -51,8 +51,8 @@ export default function ShowHideFilterGameBar({ onFilterApply, onMinRatingFilter
         const genreResponse = await fetch('http://localhost:8080/https://api.igdb.com/v4/genres', {
             method: 'post',
             headers: {
-                'Client-ID': ClientID,
-                'Authorization': Authorization,
+                'Client-ID': process.env.NEXT_PUBLIC_CLIENT_ID,
+                'Authorization': process.env.NEXT_PUBLIC_AUTHORIZATION,
                 'Accept': "application/json",
             },
             body: 'fields name,slug; limit 100;'

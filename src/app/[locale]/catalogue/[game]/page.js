@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation"
-import { ClientID, Authorization } from "@/app/config";
+// import { ClientID, Authorization } from "@/app/config";
 import { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import 'swiper/css';
@@ -11,7 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import LoadingSpinner from "../../components/common/loadingSpinner";
 import StarRating from "../../components/ui/starRating";
 import { useTranslations } from "next-intl";
-import { DeepL_Key } from "@/app/config";
+import { DeepL_Key } from "../../../config";
 import moment from "moment";
 import 'moment/locale/lt';
 
@@ -73,8 +73,8 @@ export default function GamePage({ params }) {
             {
                 method: 'post',
                 headers: {
-                    'Client-ID': ClientID,
-                    'Authorization': Authorization,
+                    'Client-ID': process.env.NEXT_PUBLIC_CLIENT_ID,
+                    'Authorization': process.env.NEXT_PUBLIC_AUTHORIZATION,
                     'Accept': 'application/json',
                 },
                 body: gameDataQuery,
@@ -92,8 +92,8 @@ export default function GamePage({ params }) {
             {
                 method: 'post',
                 headers: {
-                    'Client-ID': ClientID,
-                    'Authorization': Authorization,
+                    'Client-ID': process.env.NEXT_PUBLIC_CLIENT_ID,
+                    'Authorization': process.env.NEXT_PUBLIC_AUTHORIZATION,
                     'Accept': 'application/json',
                 },
                 body: `fields game, image_id; where game=${screenshotId};`
@@ -111,8 +111,8 @@ export default function GamePage({ params }) {
             {
                 method: 'post',
                 headers: {
-                    'Client-ID': ClientID,
-                    'Authorization': Authorization,
+                    'Client-ID': process.env.NEXT_PUBLIC_CLIENT_ID,
+                    'Authorization': process.env.NEXT_PUBLIC_AUTHORIZATION,
                     'Accept': 'application/json',
                 },
                 body: `fields name, slug, rating, cover.image_id, summary, genres.name, genres.slug, first_release_date, platforms.name, platforms.platform_logo;
@@ -127,8 +127,8 @@ export default function GamePage({ params }) {
             {
                 method: 'post',
                 headers: {
-                    'Client-ID': ClientID,
-                    'Authorization': Authorization,
+                    'Client-ID': process.env.NEXT_PUBLIC_CLIENT_ID,
+                    'Authorization': process.env.NEXT_PUBLIC_AUTHORIZATION,
                     'Accept': 'application/json',
                 },
                 body: `fields company, developer, game, porting, publisher, supporting, company.name; where game=${gameId};`
@@ -145,8 +145,8 @@ export default function GamePage({ params }) {
             {
                 method: 'post',
                 headers: {
-                    'Client-ID': ClientID,
-                    'Authorization': Authorization,
+                    'Client-ID': process.env.NEXT_PUBLIC_CLIENT_ID,
+                    'Authorization': process.env.NEXT_PUBLIC_AUTHORIZATION,
                     'Accept': 'application/json',
                 },
                 body: `fields id, versions, abbreviation, name, platform_logo; limit 500;`
@@ -160,8 +160,8 @@ export default function GamePage({ params }) {
             {
                 method: 'post',
                 headers: {
-                    'Client-ID': ClientID,
-                    'Authorization': Authorization,
+                    'Client-ID': process.env.NEXT_PUBLIC_CLIENT_ID,
+                    'Authorization': process.env.NEXT_PUBLIC_AUTHORIZATION,
                     'Accept': 'application/json',
                 },
                 body: `fields id, image_id; limit 500;`
