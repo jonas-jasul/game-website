@@ -4,11 +4,6 @@
 
 @layer base {
     .custom-datepicker {
-        .react-datepicker__week:nth-child(3n + 1) {}
-
-        .react-datepicker__week:nth-child(3n + 2) {}
-
-        .react-datepicker__week:nth-child(3n + 3) {}
 
         .react-datepicker__day--selected {
             @apply bg-primary-focus

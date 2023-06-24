@@ -154,7 +154,7 @@ export default function ShowHideFilterGameBar({ onFilterApply, onMinRatingFilter
                 <label htmlFor="my-drawer" className="drawer-overlay"></label>
                 <ul className="menu p-4 w-84 lg:w-96 h-full bg-base-200 text-base-content">
                     <li className="flex items-center text-lg font-semibold">{t('gameFilterOptTitle')}</li>
-                    <div class="divider"></div>
+                    <div className="divider"></div>
                     <h5 className="font-semibold">{t('gameFilterGameGenre')}</h5>
                     <li className="mb-2">
                         <GameGenreDropdown value={gameGenreValue} items={gameGenreDropdownItems} onChange={setGameGenreValue} />

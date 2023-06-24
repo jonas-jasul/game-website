@@ -62,7 +62,7 @@ export default function Avatar({ user }) {
 
         }
 
-    }, [authUser])
+    }, [authUser, supabase, user?.id])
 
 
     return (

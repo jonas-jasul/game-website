@@ -14,6 +14,7 @@ import { useTranslations } from "next-intl";
 // import { DeepL_Key } from "../../../config";
 import moment from "moment";
 import 'moment/locale/lt';
+import Image from "next/image";
 
 export default function GamePage({ params }) {
     // console.log('locale', params.locale);
@@ -24,10 +25,57 @@ export default function GamePage({ params }) {
     const [artworks, setArtworks] = useState();
     const [isDivDark, setIsDivDark] = useState(false);
     const [gameId, setGameId] = useState();
-    // const [gridColClass, setGridColClass] = useState();
+    const [mappedPlatformsForGame, setMappedPlatformsForGame] = useState([]);
     const t = useTranslations('GamePage');
     const t_g = useTranslations('Genres');
     const gameSlug = params?.game;
+
+
+    const platformImageLookupTable = {
+        "PC (Microsoft Windows)": "https://images.igdb.com/igdb/image/upload/t_logo_med/irwvwpl023f8y19tidgq.png",
+        "PlayStation 5": "https://images.igdb.com/igdb/image/upload/t_logo_med/plcv.png",
+        "Xbox Series X|S": "https://images.igdb.com/igdb/image/upload/t_logo_med/plfl.png",
+        "Nintendo Switch": "https://images.igdb.com/igdb/image/upload/t_logo_med/pl6b.png",
+        "PlayStation 4": "https://images.igdb.com/igdb/image/upload/t_logo_med/pl6e.png",
+        "Xbox One": "https://images.igdb.com/igdb/image/upload/t_logo_med/pl6a.png",
+        "Wii U": "https://upload.wikimedia.org/wikipedia/commons/3/35/Nintendo-Wii-U-Logo.png",
+        "Nintendo 3DS": "https://images.igdb.com/igdb/image/upload/t_logo_med/pl6o.png",
+        "PlayStation Vita": "https://images.igdb.com/igdb/image/upload/t_logo_med/pl6g.png",
+        "Xbox 360": "https://images.igdb.com/igdb/image/upload/t_logo_med/pl6z.png",
+        "PlayStation 3": "https://images.igdb.com/igdb/image/upload/t_logo_med/pl6m.png",
+        "Wii": "https://upload.wikimedia.org/wikipedia/commons/1/1c/Wii_logo.png",
+        "Nintendo DS": "https://images.igdb.com/igdb/image/upload/t_logo_med/pl6r.png",
+        "PlayStation Portable": "https://images.igdb.com/igdb/image/upload/t_logo_med/pl6q.png",
+        "Game Boy Advance": "https://images.igdb.com/igdb/image/upload/t_logo_med/pl73.png",
+        "Android": "https://cdn-icons-png.flaticon.com/512/226/226770.png",
+        "iOS": "https://www.freeiconspng.com/thumbs/ios-png/apple-ios-13.png",
+        "Game Boy": "https://loodibee.com/wp-content/uploads/Nintendo_Game_Boy_Logo.png",
+        "Nintendo Entertainment System": "https://www.vhv.rs/file/max/8/84136_nintendo-entertainment-system-logo-png.png",
+        "Xbox": "https://logos-world.net/wp-content/uploads/2020/11/Xbox-Logo-2001-2005.png",
+        "Nintendo 64": "https://cdn.freebiesupply.com/logos/large/2x/nintendo-64-2-logo-png-transparent.png",
+        "Nintendo GameCube": "https://www.gran-turismo.com/gtsport/decal/7286850598806225936_1.png",
+        "Super Nintendo Entertainment System": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/SNES_logo.svg/2560px-SNES_logo.svg.png",
+        "Super Famicom": "https://upload.wikimedia.org/wikipedia/en/thumb/6/66/Super_Famicom_logo.svg/2560px-Super_Famicom_logo.svg.png",
+        "New Nintendo 3DS": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/New_Nintendo_3DS_logo.svg/2300px-New_Nintendo_3DS_logo.svg.png",
+        "PlayStation": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Playstation_logo_colour.svg/1200px-Playstation_logo_colour.svg.png",
+        "Web browser": "https://upload.wikimedia.org/wikipedia/commons/2/26/Logo_Sitio_Web.png",
+        "Mac": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/MacOS_logo.svg/2048px-MacOS_logo.svg.png",
+        "PlayStation 2": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/PlayStation_2_logo.svg/2560px-PlayStation_2_logo.svg.png",
+        "Linux": "https://pngimg.com/d/linux_PNG1.png",
+        "Satellaview": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Satellaview_logo.svg/2560px-Satellaview_logo.svg.png",
+        "SteamVR": "https://avatars.githubusercontent.com/u/79480697?s=280&v=4",
+        "Oculus Rift": "https://1000logos.net/wp-content/uploads/2021/12/Oculus-Logo-2015.png",
+        "Windows Mixed Reality": "https://cdn2.steamgriddb.com/file/sgdb-cdn/logo_thumb/6e04df31f1bbb1c02666d0dfa3638f76.png",
+        "Dreamcast": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Dreamcast_logo.svg/2560px-Dreamcast_logo.svg.png",
+        "DOS": "https://raw.githubusercontent.com/Microsoft/MS-DOS/master/msdos-logo.png",
+        "Amiga": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Amiga-Logo-1985.svg/2560px-Amiga-Logo-1985.svg.png",
+        "Atari ST/STE": "https://www.atari-computermuseum.de/bilder/logos/atarist.png",
+        "Sega Saturn": "https://loodibee.com/wp-content/uploads/Sega-Saturn-logo.png",
+        "Arcade": "https://www.shareicon.net/data/512x512/2015/10/13/655635_arcade_512x512.png",
+        "Sega Mega Drive/Genesis": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Sega_genesis_logo.svg/2560px-Sega_genesis_logo.svg.png"
+
+
+    };
 
 
     function isDarkPlatfBackground(element) {
@@ -232,7 +280,27 @@ export default function GamePage({ params }) {
         }
     }, [data, otherGameData, gameId]);
 
-
+    useEffect(() => {
+        if (!otherDataIsFetching) {
+            const platformMapper = (platform) => {
+                const _platformNames = platform.split(',');
+                const platformDetails = _platformNames.map((name) => {
+                    const trimmedName = name.trim();
+                    return {
+                        name: trimmedName,
+                        image: platformImageLookupTable[trimmedName] || null
+                    };
+                });
+                return platformDetails
+            }
+            const platformsForGame = otherGameData[0].platforms;
+            const platformNames = platformsForGame.map((platform) => platform.name);
+            const mappedPlatformsForGame = platformNames.flatMap((platform) => platformMapper(platform));
+            setMappedPlatformsForGame(mappedPlatformsForGame);
+            console.log("platform names", platformNames);
+            console.log("mappedPlatforms", mappedPlatformsForGame);
+        }
+    }, [otherGameData])
 
 
     if (isLoading || isFetching || otherDataIsLoading || otherDataIsFetching ||
@@ -241,89 +309,12 @@ export default function GamePage({ params }) {
     }
 
 
-    const platformImageLookupTable = {
-        "PC (Microsoft Windows)": "https://images.igdb.com/igdb/image/upload/t_logo_med/irwvwpl023f8y19tidgq.png",
-        "PlayStation 5": "https://images.igdb.com/igdb/image/upload/t_logo_med/plcv.png",
-        "Xbox Series X|S": "https://images.igdb.com/igdb/image/upload/t_logo_med/plfl.png",
-        "Nintendo Switch": "https://images.igdb.com/igdb/image/upload/t_logo_med/pl6b.png",
-        "PlayStation 4": "https://images.igdb.com/igdb/image/upload/t_logo_med/pl6e.png",
-        "Xbox One": "https://images.igdb.com/igdb/image/upload/t_logo_med/pl6a.png",
-        "Wii U": "https://upload.wikimedia.org/wikipedia/commons/3/35/Nintendo-Wii-U-Logo.png",
-        "Nintendo 3DS": "https://images.igdb.com/igdb/image/upload/t_logo_med/pl6o.png",
-        "PlayStation Vita": "https://images.igdb.com/igdb/image/upload/t_logo_med/pl6g.png",
-        "Xbox 360": "https://images.igdb.com/igdb/image/upload/t_logo_med/pl6z.png",
-        "PlayStation 3": "https://images.igdb.com/igdb/image/upload/t_logo_med/pl6m.png",
-        "Wii": "https://upload.wikimedia.org/wikipedia/commons/1/1c/Wii_logo.png",
-        "Nintendo DS": "https://images.igdb.com/igdb/image/upload/t_logo_med/pl6r.png",
-        "PlayStation Portable": "https://images.igdb.com/igdb/image/upload/t_logo_med/pl6q.png",
-        "Game Boy Advance": "https://images.igdb.com/igdb/image/upload/t_logo_med/pl73.png",
-        "Android": "https://cdn-icons-png.flaticon.com/512/226/226770.png",
-        "iOS": "https://www.freeiconspng.com/thumbs/ios-png/apple-ios-13.png",
-        "Game Boy": "https://loodibee.com/wp-content/uploads/Nintendo_Game_Boy_Logo.png",
-        "Nintendo Entertainment System": "https://www.vhv.rs/file/max/8/84136_nintendo-entertainment-system-logo-png.png",
-        "Xbox": "https://logos-world.net/wp-content/uploads/2020/11/Xbox-Logo-2001-2005.png",
-        "Nintendo 64": "https://cdn.freebiesupply.com/logos/large/2x/nintendo-64-2-logo-png-transparent.png",
-        "Nintendo GameCube": "https://www.gran-turismo.com/gtsport/decal/7286850598806225936_1.png",
-        "Super Nintendo Entertainment System": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/SNES_logo.svg/2560px-SNES_logo.svg.png",
-        "Super Famicom": "https://upload.wikimedia.org/wikipedia/en/thumb/6/66/Super_Famicom_logo.svg/2560px-Super_Famicom_logo.svg.png",
-        "New Nintendo 3DS": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/New_Nintendo_3DS_logo.svg/2300px-New_Nintendo_3DS_logo.svg.png",
-        "PlayStation": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Playstation_logo_colour.svg/1200px-Playstation_logo_colour.svg.png",
-        "Web browser": "https://upload.wikimedia.org/wikipedia/commons/2/26/Logo_Sitio_Web.png",
-        "Mac": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/MacOS_logo.svg/2048px-MacOS_logo.svg.png",
-        "PlayStation 2": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/PlayStation_2_logo.svg/2560px-PlayStation_2_logo.svg.png",
-        "Linux": "https://pngimg.com/d/linux_PNG1.png",
-        "Satellaview": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Satellaview_logo.svg/2560px-Satellaview_logo.svg.png",
-        "SteamVR": "https://avatars.githubusercontent.com/u/79480697?s=280&v=4",
-        "Oculus Rift": "https://1000logos.net/wp-content/uploads/2021/12/Oculus-Logo-2015.png",
-        "Windows Mixed Reality": "https://cdn2.steamgriddb.com/file/sgdb-cdn/logo_thumb/6e04df31f1bbb1c02666d0dfa3638f76.png",
-        "Dreamcast": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Dreamcast_logo.svg/2560px-Dreamcast_logo.svg.png",
-        "DOS": "https://raw.githubusercontent.com/Microsoft/MS-DOS/master/msdos-logo.png",
-        "Amiga": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Amiga-Logo-1985.svg/2560px-Amiga-Logo-1985.svg.png",
-        "Atari ST/STE": "https://www.atari-computermuseum.de/bilder/logos/atarist.png",
-        "Sega Saturn": "https://loodibee.com/wp-content/uploads/Sega-Saturn-logo.png",
-        "Arcade": "https://www.shareicon.net/data/512x512/2015/10/13/655635_arcade_512x512.png",
-        "Sega Mega Drive/Genesis": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Sega_genesis_logo.svg/2560px-Sega_genesis_logo.svg.png"
-
-
-    };
-
-    const platformMapper = (platform) => {
-        const _platformNames = platform.split(',');
-        const platformDetails = _platformNames.map((name) => {
-            const trimmedName = name.trim();
-            return {
-                name: trimmedName,
-                image: platformImageLookupTable[trimmedName] || null
-            };
-        });
-        return platformDetails
-    }
-    const platformsForGame = otherGameData[0].platforms;
-    const platformNames = platformsForGame.map((platform) => platform.name);
-    const mappedPlatformsForGame = platformNames.flatMap((platform) => platformMapper(platform));
-    console.log("platform names", platformNames);
-    console.log("mappedPlatforms", mappedPlatformsForGame);
-
 
     const currGamePlatforms = otherGameData[0].platforms;
     console.log("specific game platforms", currGamePlatforms);
     const mappedPlatforms = currGamePlatforms.map((platform) => platform.name);
     const filteredPlatforms = platformLogoData.filter((platform) => mappedPlatforms.includes(platform.name));
     console.log("effect filtered logos", filteredPlatforms)
-
-    function getNumOfColsForPlatfGrid() {
-        const totalItems = mappedPlatformsForGame.length;
-        let cols;
-        if (totalItems < 3) {
-            cols = totalItems
-        } else {
-            cols = 3;
-        }
-        const gridClass = `grid lg:grid-cols-${cols}`;
-        console.log("grid class", gridClass);
-
-        return gridClass;
-    }
 
 
 
@@ -400,13 +391,15 @@ export default function GamePage({ params }) {
         <>
             <div className="game-container relative">
                 <div className="game-screenshot-cont w-full left-0 h-80 flex justify-center items-center relative">
-                    <img className="h-full w-full object-cover absolute" src={artworks}></img>
+                    <Image className="object-cover absolute" alt="Artwork" fill src={artworks}></Image>
                 </div>
 
                 <div className="game-cover bottom-0 top-0 left-0 right-0 mx-auto absolute lg:absolute lg:bottom-0 lg:top-20 lg:left-32 lg:right-32">
                     <div className="flex flex-row lg:h-64">
                         <div className="game-cover-img mt-5 ml-4 mr-2 lg:ml-0 lg:mr-0 z-20">
-                            <img className="w-48 h-64 lg:w-64 lg:h-auto" src={coverUrl}></img>
+                            <div className="w-48 h-64 lg:w-60 lg:h-80 relative">
+                                <Image alt="Cover" fill src={coverUrl}></Image>
+                            </div>
                             <div className="game-rating-cont bg-base-100 border border-primary p-2 rounded-md lg:flex lg:flex-col justify-center items-center w-full lg:w-60 hidden">
                                 <h3 className="text-lg game-font" >{t('gamePageRatingTitle')}</h3>
                                 <StarRating starSize={40} rating={gameRating} />
@@ -415,7 +408,7 @@ export default function GamePage({ params }) {
 
                         </div>
                         <div className="game-name-cont w-40 lg:w-screen lg:h-32 mx-auto flex flex-col justify-center items-center">
-                            <h1 className="gameName z-50 text-slate-50 text-3xl lg:text-5xl text-center game-font" >{gameName}</h1>
+                            <h1 className="gameName z-50 text-slate-50 text-3xl lg:text-5xl text-center game-font mt-3" >{gameName}</h1>
                             <div className="genre-pill-div flex flex-col lg:flex-row justify-center items-center max-w-full z-50">
                                 {translatedGenres?.map((genre, index) => (
                                     <span key={index} className="badge badge-accent overflow-hidden text-center text-ellipsis max-w-[10em] h-auto lg:max-w-full mx-1 my-1 badge-lg font-bold z-50">{genre}</span>
@@ -430,12 +423,12 @@ export default function GamePage({ params }) {
                     <div className="game-info-cont hidden lg:flex lg:flex-col lg:ml-64 lg:mt-3 z-40 lg:w-1/2 lg:mr-1 bg-base-200 rounded-2xl ">
                         <div className="upper-game-info border border-base-300 rounded-2xl z-40 mb-2 p-3 lg:w-full bg-accent">
                             <div className="game-release-date hidden lg:flex z-40">
-                                <h4>{t('gamePageReleasedOn')} &nbsp;</h4>
+                                <h4 className="text-accent-content">{t('gamePageReleasedOn')} &nbsp;</h4>
                                 <h2 className="text-xl text-accent-content font-semibold">{gameReleaseDate}</h2>
-                                <h3>&nbsp;({relativeReleaseDate})</h3>
+                                <h3 className="text-accent-content">&nbsp;({relativeReleaseDate})</h3>
                             </div>
                             <div className="game-dev hidden lg:flex">
-                                <h4 className="">{t('gamePageDevelopedBy')}&nbsp;</h4>
+                                <h4 className="text-accent-content">{t('gamePageDevelopedBy')}&nbsp;</h4>
                                 <h2 className="text-xl text-accent-content font-semibold">{gameDevName}</h2>
                             </div>
                         </div>
@@ -454,14 +447,14 @@ export default function GamePage({ params }) {
 
                     </div>
                     <div className="mx-auto z-40 hidden lg:flex lg:flex-col">
-                        <div className="platform-div mx-auto border border-primary rounded-lg p-2 mt-3 bg-base-200">
+                        <div className="platform-div mx-auto border border-primary rounded-lg p-2 mt-3 bg-base-100">
                             <h4 className="text-center text-xl flex justify-center items-center mb-0 font-semibold text-base-content">{t('gamePagePlatformsH')}</h4>
                             <div className="divider mt-1"></div>
 
-                            <div className={`game-platforms grid ${getNumOfColsForPlatfGrid()} z-40 justify-center gap-2 items-center `} >
+                            <div className={`game-platforms z-40 justify-center grid ${mappedPlatformsForGame.length >= 3 ? 'grid-cols-3' : mappedPlatformsForGame.length === 2 ? 'grid-cols-2' : 'grid-cols-1'} gap-2 items-center`} >
                                 {mappedPlatformsForGame.map((platform, index) => (
-                                    <div className="platform z-40 w-20" key={index}>
-                                        <img className="object-contain" src={platform.image} />
+                                    <div className="platform z-40 w-20 relative h-28 mx-auto" key={index}>
+                                        <Image alt="Platform" className="object-contain " fill src={platform.image} />
                                     </div>
                                 )
                                 )}
@@ -510,10 +503,10 @@ export default function GamePage({ params }) {
                             <div className="divider divider-horizontal"></div>
 
                         </div>
-                        <div className={`game-platforms lg:hidden grid grid-cols-2 z-40 justify-center items-center mx-auto`} >
+                        <div className={`game-platforms lg:hidden grid grid-cols-2 z-40 gap-2 justify-center items-center mx-auto`} >
                             {mappedPlatformsForGame.map((platform, index) => (
-                                <div className="platform z-40 w-16 m-1">
-                                    <img className="object-contain" key={index} src={platform.image} />
+                                <div key={index} className="platform z-40 w-16 m-1 h-16 relative">
+                                    <Image alt="Platform" style={{ objectFit: 'contain' }} fill key={index} src={platform.image} />
                                 </div>
                             )
                             )}

@@ -15,7 +15,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 import { RxArrowLeft, RxArrowRight } from "react-icons/rx";
 import { dropEllipsisThenNav, dropEllipsis } from "react-responsive-pagination/narrowBehaviour";
-
+import Image from "next/image";
 export default function GameInfo({ searchParams, searchTerm, minRatingsFilterValue, sortGameVal }) {
   const t = useTranslations('GameInfo');
   const [pageCount, setPageCount] = useState(0);
@@ -33,7 +33,7 @@ export default function GameInfo({ searchParams, searchTerm, minRatingsFilterVal
       router.push(`${pathname}?page=1`, undefined, { shallow: true });
 
     }
-  }, [searchParams.page, searchParams.genre]);
+  }, [searchParams.page, searchParams.genre, pathname, router]);
 
 
   const handlePageClick = (data) => {
@@ -83,10 +83,10 @@ export default function GameInfo({ searchParams, searchTerm, minRatingsFilterVal
     'pack': 13,
     'update': 14,
   };
-  
-  
 
-  const categoryMapper = (category) =>categoryLookupTable[category]; 
+
+
+  const categoryMapper = (category) => categoryLookupTable[category];
   const fetchTotalGameCount = async () => {
 
     const genreArr = await fetchGameGenres();
@@ -99,7 +99,7 @@ export default function GameInfo({ searchParams, searchTerm, minRatingsFilterVal
       countQuery += ` & genres = ${genreQuery.id}`;
     }
 
-    if(searchParams.category) {
+    if (searchParams.category) {
       countQuery += ` & category = ${categoryMapper(searchParams.category)}`
     }
 
@@ -239,7 +239,9 @@ export default function GameInfo({ searchParams, searchTerm, minRatingsFilterVal
     <div className="p-5 flex flex-wrap justify-center items-center">
       {gameQuery.map((game) => (
         <div className="card lg:card-side bg-base-100 shadow-xl border border-primary p-0" key={game.id}>
-          <figure className="h-60"><img className="h-full w-full object-cover" src={game.coverUrl} alt="cover" /></figure>
+          <figure className="relative w-60 h-72 lg:h-60 lg:w-44">
+            <Image fill src={game.coverUrl} style={{ objectFit: 'cover' }} alt="cover" />
+          </figure>
           <div className="card-body w-60">
             <h2 className="card-title text-xl">{game.name}</h2>
             <p><StarRating starSize={20} rating={game.rating} /></p>

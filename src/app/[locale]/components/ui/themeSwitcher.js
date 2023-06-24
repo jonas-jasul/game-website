@@ -16,6 +16,7 @@ const ThemeSwitcher = () => {
         { value: 'wireframe', label: t('wireframeTheme') },
         { value: 'business', label: t('businessTheme') },
         { value: 'pastel', label: t('pastelTheme') },
+        { value: 'dark', label: t('nightTheme') },
     ];
 
     const handleThemeChange = (selected) => {
@@ -77,7 +78,7 @@ const ThemeSwitcher = () => {
                 options={themeOptions}
                 placeholder={t('chooseTheme')}
                 theme={customTheme}
-                noOptionsMessage={()=>t('noOptionsMessage')}
+                noOptionsMessage={() => t('noOptionsMessage')}
             />
         </div>
     )
