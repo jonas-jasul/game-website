@@ -39,14 +39,14 @@ const ThemeSwitcher = () => {
             let backgroundColor = colors[`[data-theme=${theme}]`]["base-100"];
 
             if (state.isFocused) {
-                backgroundColor = colors[`[data-theme=${theme}]`].primary;
+                backgroundColor = colors[`[data-theme=${theme}]`]["primary"];
             }
             if (state.isSelected) {
-                backgroundColor = colors[`[data-theme=${theme}]`].accent;
+                backgroundColor = colors[`[data-theme=${theme}]`]["accent"];
 
             }
             if (state.isClicked) {
-                backgroundColor = colors[`[data-theme=${theme}]`].accent;
+                backgroundColor = colors[`[data-theme=${theme}]`]["accent"];
             }
 
             return {
@@ -62,10 +62,10 @@ const ThemeSwitcher = () => {
         ..._theme,
         colors: {
             ..._theme.colors,
-            primary: colors[`[data-theme=${theme}]`].primary,
-            primary25: colors[`[data-theme=${theme}]`].accent,
-            primary50: colors[`[data-theme=${theme}]`].accent,
-            primary75: colors[`[data-theme=${theme}]`].accent,
+            primary: colors[`[data-theme=${theme}]`]["primary"],
+            primary25: colors[`[data-theme=${theme}]`]["accent"],
+            primary50: colors[`[data-theme=${theme}]`]["accent"],
+            primary75: colors[`[data-theme=${theme}]`]["accent"],
         }
     })
     return (
