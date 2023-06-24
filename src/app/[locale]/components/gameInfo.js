@@ -46,7 +46,7 @@ export default function GameInfo({ searchParams, searchTerm, minRatingsFilterVal
   }
 
   async function fetchGameGenres() {
-    const genreResponse = await fetch('http://localhost:8080/https://api.igdb.com/v4/genres', {
+    const genreResponse = await fetch(process.env.NEXT_PUBLIC_GAMES_GENRES_FETCH, {
       method: 'post',
       headers: {
         'Client-ID': ClientID,
@@ -109,7 +109,7 @@ export default function GameInfo({ searchParams, searchTerm, minRatingsFilterVal
 
     countQuery += ';';
 
-    const countResponse = await fetch('http://localhost:8080/https://api.igdb.com/v4/games/count', {
+    const countResponse = await fetch(process.env.NEXT_PUBLIC_GAMES_COUNT_FETCH, {
       method: 'post',
       headers: {
         'Client-ID': ClientID,
@@ -168,8 +168,7 @@ export default function GameInfo({ searchParams, searchTerm, minRatingsFilterVal
     gameDataQuery += `; limit ${pageSize}; offset ${offset};`;
     console.log("offset", offset)
     console.log(gameDataQuery);
-    const gamesResponse = await fetch(
-      'http://localhost:8080/https://api.igdb.com/v4/games',
+    const gamesResponse = await fetch(process.env.NEXT_PUBLIC_GAMES_FETCH,
       {
         method: 'post',
         headers: {
@@ -186,8 +185,7 @@ export default function GameInfo({ searchParams, searchTerm, minRatingsFilterVal
     const imageIds = dataGame.map((game) => game.id);
     console.log(imageIds);
 
-    const coversResponse = await fetch(
-      'http://localhost:8080/https://api.igdb.com/v4/covers',
+    const coversResponse = await fetch(process.env.NEXT_PUBLIC_GAMES_COVERS_FETCH,
       {
         method: 'post',
         headers: {

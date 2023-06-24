@@ -24,6 +24,7 @@ export default function GamePage({ params }) {
     const [artworks, setArtworks] = useState();
     const [isDivDark, setIsDivDark] = useState(false);
     const [gameId, setGameId] = useState();
+    // const [gridColClass, setGridColClass] = useState();
     const t = useTranslations('GamePage');
     const t_g = useTranslations('Genres');
     const gameSlug = params?.game;
@@ -45,7 +46,7 @@ export default function GamePage({ params }) {
     }
 
     useEffect(() => {
-        const checkPlatformDiv = ()=> {
+        const checkPlatformDiv = () => {
             const platformDiv = document.querySelector('.platform-div');
 
             if (platformDiv) {
@@ -58,16 +59,17 @@ export default function GamePage({ params }) {
                 requestAnimationFrame(checkPlatformDiv)
             }
         }
-        
+
         requestAnimationFrame(checkPlatformDiv);
     }, []);
-    
+
+
 
     const fetchGame = async () => {
         const gameDataQuery = `fields id, name, rating, cover, genres, slug, summary, artworks, platforms, release_dates, screenshots;
          where slug = "${gameSlug}";`;
         const gamesResponse = await fetch(
-            'http://localhost:8080/https://api.igdb.com/v4/games',
+            process.env.NEXT_PUBLIC_GAMES_FETCH,
             {
                 method: 'post',
                 headers: {
@@ -86,7 +88,7 @@ export default function GamePage({ params }) {
         console.log("dataGame", dataGame);
         console.log("screenshot ids", screenshotId);
         const screenshotQuery = await fetch(
-            'http://localhost:8080/https://api.igdb.com/v4/screenshots',
+            process.env.NEXT_PUBLIC_GAME_SCREENSHOT_FETCH,
             {
                 method: 'post',
                 headers: {
@@ -105,7 +107,7 @@ export default function GamePage({ params }) {
 
     const fetchOtherGameData = async () => {
         const otherDataQuery = await fetch(
-            'http://localhost:8080/https://api.igdb.com/v4/games',
+            process.env.NEXT_PUBLIC_GAMES_FETCH,
             {
                 method: 'post',
                 headers: {
@@ -121,7 +123,7 @@ export default function GamePage({ params }) {
         return otherData;
     }
     const fetchGameCompanies = async () => {
-        const companiesQuery = await fetch('http://localhost:8080/https://api.igdb.com/v4/involved_companies',
+        const companiesQuery = await fetch(process.env.NEXT_PUBLIC_GAME_INVOLVED_COMPANIES_FETCH,
             {
                 method: 'post',
                 headers: {
@@ -138,7 +140,7 @@ export default function GamePage({ params }) {
 
     const fetchGamePlatformLogos = async () => {
 
-        const platformQuery = await fetch('http://localhost:8080/https://api.igdb.com/v4/platforms',
+        const platformQuery = await fetch(process.env.NEXT_PUBLIC_GAME_PLATFORMS_FETCH,
 
             {
                 method: 'post',
@@ -154,7 +156,7 @@ export default function GamePage({ params }) {
         console.log("platform DATA", platformData);
 
 
-        const platformLogosQuery = await fetch('http://localhost:8080/https://api.igdb.com/v4/platform_logos',
+        const platformLogosQuery = await fetch(process.env.NEXT_PUBLIC_GAME_PLATFORMS_LOGO_FETCH,
             {
                 method: 'post',
                 headers: {
@@ -269,7 +271,7 @@ export default function GamePage({ params }) {
         "Web browser": "https://upload.wikimedia.org/wikipedia/commons/2/26/Logo_Sitio_Web.png",
         "Mac": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/MacOS_logo.svg/2048px-MacOS_logo.svg.png",
         "PlayStation 2": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/PlayStation_2_logo.svg/2560px-PlayStation_2_logo.svg.png",
-        "Linux": "https://assets.stickpng.com/images/58480e82cef1014c0b5e4927.png",
+        "Linux": "https://pngimg.com/d/linux_PNG1.png",
         "Satellaview": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Satellaview_logo.svg/2560px-Satellaview_logo.svg.png",
         "SteamVR": "https://avatars.githubusercontent.com/u/79480697?s=280&v=4",
         "Oculus Rift": "https://1000logos.net/wp-content/uploads/2021/12/Oculus-Logo-2015.png",
@@ -280,6 +282,7 @@ export default function GamePage({ params }) {
         "Atari ST/STE": "https://www.atari-computermuseum.de/bilder/logos/atarist.png",
         "Sega Saturn": "https://loodibee.com/wp-content/uploads/Sega-Saturn-logo.png",
         "Arcade": "https://www.shareicon.net/data/512x512/2015/10/13/655635_arcade_512x512.png",
+        "Sega Mega Drive/Genesis": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Sega_genesis_logo.svg/2560px-Sega_genesis_logo.svg.png"
 
 
     };
@@ -308,22 +311,19 @@ export default function GamePage({ params }) {
     const filteredPlatforms = platformLogoData.filter((platform) => mappedPlatforms.includes(platform.name));
     console.log("effect filtered logos", filteredPlatforms)
 
-    function getNumOfColsForPlatfGrid(mappedPlatformsForGame) {
+    function getNumOfColsForPlatfGrid() {
         const totalItems = mappedPlatformsForGame.length;
         let cols;
-        if (totalItems <= 3) {
+        if (totalItems < 3) {
             cols = totalItems
         } else {
             cols = 3;
         }
-        return "lg:grid-cols-" + cols;
+        const gridClass = `grid lg:grid-cols-${cols}`;
+        console.log("grid class", gridClass);
+
+        return gridClass;
     }
-
-    const gridClass = `lg:grid ${getNumOfColsForPlatfGrid(mappedPlatformsForGame)}`;
-
-
-
-
 
 
 
@@ -363,7 +363,8 @@ export default function GamePage({ params }) {
 
 
     const translateDescription = async (description) => {
-        const apiUrl = `http://localhost:8080/https://api-free.deepl.com/v2/translate?auth_key=${DeepL_Key}&text=${encodeURIComponent(description)}&target_lang=lt`;
+        const apiUrl = process.env.NEXT_PUBLIC_DEEPL_API_URL.toString() + `?auth_key=${DeepL_Key}&text=${encodeURIComponent(description)}&target_lang=lt`
+        console.log("apie url", apiUrl)
         const response = await fetch(apiUrl);
         const data = await response.json();
         return data;
@@ -426,14 +427,14 @@ export default function GamePage({ params }) {
                     </div>
                 </div>
                 <div className="hidden lg:flex lg:flex-row bg-base-200 mx-32 rounded-xl pb-3">
-                    <div className="game-info-cont hidden lg:flex lg:flex-col lg:ml-64 lg:mt-3 z-40 lg:w-1/2 lg:mr-10 bg-base-200 rounded-2xl ">
+                    <div className="game-info-cont hidden lg:flex lg:flex-col lg:ml-64 lg:mt-3 z-40 lg:w-1/2 lg:mr-1 bg-base-200 rounded-2xl ">
                         <div className="upper-game-info border border-base-300 rounded-2xl z-40 mb-2 p-3 lg:w-full bg-accent">
                             <div className="game-release-date hidden lg:flex z-40">
                                 <h4>{t('gamePageReleasedOn')} &nbsp;</h4>
                                 <h2 className="text-xl text-accent-content font-semibold">{gameReleaseDate}</h2>
                                 <h3>&nbsp;({relativeReleaseDate})</h3>
                             </div>
-                            <div className="game-dev hidden lg:flex ">
+                            <div className="game-dev hidden lg:flex">
                                 <h4 className="">{t('gamePageDevelopedBy')}&nbsp;</h4>
                                 <h2 className="text-xl text-accent-content font-semibold">{gameDevName}</h2>
                             </div>
@@ -452,14 +453,15 @@ export default function GamePage({ params }) {
                         </div>
 
                     </div>
-                    <div className="flex flex-col mx-auto z-40">
+                    <div className="mx-auto z-40 hidden lg:flex lg:flex-col">
                         <div className="platform-div mx-auto border border-primary rounded-lg p-2 mt-3 bg-base-200">
                             <h4 className="text-center text-xl flex justify-center items-center mb-0 font-semibold text-base-content">{t('gamePagePlatformsH')}</h4>
                             <div className="divider mt-1"></div>
-                            <div className={`game-platforms hidden ${gridClass} z-40 justify-center gap-2 items-center mx-auto`} >
+
+                            <div className={`game-platforms grid ${getNumOfColsForPlatfGrid()} z-40 justify-center gap-2 items-center `} >
                                 {mappedPlatformsForGame.map((platform, index) => (
-                                    <div className="platform z-40 w-24 m-1">
-                                        <img className="object-contain" key={index} src={platform.image} />
+                                    <div className="platform z-40 w-20" key={index}>
+                                        <img className="object-contain" src={platform.image} />
                                     </div>
                                 )
                                 )}
