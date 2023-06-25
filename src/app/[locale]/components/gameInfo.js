@@ -46,6 +46,10 @@ export default function GameInfo({ searchParams, searchTerm, minRatingsFilterVal
     // setPageNumber(data);
   }
 
+  function normalizeGenreNames(genre) {
+    return genre.replace(/[^\w\s\/&'()\-\+]/g, "").replace(/\+/g, " ").toLowerCase();
+  }
+
   async function fetchGameGenres() {
 
     const genreResponse = await fetch('/api/catalogue/gameGenres', {
@@ -60,6 +64,7 @@ export default function GameInfo({ searchParams, searchTerm, minRatingsFilterVal
       id: game.id,
       name: game.name.toLowerCase(),
     }));
+    console.log("genre arr", genreArr);
 
     return genreArr;
   }
@@ -91,9 +96,10 @@ export default function GameInfo({ searchParams, searchTerm, minRatingsFilterVal
     let countQuery = `where total_rating_count>=${minRating}`;
 
     if (searchParams.genre) {
-      const genreQuery = genreArr.find((genre) => genre.name === searchParams.genre);
+      console.log("normalized genre name", normalizeGenreNames(searchParams.genre));
+      const genreQuery = genreArr.find((genre) => genre.name === normalizeGenreNames(searchParams.genre));
 
-      countQuery += ` & genres = ${genreQuery.id}`;
+      countQuery += ` & genres = (${genreQuery.id})`;
     }
 
     if (searchParams.category) {
@@ -117,10 +123,14 @@ export default function GameInfo({ searchParams, searchTerm, minRatingsFilterVal
     setPageCount(totalPages);
   };
 
-  useEffect(() => {
-    fetchTotalGameCount();
-  }, [searchParams.search, searchParams.genre, searchParams.category, searchParams.page, searchParams.min_ratings]);
+  // useEffect(() => {
+  //   fetchTotalGameCount();
+  // }, [searchParams.search, searchParams.genre, searchParams.category, searchParams.page, searchParams.min_ratings]);
 
+  const {data: countQueryData, isLoading: countQueryDataIsLoading, isFetching: countQueryDataIsFetching} = useQuery({
+    queryKey:["count-query", searchParams.search, searchParams.genre, searchParams.category, searchParams.page, searchParams.min_ratings],
+    queryFn: fetchTotalGameCount
+  })
 
   async function fetchGameData() {
     const genreArr = await fetchGameGenres();
@@ -139,9 +149,9 @@ export default function GameInfo({ searchParams, searchTerm, minRatingsFilterVal
     }
 
     if (searchParams.genre) {
-      const genreQuery = genreArr.find((genre) => genre.name === searchParams.genre);
+      const genreQuery = genreArr.find((genre) => genre.name === normalizeGenreNames(searchParams.genre));
       console.log("genre query", genreQuery);
-      gameDataQuery += ` & genres = ${genreQuery.id}`;
+      gameDataQuery += ` & genres = (${genreQuery.id})`;
     }
 
     if (searchParams.category) {
