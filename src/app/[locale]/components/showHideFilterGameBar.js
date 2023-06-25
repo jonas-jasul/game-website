@@ -48,14 +48,8 @@ export default function ShowHideFilterGameBar({ onFilterApply, onMinRatingFilter
     }
 
     const fetchAllGameGenres = async () => {
-        const genreResponse = await fetch('http://localhost:8080/https://api.igdb.com/v4/genres', {
+        const genreResponse = await fetch('/api/catalogue/gameGenres', {
             method: 'post',
-            headers: {
-                'Client-ID': process.env.NEXT_PUBLIC_CLIENT_ID,
-                'Authorization': process.env.NEXT_PUBLIC_AUTHORIZATION,
-                'Accept': "application/json",
-            },
-            body: 'fields name,slug; limit 100;'
         }
         );
 
@@ -145,12 +139,12 @@ export default function ShowHideFilterGameBar({ onFilterApply, onMinRatingFilter
     }
 
     return (
-        <div className="drawer" style={{ zIndex: 2 }}>
+        <div className="drawer">
             <input id="my-drawer" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content flex mt-3">
                 <label htmlFor="my-drawer" className="btn btn-secondary drawer-button">{t('filterBtn')} <RxDropdownMenu size='1.4rem' className="m-1" /> </label>
             </div>
-            <div className="drawer-side">
+            <div className="drawer-side z-50">
                 <label htmlFor="my-drawer" className="drawer-overlay"></label>
                 <ul className="menu p-4 w-84 lg:w-96 h-full bg-base-200 text-base-content">
                     <li className="flex items-center text-lg font-semibold">{t('gameFilterOptTitle')}</li>
@@ -165,13 +159,13 @@ export default function ShowHideFilterGameBar({ onFilterApply, onMinRatingFilter
                     </li>
 
                     <li className="mb-2">
-                        Select category:
+                        {t('gameFilterCategoryTitle')}
                         <GameCategoryDropdown items={gameCategDropdownItems} value={gameCategoryValue} onChange={setGameCategoryValue} />
                     </li>
 
                     <div className="flex justify-end">
                         <li>
-                            <button onClick={clearFilters} className="btn bg-error flex flex-col justify-center items-center hover:bg-error">
+                            <button onClick={clearFilters} className="btn bg-error text-error-content flex flex-col justify-center items-center hover:text-success-content hover:bg-error">
                                 <div className="flex items-center">
                                     {t('gameFilterClear')}
                                     <RxCrossCircled size={'1.4em'} />
@@ -181,7 +175,7 @@ export default function ShowHideFilterGameBar({ onFilterApply, onMinRatingFilter
                         </li>
 
                         <li>
-                            <button onClick={submitFilters} className="btn bg-success flex flex-col items-center justify-center hover:bg-success">
+                            <button onClick={submitFilters} className="btn bg-success text-success-content flex flex-col items-center justify-center hover:text-success-content hover:bg-success">
                                 <div className="flex items-center">
                                     {t('gameFilterApply')}
                                     <RxCheckCircled size={'1.4em'} />

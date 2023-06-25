@@ -16,6 +16,7 @@ import Link from "next/link";
 import { RxArrowLeft, RxArrowRight } from "react-icons/rx";
 import { dropEllipsisThenNav, dropEllipsis } from "react-responsive-pagination/narrowBehaviour";
 import Image from "next/image";
+
 export default function GameInfo({ searchParams, searchTerm, minRatingsFilterValue, sortGameVal }) {
   const t = useTranslations('GameInfo');
   const [pageCount, setPageCount] = useState(0);
@@ -46,14 +47,11 @@ export default function GameInfo({ searchParams, searchTerm, minRatingsFilterVal
   }
 
   async function fetchGameGenres() {
-    const genreResponse = await fetch(process.env.NEXT_PUBLIC_GAMES_GENRES_FETCH, {
-      method: 'post',
-      headers: {
-        'Client-ID': process.env.NEXT_PUBLIC_CLIENT_ID,
-        'Authorization': process.env.NEXT_PUBLIC_AUTHORIZATION,
-        'Accept': "application/json",
-      },
-      body: 'fields name; limit 50;'
+
+    const genreResponse = await fetch('/api/catalogue/gameGenres', {
+      method: 'POST',
+
+      // body: JSON.stringify({quer, querTWO})
     });
 
     const dataGenres = await genreResponse.json();
@@ -85,7 +83,6 @@ export default function GameInfo({ searchParams, searchTerm, minRatingsFilterVal
   };
 
 
-
   const categoryMapper = (category) => categoryLookupTable[category];
   const fetchTotalGameCount = async () => {
 
@@ -109,14 +106,9 @@ export default function GameInfo({ searchParams, searchTerm, minRatingsFilterVal
 
     countQuery += ';';
 
-    const countResponse = await fetch(process.env.NEXT_PUBLIC_GAMES_COUNT_FETCH, {
+    const countResponse = await fetch('/api/catalogue/gameCount', {
       method: 'post',
-      headers: {
-        'Client-ID': process.env.NEXT_PUBLIC_CLIENT_ID,
-        'Authorization': process.env.NEXT_PUBLIC_AUTHORIZATION,
-        'Accept': 'application/json',
-      },
-      body: countQuery,
+      body: JSON.stringify({ countQuery }),
     }
     );
     const { count } = await countResponse.json();
@@ -168,15 +160,10 @@ export default function GameInfo({ searchParams, searchTerm, minRatingsFilterVal
     gameDataQuery += `; limit ${pageSize}; offset ${offset};`;
     console.log("offset", offset)
     console.log(gameDataQuery);
-    const gamesResponse = await fetch(process.env.NEXT_PUBLIC_GAMES_FETCH,
+    const gamesResponse = await fetch('/api/catalogue/games',
       {
         method: 'post',
-        headers: {
-          'Client-ID': process.env.NEXT_PUBLIC_CLIENT_ID,
-          'Authorization': process.env.NEXT_PUBLIC_AUTHORIZATION,
-          'Accept': 'application/json',
-        },
-        body: gameDataQuery,
+        body: JSON.stringify({ gameDataQuery }),
       }
     );
 
@@ -185,17 +172,11 @@ export default function GameInfo({ searchParams, searchTerm, minRatingsFilterVal
     const imageIds = dataGame.map((game) => game.id);
     console.log(imageIds);
 
-    const coversResponse = await fetch(process.env.NEXT_PUBLIC_GAMES_COVERS_FETCH,
+    const imageIDsJoined = imageIds.join(',');
+    const coversResponse = await fetch('/api/catalogue/gameCovers',
       {
         method: 'post',
-        headers: {
-          'Client-ID': process.env.NEXT_PUBLIC_CLIENT_ID,
-          'Authorization': process.env.NEXT_PUBLIC_AUTHORIZATION,
-          'Accept': 'application/json',
-        },
-        body: `fields game, image_id; where game = (${imageIds.join(
-          ','
-        )}); limit ${pageSize};`,
+        body: JSON.stringify({imageIDsJoined, pageSize}),
       }
     );
 

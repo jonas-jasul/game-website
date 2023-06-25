@@ -94,6 +94,8 @@ export default function GamePage({ params }) {
     }
 
     useEffect(() => {
+        let counter = 0;
+        const maxChecks = 100;
         const checkPlatformDiv = () => {
             const platformDiv = document.querySelector('.platform-div');
 
@@ -104,7 +106,11 @@ export default function GamePage({ params }) {
                 setIsDivDark(isDark);
             } else {
                 console.log('platform div (dark) not found');
-                requestAnimationFrame(checkPlatformDiv)
+                counter++;
+                if (counter < maxChecks) {
+                    requestAnimationFrame(checkPlatformDiv)
+                }
+
             }
         }
 
@@ -116,16 +122,10 @@ export default function GamePage({ params }) {
     const fetchGame = async () => {
         const gameDataQuery = `fields id, name, rating, cover, genres, slug, summary, artworks, platforms, release_dates, screenshots;
          where slug = "${gameSlug}";`;
-        const gamesResponse = await fetch(
-            process.env.NEXT_PUBLIC_GAMES_FETCH,
+        const gamesResponse = await fetch('/api/game_slug/games',
             {
                 method: 'post',
-                headers: {
-                    'Client-ID': process.env.NEXT_PUBLIC_CLIENT_ID,
-                    'Authorization': process.env.NEXT_PUBLIC_AUTHORIZATION,
-                    'Accept': 'application/json',
-                },
-                body: gameDataQuery,
+                body: JSON.stringify({ gameDataQuery }),
             }
         );
 
@@ -135,16 +135,12 @@ export default function GamePage({ params }) {
         setGameId(screenshotId);
         console.log("dataGame", dataGame);
         console.log("screenshot ids", screenshotId);
+
         const screenshotQuery = await fetch(
-            process.env.NEXT_PUBLIC_GAME_SCREENSHOT_FETCH,
+            '/api/game_slug/screenshots',
             {
                 method: 'post',
-                headers: {
-                    'Client-ID': process.env.NEXT_PUBLIC_CLIENT_ID,
-                    'Authorization': process.env.NEXT_PUBLIC_AUTHORIZATION,
-                    'Accept': 'application/json',
-                },
-                body: `fields game, image_id; where game=${screenshotId};`
+                body: JSON.stringify({ screenshotId }),
             }
         );
 
@@ -154,81 +150,25 @@ export default function GamePage({ params }) {
     }
 
     const fetchOtherGameData = async () => {
-        const otherDataQuery = await fetch(
-            process.env.NEXT_PUBLIC_GAMES_FETCH,
+        const otherDataQuery = await fetch('/api/game_slug/other_game_data',
             {
                 method: 'post',
-                headers: {
-                    'Client-ID': process.env.NEXT_PUBLIC_CLIENT_ID,
-                    'Authorization': process.env.NEXT_PUBLIC_AUTHORIZATION,
-                    'Accept': 'application/json',
-                },
-                body: `fields name, slug, rating, cover.image_id, summary, genres.name, genres.slug, first_release_date, platforms.name, platforms.platform_logo;
-                 where slug="${gameSlug}";`
+                body: JSON.stringify({ gameSlug })
             }
         );
         const otherData = await otherDataQuery.json();
         return otherData;
     }
+
     const fetchGameCompanies = async () => {
-        const companiesQuery = await fetch(process.env.NEXT_PUBLIC_GAME_INVOLVED_COMPANIES_FETCH,
+        const companiesQuery = await fetch('/api/game_slug/companies',
             {
                 method: 'post',
-                headers: {
-                    'Client-ID': process.env.NEXT_PUBLIC_CLIENT_ID,
-                    'Authorization': process.env.NEXT_PUBLIC_AUTHORIZATION,
-                    'Accept': 'application/json',
-                },
-                body: `fields company, developer, game, porting, publisher, supporting, company.name; where game=${gameId};`
+                body: JSON.stringify({ gameId }),
             })
 
         const companyData = await companiesQuery.json();
         return companyData;
-    }
-
-    const fetchGamePlatformLogos = async () => {
-
-        const platformQuery = await fetch(process.env.NEXT_PUBLIC_GAME_PLATFORMS_FETCH,
-
-            {
-                method: 'post',
-                headers: {
-                    'Client-ID': process.env.NEXT_PUBLIC_CLIENT_ID,
-                    'Authorization': process.env.NEXT_PUBLIC_AUTHORIZATION,
-                    'Accept': 'application/json',
-                },
-                body: `fields id, versions, abbreviation, name, platform_logo; limit 500;`
-            })
-
-        const platformData = await platformQuery.json();
-        console.log("platform DATA", platformData);
-
-
-        const platformLogosQuery = await fetch(process.env.NEXT_PUBLIC_GAME_PLATFORMS_LOGO_FETCH,
-            {
-                method: 'post',
-                headers: {
-                    'Client-ID': process.env.NEXT_PUBLIC_CLIENT_ID,
-                    'Authorization': process.env.NEXT_PUBLIC_AUTHORIZATION,
-                    'Accept': 'application/json',
-                },
-                body: `fields id, image_id; limit 500;`
-            })
-
-        const platformLogoData = await platformLogosQuery.json();
-        console.log("platformLogoData", platformLogoData);
-
-        const platformsWithLogos = platformData.map((platform) => {
-            const cover = platformLogoData.find((cover) => cover.id === platform.platform_logo);
-            return {
-                id: platform.id,
-                name: platform.name,
-                coverUrl: cover && cover !== "null"
-                    ? `https://images.igdb.com/igdb/image/upload/t_logo_med/${cover.image_id}.png`
-                    : null,
-            };
-        })
-        return platformsWithLogos;
     }
 
 
@@ -252,15 +192,6 @@ export default function GamePage({ params }) {
         refetchOnWindowFocus: false
     })
     console.log("company data", companyData);
-
-    const { data: platformLogoData, isLoading: platformLogoIsLoading, isFetching: platformLogoIsFetching } = useQuery({
-        queryKey: ['platformLogoData'],
-        queryFn: fetchGamePlatformLogos,
-        refetchOnWindowFocus: false
-    })
-
-
-    console.log("platform logo data RESULT  ", platformLogoData);
 
     useEffect(() => {
         if (data && otherGameData) {
@@ -304,18 +235,13 @@ export default function GamePage({ params }) {
 
 
     if (isLoading || isFetching || otherDataIsLoading || otherDataIsFetching ||
-        companyDataIsFetching || companyDataIsLoading || platformLogoIsLoading || platformLogoIsFetching) {
+        companyDataIsFetching || companyDataIsLoading) {
         return <LoadingSpinner />
     }
 
 
-
     const currGamePlatforms = otherGameData[0].platforms;
     console.log("specific game platforms", currGamePlatforms);
-    const mappedPlatforms = currGamePlatforms.map((platform) => platform.name);
-    const filteredPlatforms = platformLogoData.filter((platform) => mappedPlatforms.includes(platform.name));
-    console.log("effect filtered logos", filteredPlatforms)
-
 
 
     const gameName = otherGameData[0].name;
@@ -354,23 +280,33 @@ export default function GamePage({ params }) {
 
 
     const translateDescription = async (description) => {
-        const apiUrl = process.env.NEXT_PUBLIC_DEEPL_API_URL.toString() + `?auth_key=${process.env.NEXT_PUBLIC_DEEPL_KEY}&text=${encodeURIComponent(description)}&target_lang=lt`
-        console.log("apie url", apiUrl)
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-        return data;
-    }
+        try {
+            const queryParams = new URLSearchParams({
+                auth_key: process.env.NEXT_PUBLIC_DEEPL_KEY,
+                text: description,
+                target_lang: 'lt',
+            });
+            const response = await fetch(`/api/deepl?${queryParams.toString()}`);
+            const data = await response.json();
+            const result = data.translations[0].text;
+
+            return result;
+        } catch (err) {
+            console.log("Klaida verčiant", err);
+            return null;
+        }
+    };
+
     const handleTranslateButton = async () => {
         try {
             const response = await translateDescription(gameDescription);
-            setTranslatedGameDescrip(response.translations[0].text);
+            setTranslatedGameDescrip(response);
             console.log("translated summary", translatedGameDescrip);
         } catch (error) {
             console.error("Error", error);
             alert("Pasiekta DeepL vertimų kvota. Bandykite vėliau")
         }
     }
-
 
 
     const gameReleaseDateUnix = otherGameData[0].first_release_date * 1000;
@@ -391,14 +327,14 @@ export default function GamePage({ params }) {
         <>
             <div className="game-container relative">
                 <div className="game-screenshot-cont w-full left-0 h-80 flex justify-center items-center relative">
-                    <Image className="object-cover absolute" alt="Artwork" fill src={artworks}></Image>
+                    {artworks && <Image className="object-cover absolute" alt="Artwork" fill src={artworks}></Image>}
                 </div>
 
                 <div className="game-cover bottom-0 top-0 left-0 right-0 mx-auto absolute lg:absolute lg:bottom-0 lg:top-20 lg:left-32 lg:right-32">
                     <div className="flex flex-row lg:h-64">
                         <div className="game-cover-img mt-5 ml-4 mr-2 lg:ml-0 lg:mr-0 z-20">
                             <div className="w-48 h-64 lg:w-60 lg:h-80 relative">
-                                <Image alt="Cover" fill src={coverUrl}></Image>
+                                {coverUrl && <Image alt="Cover" fill src={coverUrl}></Image>}
                             </div>
                             <div className="game-rating-cont bg-base-100 border border-primary p-2 rounded-md lg:flex lg:flex-col justify-center items-center w-full lg:w-60 hidden">
                                 <h3 className="text-lg game-font" >{t('gamePageRatingTitle')}</h3>
@@ -454,7 +390,7 @@ export default function GamePage({ params }) {
                             <div className={`game-platforms z-40 justify-center grid ${mappedPlatformsForGame.length >= 3 ? 'grid-cols-3' : mappedPlatformsForGame.length === 2 ? 'grid-cols-2' : 'grid-cols-1'} gap-2 items-center`} >
                                 {mappedPlatformsForGame.map((platform, index) => (
                                     <div className="platform z-40 w-20 relative h-28 mx-auto" key={index}>
-                                        <Image alt="Platform" className="object-contain " fill src={platform.image} />
+                                        {platform.image && <Image alt="Platform" className="object-contain " fill src={platform.image} />}
                                     </div>
                                 )
                                 )}
@@ -506,7 +442,7 @@ export default function GamePage({ params }) {
                         <div className={`game-platforms lg:hidden grid grid-cols-2 z-40 gap-2 justify-center items-center mx-auto`} >
                             {mappedPlatformsForGame.map((platform, index) => (
                                 <div key={index} className="platform z-40 w-16 m-1 h-16 relative">
-                                    <Image alt="Platform" style={{ objectFit: 'contain' }} fill key={index} src={platform.image} />
+                                    {platform.image && <Image alt="Platform" style={{ objectFit: 'contain' }} fill key={index} src={platform.image} />}
                                 </div>
                             )
                             )}

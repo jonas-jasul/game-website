@@ -6,7 +6,7 @@ module.exports = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   daisyui: {
-    themes: true,
+    themes:true,
     darkTheme: "cupcake",
     darkMode: 'class',
     imortant: true,
@@ -15,15 +15,6 @@ module.exports = {
     styled:true,
   
   },
-  theme: {
-    extend: {
-      // backgroundImage: {
-      //   'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-      //   'gradient-conic':
-      //     'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-      // },
-    },
-    // default:"light",
-  },
+  
   plugins:  [require('@tailwindcss/forms'), require("daisyui")],
 }

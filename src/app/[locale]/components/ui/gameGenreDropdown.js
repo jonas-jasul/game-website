@@ -44,7 +44,7 @@ const GameGenreDropdown = ({items, value, onChange }) => {
                                     onChange(item);
                                     setOpen(false);
                                 }}
-                                className="border w-full rounded-full"
+                                className="border w-full m-1 p-1"
                             >
                                 <button className="pl-2">{item}</button>
                             </li>

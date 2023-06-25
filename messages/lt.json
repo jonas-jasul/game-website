@@ -13,7 +13,8 @@
         "darkTheme": "Juoda",
         "cyberpunkTheme": "Kiberpankas",
         "halloweenTheme": "Helovynas",
-        "wireframeTheme": "Wireframe",
+        "luxuryTheme": "Prabangi",
+        "lofiTheme": "Lo-Fi",
         "businessTheme": "Verslas (tamsi)",
         "pastelTheme": "Pastelinė",
         "nightTheme": "Naktinė",
@@ -32,7 +33,9 @@
         "gameFilterMinRatings": "Minimalus įvertinimų skaičius",
         "gameFilterApply": "Patvirtinti",
         "gameFilterClear": "Išvalyti",
-        "searchGamePlaceholder": "Ieškoti žaidimo"
+        "searchGamePlaceholder": "Ieškoti žaidimo",
+        "gameFilterCategoryTitle": "Žaidimo kategorija",
+        "gameFilterCategoryPlaceholder" : "Pasirinkite kategoriją"
 
     },
 

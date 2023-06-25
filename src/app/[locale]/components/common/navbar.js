@@ -46,7 +46,7 @@ const Navbar = ({ user }) => {
 
                     <Link href="/" locale={router.locale} className="btn btn-ghost normal-case text-xl">
                         <div className="flex items-center justify-center">
-                            <Image src="/../public/playInfiniteTransparent(cropped).png" height={90} width={90} alt="Play Infinite" />
+                            <Image src="/static/img/playInfiniteTransparent(cropped).png" height={90} width={90} alt="Play Infinite" />
                         </div>
                     </Link>
                 </div>
@@ -55,11 +55,11 @@ const Navbar = ({ user }) => {
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1">
-                        <li><Link href="/catalogue" locale={router.locale}>{t('catalogue')}</Link></li>
+                        <li><Link href="/catalogue" className="font-semibold text-primary-content hover:text-primary-content focus:text-primary-content" locale={router.locale}>{t('catalogue')}</Link></li>
                         <li tabIndex={0}>
 
                         </li>
-                        <li><a>Item</a></li>
+                        <li><Link href="" className="font-semibold text-primary-content hover:text-primary-content focus:text-primary-content">Item</Link></li>
                     </ul>
                 </div>
 

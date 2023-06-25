@@ -78,7 +78,7 @@ export default function Avatar({ user }) {
             <ul style={{ zIndex: 2 }} className="menu dropdown-content p-2 shadow bg-base-100 rounded-box w-52 mt-4">
 
                 {!authUser && (<li><Link locale={router.locale} href="/authCheck">{t('avatarLoginSignup')}</Link></li>)}
-                {authUser && (<li><Link locale={router.locale} href="/profile">{t('navAvatarProfile')}</Link></li>)}
+                {authUser && (<li><Link locale={router.locale} className="text-primary-content" href="/profile">{t('navAvatarProfile')}</Link></li>)}
                 {authUser && (<li><SignOut /></li>)}
             </ul>
         </div>

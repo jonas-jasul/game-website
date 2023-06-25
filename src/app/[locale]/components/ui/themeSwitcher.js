@@ -13,11 +13,15 @@ const ThemeSwitcher = () => {
         { value: 'black', label: t('darkTheme') },
         { value: 'cyberpunk', label: t('cyberpunkTheme') },
         { value: 'halloween', label: t('halloweenTheme') },
-        { value: 'wireframe', label: t('wireframeTheme') },
+        { value: 'lofi', label: t('lofiTheme') },
         { value: 'business', label: t('businessTheme') },
         { value: 'pastel', label: t('pastelTheme') },
         { value: 'dark', label: t('nightTheme') },
+        {value: 'luxury', label: t('luxuryTheme')}
     ];
+    const themeKey=`[data-theme=${theme}]`;
+    const themeColors = colors[themeKey] || {};
+
 
     const handleThemeChange = (selected) => {
         const currentTheme = selected.value;
@@ -32,42 +36,49 @@ const ThemeSwitcher = () => {
 
         menu: (baseStyles) => ({
             ...baseStyles,
-            backgroundColor: colors[`[data-theme=${theme}]`]["base-100"],
+            backgroundColor: themeColors["base-100"],
         }),
         option: (baseStyles, state) => {
 
-            let backgroundColor = colors[`[data-theme=${theme}]`]["base-100"];
-
+            let backgroundColor = themeColors["base-100"];
+            let color;
             if (state.isFocused) {
-                backgroundColor = colors[`[data-theme=${theme}]`]["primary"];
+                backgroundColor = themeColors["primary"];
+                color = themeColors["base-100"]
             }
             if (state.isSelected) {
-                backgroundColor = colors[`[data-theme=${theme}]`]["accent"];
+                backgroundColor = themeColors["accent"];
+                color = themeColors["base-100"]
 
             }
             if (state.isClicked) {
-                backgroundColor = colors[`[data-theme=${theme}]`]["accent"];
+                backgroundColor = themeColors["accent"];
             }
 
             return {
                 ...baseStyles,
-                backgroundColor
+                backgroundColor,
+                color
             };
         },
 
 
     }
 
-    const customTheme = (_theme) => ({
-        ..._theme,
-        colors: {
-            ..._theme.colors,
-            primary: colors[`[data-theme=${theme}]`]["primary"],
-            primary25: colors[`[data-theme=${theme}]`]["accent"],
-            primary50: colors[`[data-theme=${theme}]`]["accent"],
-            primary75: colors[`[data-theme=${theme}]`]["accent"],
+    const customTheme = (_theme) => {
+
+        return {
+            ..._theme,
+            colors: {
+                ..._theme.colors,
+                primary: themeColors["primary"],
+                primary25: themeColors["accent"],
+                primary50: themeColors["accent"],
+                primary75: themeColors["accent"],
+            }
         }
-    })
+       
+    }
     return (
         <div className="p-0 m-0 me-1 z-50" data-choose-theme>
             <Select

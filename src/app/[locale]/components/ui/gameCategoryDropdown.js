@@ -23,7 +23,7 @@ const GameCategoryDropdown = ({items, value, onChange }) => {
         >
 
             <input type="text" className="input w-full" value={value} onChange={(event) => onChange(event.target.value)}
-                placeholder={t('gameFilterGameSelectPlaceh')}
+                placeholder={t('gameFilterCategoryPlaceholder')}
                 tabIndex={0} />
 
             <div className="dropdown-content bg-base-200 border border-primary top-14 max-h-96 overflow-auto flex-col rounded-md" style={{ zIndex: 1 }}>
@@ -40,7 +40,7 @@ const GameCategoryDropdown = ({items, value, onChange }) => {
                                     onChange(item);
                                     setOpenCatDropd(false);
                                 }}
-                                className="border w-full rounded-full"
+                                className="border w-full m-1 p-1"
                             >
                                 <button className="pl-2">{item}</button>
                             </li>

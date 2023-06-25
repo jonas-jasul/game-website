@@ -12,7 +12,8 @@
         "darkTheme": "Black",
         "cyberpunkTheme": "Cyberpunk",
         "halloweenTheme": "Halloween",
-        "wireframeTheme": "Wireframe",
+        "luxuryTheme": "Luxury",
+        "lofiTheme": "Lo-Fi",
         "businessTheme": "Business (dark)",
         "pastelTheme": "Pastel",
         "nightTheme": "Night",
@@ -29,7 +30,10 @@
         "gameFilterMinRatings": "Minimum amount of ratings",
         "gameFilterApply": "Apply",
         "gameFilterClear": "Clear",
-        "searchGamePlaceholder": "Search for a game"
+        "searchGamePlaceholder": "Search for a game",
+        "gameFilterCategoryTitle": "Game category",
+        "gameFilterCategoryPlaceholder" : "Select a category"
+        
     },
     "SortDropdown": {
         "rating": "Rating",
