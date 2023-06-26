@@ -46,7 +46,7 @@ const ResetPassword = () => {
                     <div className='col col-flex'>
                         <label htmlFor="email" className="m-1">{t('forgotPassEmail')}</label>
                         <Field
-                            className={cn('input input-bordered', errors.email && 'bg-red-50')}
+                            className={cn('input border-primary', errors.email && 'bg-base-100')}
                             id="email"
                             name="email"
                             placeholder=""
@@ -54,7 +54,7 @@ const ResetPassword = () => {
                         />
                         </div>
                         {errors.email && touched.email ? (
-                            <div className="text-red-600">{errors.email}</div>
+                            <div className="text-error">{errors.email}</div>
                         ) : null}
                         <button className="btn btn-primary w-full mt-5" type="submit">
                             {t('forgotPassSendInstruct')}
@@ -62,9 +62,9 @@ const ResetPassword = () => {
                     </Form>
                 )}
             </Formik>
-            {errorMsg && <div className="text-center text-red-600">{errorMsg}</div>}
-            {successMsg && <div className="text-center text-black">{successMsg}</div>}
-            <button className="link" type="button" onClick={() => setView(VIEWS.SIGN_IN)}>
+            {errorMsg && <div className="text-center text-error">{errorMsg}</div>}
+            {successMsg && <div className="text-center text-primary">{successMsg}</div>}
+            <button className="link text-accent" type="button" onClick={() => setView(VIEWS.SIGN_IN)}>
                 {t('forgotPassLinkBack')}
             </button>
         </div>

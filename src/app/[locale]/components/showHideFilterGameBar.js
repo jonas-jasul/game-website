@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useRef } from "react";
 import { RxCrossCircled, RxCheckCircled } from "react-icons/rx";
 import { RxDropdownMenu } from "react-icons/rx";
+import { AiOutlineCloseSquare } from "react-icons/ai";
 import GameGenreDropdown from "./ui/gameGenreDropdown";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
@@ -17,12 +18,14 @@ export default function ShowHideFilterGameBar({ onFilterApply, onMinRatingFilter
     const t = useTranslations('FilterBar');
     const router = useRouter();
     const pathname = usePathname();
+
     const [gameGenres, setGameGenres] = useState([]);
     const [gameGenreValue, setGameGenreValue] = useState("");
 
     const [gameGenreDropdownItems, setGameGenreDropdownItems] = useState([]);
     const [gameMinRatings, setGameMinRatings] = useState(25);
     const [gameCategDropdownItems, setGameCategDropdownItems] = useState([]);
+
 
     const categoryEnums = [
         { id: 0, name: 'Main Game', slug: 'main_game' },
@@ -93,6 +96,14 @@ export default function ShowHideFilterGameBar({ onFilterApply, onMinRatingFilter
         router.push(`${pathname}?${urlStr}`);
     }
 
+    const handleDrawerOpen = () => {
+        setIsDrawerOpen(true);
+    };
+
+    const handleDrawerClose = () => {
+        setIsDrawerOpen(false);
+    };
+
 
     function clearFilters() {
         setGameGenreValue('');
@@ -147,7 +158,13 @@ export default function ShowHideFilterGameBar({ onFilterApply, onMinRatingFilter
             <div className="drawer-side z-50">
                 <label htmlFor="my-drawer" className="drawer-overlay"></label>
                 <ul className="menu p-4 w-84 lg:w-96 h-full bg-base-200 text-base-content">
-                    <li className="flex items-center text-lg font-semibold">{t('gameFilterOptTitle')}</li>
+                    <li className="flex justify-end items-end">
+                        <button><AiOutlineCloseSquare size="2rem" /></button>
+                    </li>
+                    <li className="flex items-center text-lg font-semibold ">
+                        {t('gameFilterOptTitle')}
+                    </li>
+
                     <div className="divider"></div>
                     <h5 className="font-semibold">{t('gameFilterGameGenre')}</h5>
                     <li className="mb-2">

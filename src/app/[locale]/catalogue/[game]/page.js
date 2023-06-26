@@ -225,8 +225,8 @@ export default function GamePage({ params }) {
                 return platformDetails
             }
             const platformsForGame = otherGameData[0].platforms;
-            const platformNames = platformsForGame.map((platform) => platform.name);
-            const mappedPlatformsForGame = platformNames.flatMap((platform) => platformMapper(platform));
+            const platformNames = platformsForGame?.map((platform) => platform.name);
+            const mappedPlatformsForGame = platformNames?.flatMap((platform) => platformMapper(platform));
             setMappedPlatformsForGame(mappedPlatformsForGame);
             console.log("platform names", platformNames);
             console.log("mappedPlatforms", mappedPlatformsForGame);
@@ -387,8 +387,8 @@ export default function GamePage({ params }) {
                             <h4 className="text-center text-xl flex justify-center items-center mb-0 font-semibold text-base-content">{t('gamePagePlatformsH')}</h4>
                             <div className="divider mt-1"></div>
 
-                            <div className={`game-platforms z-40 justify-center grid ${mappedPlatformsForGame.length >= 3 ? 'grid-cols-3' : mappedPlatformsForGame.length === 2 ? 'grid-cols-2' : 'grid-cols-1'} gap-2 items-center`} >
-                                {mappedPlatformsForGame.map((platform, index) => (
+                            <div className={`game-platforms z-40 justify-center grid ${mappedPlatformsForGame?.length >= 3 ? 'grid-cols-3' : mappedPlatformsForGame?.length === 2 ? 'grid-cols-2' : 'grid-cols-1'} gap-2 items-center`} >
+                                {mappedPlatformsForGame?.map((platform, index) => (
                                     <div className="platform z-40 w-20 relative h-28 mx-auto" key={index}>
                                         {platform.image && <Image alt="Platform" className="object-contain " fill src={platform.image} />}
                                     </div>
@@ -440,7 +440,7 @@ export default function GamePage({ params }) {
 
                         </div>
                         <div className={`game-platforms lg:hidden grid grid-cols-2 z-40 gap-2 justify-center items-center mx-auto`} >
-                            {mappedPlatformsForGame.map((platform, index) => (
+                            {mappedPlatformsForGame?.map((platform, index) => (
                                 <div key={index} className="platform z-40 w-16 m-1 h-16 relative">
                                     {platform.image && <Image alt="Platform" style={{ objectFit: 'contain' }} fill key={index} src={platform.image} />}
                                 </div>

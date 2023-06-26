@@ -18,6 +18,7 @@
         "businessTheme": "Verslas (tamsi)",
         "pastelTheme": "Pastelinė",
         "nightTheme": "Naktinė",
+        "draculaTheme": "Rožinė",
         "avatarLoginSignup": "Prisijungti / Registruotis",
         "navAvatarProfile": "Profilis",
         "navAvatarSignOut": "Atsijungti",
@@ -62,7 +63,7 @@
         "loginSocialProviderText": "Prisijungti su ",
         "loginLinkToSignUp": "Neturite paskyros? Prisiregistruoti",
         "requiredError":"Privaloma",
-
+        "invalidEmailError": "Neteisingas el. pašto formatas",
 
         "registerHeading": "Registracija",
         "registerEmail": "El. paštas",
@@ -74,6 +75,7 @@
         "registerSocialProviderText": "Registruotis su {{provider}}",
         "registerLinkTo": "Turite paskyrą? Prisijunkite",
         "confirmation_text": "Pasitikrinkite el. paštą ir patvirtinkite paskyrą",
+        "emailExists": "Šis el. paštas jau egizstuoja",
         "rememberMe": "Prisiminti mane",
         "forgotPassHeading": "Pamiršote slaptažodį?",
         "loginSocialProviderGoogle": "Prisijungti su Google",

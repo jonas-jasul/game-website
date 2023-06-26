@@ -8,7 +8,8 @@ import { useAuth, VIEWS } from '../AuthProvider';
 import supabase from '../../lib/supabase-browser';
 import { useTranslations } from 'next-intl';
 import {SlNote} from "react-icons/sl";
-
+import {authEmailsTranslations} from "./authEmailsTranslations"
+import { useRouter } from 'next/navigation';
 const SignUpSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Required'),
     password: Yup.string().required('Required'),
@@ -21,21 +22,26 @@ const SignUp = () => {
     const { setView } = useAuth();
     const [errorMsg, setErrorMsg] = useState(null);
     const [successMsg, setSuccessMsg] = useState(null);
-
+    const router = useRouter();
     async function signUp(formData) {
-        const { error } = await supabase.auth.signUp({
+        const {data: createdUser, error } = await supabase.auth.signUp({
             email: formData.email,
             password: formData.password,
+            options: {
+                data: authEmailsTranslations[router.locale],
+            }
         });
 
         if (error) {
             setErrorMsg(error.message);
-        } else {
-            setSuccessMsg('Success! Please check your email for further instructions.');
-        }
-        if (formData?.user?.identities?.length === 0) {
-            return { formData, error: "Please sign in with your existing account" };
+        } 
+        if (createdUser.user.identities?.length === 0) {
+            setErrorMsg("Email already exists");
           }
+        else {
+            setSuccessMsg(t('confirmation_text'));
+        }
+       
     }
 
     return (
@@ -59,27 +65,27 @@ const SignUp = () => {
 
                                 <label htmlFor="email">{t('registerEmail')}</label>
                                 <Field
-                                    className={cn('input input-bordered', errors.email && 'bg-red-50')}
+                                    className={cn('input border-primary', errors.email && 'bg-base-200')}
                                     id="email"
                                     name="email"
                                     placeholder=""
                                     type="email"
                                 />
                                 {errors.email && touched.email ? (
-                                    <div className="text-red-600">{errors.email}</div>
+                                    <div className="text-error">{errors.email}</div>
                                 ) : null}
                             </div>
                             <div className="flex flex-col">
 
                                 <label htmlFor="email">{t('registerPass')}</label>
                                 <Field
-                                    className={cn('input input-bordered', errors.password && touched.password && 'bg-red-50')}
+                                    className={cn('input border-primary', errors.password && touched.password && 'bg-base-100')}
                                     id="password"
                                     name="password"
                                     type="password"
                                 />
                                 {errors.password && touched.password ? (
-                                    <div className="text-red-600">{errors.password}</div>
+                                    <div className="text-error">{errors.password}</div>
                                 ) : null}
                             </div>
                             <button className="btn btn-primary w-full mt-8" type="submit">
@@ -89,10 +95,10 @@ const SignUp = () => {
                     </div>
                 )}
             </Formik>
-            {errorMsg && <div className="text-red-600">{errorMsg}</div>}
-            {successMsg && <div className="text-black">{successMsg}</div>}
+            {errorMsg && <div className="text-error">{errorMsg}</div>}
+            {successMsg && <div className="text-info">{successMsg}</div>}
             <button
-                className="link w-full"
+                className="link w-full text-xl text-accent"
                 type="button"
                 onClick={() => setView(VIEWS.SIGN_IN)}
             >

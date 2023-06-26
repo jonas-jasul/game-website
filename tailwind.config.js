@@ -6,15 +6,16 @@ module.exports = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   daisyui: {
-    themes:true,
-    darkTheme: "cupcake",
+    themes:
+      ["cupcake", "cyberpunk", "lofi", "business", "pastel", "dracula", "halloween"],
+    darkTheme: "business",
     darkMode: 'class',
     imortant: true,
-    utils:true,
-    base:true,
-    styled:true,
-  
+    utils: true,
+    base: true,
+    styled: true,
+
   },
-  
-  plugins:  [require('@tailwindcss/forms'), require("daisyui")],
+
+  plugins: [require('@tailwindcss/forms'), require("daisyui")],
 }

@@ -14,7 +14,7 @@ import { useFormik } from 'formik';
 import { SlLogin } from "react-icons/sl";
 
 const SignInSchema = Yup.object().shape({
-    email: Yup.string().email('Invalid email').required('requiredError'),
+    email: Yup.string().email('invalidEmailError').required('requiredError'),
     password: Yup.string().required('requiredError'),
 });
 
@@ -82,27 +82,27 @@ const SignIn = () => {
                             <div className="flex flex-col">
                                 <label htmlFor="email">{t('loginEmail')}</label>
                                 <Field
-                                    className={cn('input input-bordered', errors.email && touched.email && 'bg-red-50')}
+                                    className={cn('input border-primary', errors.email && touched.email && 'bg-base-200')}
                                     id="email"
                                     name="email"
                                     placeholder=""
                                     type="email"
                                 />
                                 {errors.email && touched.email ? (
-                                    <div className="text-red-600">{t(errors.email)}</div>
+                                    <div className="text-error">{t(errors.email)}</div>
                                 ) : null}
                             </div>
 
                             <div className="flex flex-col">
                                 <label htmlFor="password">{t('loginPass')}</label>
                                 <Field
-                                    className={cn('input input-bordered', errors.password && touched.password && 'bg-red-50')}
+                                    className={cn('input border-primary', errors.password && touched.password && 'bg-base-200')}
                                     id="password"
                                     name="password"
                                     type="password"
                                 />
                                 {errors.password && touched.password ? (
-                                    <div className="text-red-600">{t(errors.password)}</div>
+                                    <div className="text-error">{t(errors.password)}</div>
                                 ) : null}
                             </div>
 
@@ -114,29 +114,29 @@ const SignIn = () => {
                             </div>
 
                             <button
-                                className="link w-full mt-2"
+                                className="link w-full mt-2 text-accent"
                                 type="button"
                                 onClick={() => setView(VIEWS.FORGOTTEN_PASSWORD)}
                             >
                                 {t('forgotPassHeading')}
                             </button>
 
-                            <button className="btn bg-primary w-full mt-5" type="submit">
+                            <button className="btn btn-primary w-full mt-5" type="submit">
                                 {t('loginSubmitButton')}
                             </button>
                         </Form>
                     )}
                 </Formik>
-                {errorMsg && <div className="text-red-600">{errorMsg}</div>}
+                {errorMsg && <div className="text-error">{errorMsg}</div>}
                 <button
-                    className="link my-3 w-full"
+                    className="link my-3 w-full text-xl text-accent"
                     type="button"
                     onClick={() => setView(VIEWS.SIGN_UP)}
                 >
                     {t('loginLinkToSignUp')}
                 </button>
             </div>
-        </div >
+        </div>
 
     );
 };

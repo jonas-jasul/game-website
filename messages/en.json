@@ -15,6 +15,7 @@
         "luxuryTheme": "Luxury",
         "lofiTheme": "Lo-Fi",
         "businessTheme": "Business (dark)",
+        "draculaTheme": "Rose",
         "pastelTheme": "Pastel",
         "nightTheme": "Night",
         "avatarLoginSignup": "Log In / Sign Up",
@@ -56,6 +57,7 @@
         "loginSocialProviderText": "Log in with {{provider}}",
         "loginLinkToSignUp": "Don't have an account? Register",
         "requiredError":"Required",
+        "invalidEmailError": "Invalid Email format",
 
         "registerHeading": "Register",
         "registerEmail": "Email address",
@@ -67,8 +69,10 @@
         "registerSocialProviderText": "Sign in with {{provider}}",
         "registerLinkTo": "Have an account? Log in",
         "confirmation_text": "Check your email for the confirmation link",
+        "emailExists": "Please sign in with your existing account",
         "rememberMe": "Remember me",
         "forgotPassHeading": "Forgot your password?",
+
 
         "forgotPassRecovery": "Recover your password",
         "forgotPassSendInstruct" : "Confirm",

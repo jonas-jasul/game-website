@@ -237,7 +237,7 @@ export default function GameInfo({ searchParams, searchTerm, minRatingsFilterVal
             <h2 className="card-title text-xl">{game.name}</h2>
             <p><StarRating starSize={20} rating={game.rating} /></p>
             <div className="card-actions justify-end">
-              <Link href={`/catalogue/${game.slug}`} className="btn btn-primary">{t('moreInfoBtn')}</Link>
+              <Link href={`/catalogue/${game.slug}`} locale={router.locale} className="btn btn-primary">{t('moreInfoBtn')}</Link>
             </div>
           </div>
         </div>

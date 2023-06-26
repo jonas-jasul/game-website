@@ -10,14 +10,12 @@ const ThemeSwitcher = () => {
 
     const themeOptions = [
         { value: 'cupcake', label: t('lightTheme') },
-        { value: 'black', label: t('darkTheme') },
         { value: 'cyberpunk', label: t('cyberpunkTheme') },
         { value: 'halloween', label: t('halloweenTheme') },
         { value: 'lofi', label: t('lofiTheme') },
         { value: 'business', label: t('businessTheme') },
         { value: 'pastel', label: t('pastelTheme') },
-        { value: 'dark', label: t('nightTheme') },
-        {value: 'luxury', label: t('luxuryTheme')}
+        {value: 'dracula', label: t('draculaTheme')}
     ];
     const themeKey=`[data-theme=${theme}]`;
     const themeColors = colors[themeKey] || {};
@@ -34,10 +32,26 @@ const ThemeSwitcher = () => {
             "input[type='text']:focus": { boxShadow: 'none' },
         }),
 
-        menu: (baseStyles) => ({
-            ...baseStyles,
-            backgroundColor: themeColors["base-100"],
-        }),
+        menu: (baseStyles) => {
+            
+            let backgroundColor;
+            let color;
+            if(localStorage.getItem("theme")===null) {
+                backgroundColor = "black";
+                color="white";
+            }
+            else {
+                backgroundColor= themeColors["base-100"];
+            }
+
+            return {
+                ...baseStyles,
+                backgroundColor,
+                color
+    
+            }
+            
+        },
         option: (baseStyles, state) => {
 
             let backgroundColor = themeColors["base-100"];
@@ -90,6 +104,7 @@ const ThemeSwitcher = () => {
                 placeholder={t('chooseTheme')}
                 theme={customTheme}
                 noOptionsMessage={() => t('noOptionsMessage')}
+                isSearchable={false}
             />
         </div>
     )
