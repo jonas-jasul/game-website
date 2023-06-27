@@ -1,8 +1,6 @@
 'use client';
 import { useEffect, useRef, useState } from "react";
-import LoadingSpinner from "./common/loadingSpinner";
-// import { ClientID, Authorization } from "../../config";
-// import ReactPaginate from "react-paginate";
+import LoadingSpinner from "./common/loadingSpinner";;
 import ResponsivePagination from "react-responsive-pagination";
 import "../css/gameInfo.css";
 import SearchGameBar from "./ui/searchGame";
@@ -12,10 +10,15 @@ import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
-import Link from "next/link";
+import Link from "next-intl/link";
 import { RxArrowLeft, RxArrowRight } from "react-icons/rx";
 import { dropEllipsisThenNav, dropEllipsis } from "react-responsive-pagination/narrowBehaviour";
 import Image from "next/image";
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+import { Suspense } from "react";
+import colors from "daisyui/src/theming/themes"
+
 
 export default function GameInfo({ searchParams, searchTerm, minRatingsFilterValue, sortGameVal }) {
   const t = useTranslations('GameInfo');
@@ -127,9 +130,10 @@ export default function GameInfo({ searchParams, searchTerm, minRatingsFilterVal
   //   fetchTotalGameCount();
   // }, [searchParams.search, searchParams.genre, searchParams.category, searchParams.page, searchParams.min_ratings]);
 
-  const {data: countQueryData, isLoading: countQueryDataIsLoading, isFetching: countQueryDataIsFetching} = useQuery({
-    queryKey:["count-query", searchParams.search, searchParams.genre, searchParams.category, searchParams.page, searchParams.min_ratings],
-    queryFn: fetchTotalGameCount
+  const { data: countQueryData, isLoading: countQueryDataIsLoading, isFetching: countQueryDataIsFetching } = useQuery({
+    queryKey: ["count-query", searchParams.search, searchParams.genre, searchParams.category, searchParams.page, searchParams.min_ratings],
+    queryFn: fetchTotalGameCount,
+    keepPreviousData: true,
   })
 
   async function fetchGameData() {
@@ -186,7 +190,7 @@ export default function GameInfo({ searchParams, searchTerm, minRatingsFilterVal
     const coversResponse = await fetch('/api/catalogue/gameCovers',
       {
         method: 'post',
-        body: JSON.stringify({imageIDsJoined, pageSize}),
+        body: JSON.stringify({ imageIDsJoined, pageSize }),
       }
     );
 
@@ -211,7 +215,8 @@ export default function GameInfo({ searchParams, searchTerm, minRatingsFilterVal
   const { data: gameQuery, isLoading: gameQueryIsLoading, isFetching: gameQueryIsFetching, refetch: gameRefetch } = useQuery({
     queryKey: ['games', searchParams.page, searchParams.genre, searchParams.category, searchParams.sort,
       searchParams.search, searchParams.min_ratings],
-    queryFn: fetchGameData, refetchOnWindowFocus: false
+    queryFn: fetchGameData, refetchOnWindowFocus: false,
+    keepPreviousData: true,
   })
 
   const customPageRef = useRef(null);
@@ -222,8 +227,15 @@ export default function GameInfo({ searchParams, searchTerm, minRatingsFilterVal
     const urlStr = url.toString();
     router.push(`${pathname}?${urlStr}`)
   }
+  function getCurrentTheme() {
+    const theme = localStorage.getItem('theme');
+    const themeKey = `[data-theme=${theme}]`;
+    return themeKey;
+  }
 
-  if (gameQueryIsLoading || gameQueryIsFetching) {
+  const themeColors = colors[getCurrentTheme()] || {};
+
+  if (gameQueryIsLoading) {
     return <LoadingSpinner />
   }
   const renderGames = (
@@ -247,10 +259,37 @@ export default function GameInfo({ searchParams, searchTerm, minRatingsFilterVal
 
   );
 
+  const loadingGameDiv = (
+    <div className="p-5 flex flex-wrap justify-center items-center">
+      {gameQuery.map((game) => (
+        <div className="card lg:card-side bg-base-100 shadow-xl border border-primary p-0" key={game.id}>
+          <figure className="relative w-60 h-72 lg:h-60 lg:w-44">
+
+            <Skeleton containerClassName="flex w-60 h-72 lg:h-60 lg:w-44" />
+
+          </figure>
+          <div className="card-body w-60">
+            <h2 className="card-title text-xl"><Skeleton /></h2>
+            <p><Skeleton /></p>
+            <div className="card-actions justify-end">
+            <button className="btn btn-primary bg-primary pointer-events-none"><span class="loading loading-infinity loading-lg"></span></button>
+            </div>
+          </div>
+        </div>
+      )
+      )}
+    </div>
+  )
+
   return (
     <>
       <div className="flex">
-        {renderGames}
+        {gameQueryIsFetching ? (
+          loadingGameDiv
+        ) : (
+          renderGames
+        )}
+
       </div>
       <div className="flex flex-col mx-auto pagination justify-center items-center w-full lg:w-1/2">
         <ResponsivePagination
@@ -263,12 +302,13 @@ export default function GameInfo({ searchParams, searchTerm, minRatingsFilterVal
         />
         <div className="form-control ml-4 mt-2">
           <div className="input-group">
-            <input type="number" placeholder={t('customPagePlaceholder')} ref={customPageRef} className="input input-bordered border-primary w-20" />
+            <input type="number" placeholder={t('customPagePlaceholder')} ref={customPageRef} className="input border-primary w-20" />
             <button className="btn btn-square border-primary" onClick={setCustomPageNr}>
               {t('customPageGo')}
             </button>
           </div>
         </div>
+
       </div>
 
     </>

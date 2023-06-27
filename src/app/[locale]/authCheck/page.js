@@ -2,11 +2,13 @@
 import Auth from "../components/auth";
 import { useRouter } from "next-intl/client";
 import { useAuth, VIEWS } from "../components/AuthProvider";
+import { useSearchParams } from "next/navigation";
 
 export default function AuthPage() {
-  const { user, view } = useAuth();
+  const { user, view, setView } = useAuth();
   const router = useRouter();
-
+  const searchParams = useSearchParams();
+  const newView =searchParams.get('view');
   if (view === VIEWS.UPDATE_PASSWORD) {
     return <Auth view={view} />;
   }
@@ -16,9 +18,10 @@ export default function AuthPage() {
 
   }
 
+
   return (
     <div className="mt-20 lg:mt-3">
-      <Auth view={view} />
+      <Auth view={newView}  />
 
     </div>
 

@@ -18,7 +18,8 @@
         "draculaTheme": "Rose",
         "pastelTheme": "Pastel",
         "nightTheme": "Night",
-        "avatarLoginSignup": "Log In / Sign Up",
+        "avatarLogin": "Log In",
+        "avatarSignup": "Sign Up",
         "navAvatarProfile": "Profile",
         "navAvatarSignOut": "Sign out",
         "noOptionsMessage": "No options"

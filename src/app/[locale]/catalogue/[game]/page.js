@@ -120,7 +120,7 @@ export default function GamePage({ params }) {
 
 
     const fetchGame = async () => {
-        const gameDataQuery = `fields id, name, rating, cover, genres, slug, summary, artworks, platforms, release_dates, screenshots;
+        const gameDataQuery = `fields id, name, total_rating, cover, genres, slug, summary, artworks, platforms, release_dates, screenshots;
          where slug = "${gameSlug}";`;
         const gamesResponse = await fetch('/api/game_slug/games',
             {
@@ -247,7 +247,7 @@ export default function GamePage({ params }) {
     const gameName = otherGameData[0].name;
     const gameCover = otherGameData[0].cover?.image_id;
     console.log("game cover", gameCover)
-    const gameRating = otherGameData[0].rating;
+    const gameRating = otherGameData[0].total_rating;
     console.log('game rating', gameRating);
     const gameRatingRounded = Math.round(gameRating * 100) / 100;
 

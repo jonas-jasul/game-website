@@ -7,9 +7,10 @@ import * as Yup from 'yup';
 import { useAuth, VIEWS } from '../AuthProvider';
 import supabase from '../../lib/supabase-browser';
 import { useTranslations } from 'next-intl';
-import {SlNote} from "react-icons/sl";
-import {authEmailsTranslations} from "./authEmailsTranslations"
+import { SlNote } from "react-icons/sl";
+import { authEmailsTranslations } from "./authEmailsTranslations"
 import { useRouter } from 'next/navigation';
+import Link from "next-intl/link";
 const SignUpSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Required'),
     password: Yup.string().required('Required'),
@@ -24,7 +25,7 @@ const SignUp = () => {
     const [successMsg, setSuccessMsg] = useState(null);
     const router = useRouter();
     async function signUp(formData) {
-        const {data: createdUser, error } = await supabase.auth.signUp({
+        const { data: createdUser, error } = await supabase.auth.signUp({
             email: formData.email,
             password: formData.password,
             options: {
@@ -34,22 +35,22 @@ const SignUp = () => {
 
         if (error) {
             setErrorMsg(error.message);
-        } 
+        }
         if (createdUser.user.identities?.length === 0) {
             setErrorMsg("Email already exists");
-          }
+        }
         else {
             setSuccessMsg(t('confirmation_text'));
         }
-       
+
     }
 
     return (
         <div className="flex justify-center items-center shadow-md mx-auto card w-64">
             <h2 className="text-center text-2xl">{t('registerHeading')}</h2>
             <div className='mx-auto flex justify-center items-center'>
-                    <SlNote className='' style={{ fontSize: 40 }} />
-                </div>
+                <SlNote className='' style={{ fontSize: 40 }} />
+            </div>
             <Formik
                 initialValues={{
                     email: '',
@@ -79,7 +80,7 @@ const SignUp = () => {
 
                                 <label htmlFor="email">{t('registerPass')}</label>
                                 <Field
-                                    className={cn('input border-primary', errors.password && touched.password && 'bg-base-100')}
+                                    className={cn('input border-primary', errors.password && touched.password && 'bg-base-200')}
                                     id="password"
                                     name="password"
                                     type="password"
@@ -97,13 +98,15 @@ const SignUp = () => {
             </Formik>
             {errorMsg && <div className="text-error">{errorMsg}</div>}
             {successMsg && <div className="text-info">{successMsg}</div>}
-            <button
-                className="link w-full text-xl text-accent"
-                type="button"
-                onClick={() => setView(VIEWS.SIGN_IN)}
-            >
-                {t('registerLinkTo')}
-            </button>
+            <div className='flex mx-auto justify-center items-center'>
+                <Link locale={router.locale}
+                    className="link w-full text-xl text-accent text-center"
+                    href={`/authCheck?view=sign_in`}
+                >
+                    {t('registerLinkTo')}
+                </Link>
+            </div>
+
         </div>
     );
 };

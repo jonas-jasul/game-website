@@ -25,7 +25,7 @@ const Auth = ({ view: initialView }) => {
         case VIEWS.SIGN_UP:
             return <SignUp />
         default:
-            return <SignIn />
+            return <SignIn  />
     }
 }
 

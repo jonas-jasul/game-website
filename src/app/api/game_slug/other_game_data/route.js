@@ -12,7 +12,7 @@ export async function POST(req) {
         'Accept': 'application/json',
         "Content-Type": 'application/json',
       },
-      body: `fields name, slug, rating, cover.image_id, summary, genres.name, genres.slug, first_release_date, platforms.name, platforms.platform_logo;
+      body: `fields name, slug, total_rating, cover.image_id, summary, genres.name, genres.slug, first_release_date, platforms.name, platforms.platform_logo;
       where slug="${gameSlug}";`,
     });
 

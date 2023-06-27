@@ -12,7 +12,8 @@ import Cookies from 'universal-cookie';
 import { id } from 'date-fns/locale';
 import { useFormik } from 'formik';
 import { SlLogin } from "react-icons/sl";
-
+import Link from "next-intl/link";
+import { useRouter } from 'next/navigation';
 const SignInSchema = Yup.object().shape({
     email: Yup.string().email('invalidEmailError').required('requiredError'),
     password: Yup.string().required('requiredError'),
@@ -24,7 +25,7 @@ const SignIn = () => {
     const { setView } = useAuth();
     const [errorMsg, setErrorMsg] = useState(null);
     const [rememberMe, setRememberMe] = useState(false);
-
+    const router = useRouter();
 
     const [email, setEmail] = useState('');
     async function signIn(formData) {
@@ -113,13 +114,12 @@ const SignIn = () => {
                                 </label>
                             </div>
 
-                            <button
+                            <Link
                                 className="link w-full mt-2 text-accent"
-                                type="button"
-                                onClick={() => setView(VIEWS.FORGOTTEN_PASSWORD)}
+                                href={`/authCheck?view=forgotten_password`}
                             >
                                 {t('forgotPassHeading')}
-                            </button>
+                            </Link>
 
                             <button className="btn btn-primary w-full mt-5" type="submit">
                                 {t('loginSubmitButton')}
@@ -128,13 +128,16 @@ const SignIn = () => {
                     )}
                 </Formik>
                 {errorMsg && <div className="text-error">{errorMsg}</div>}
-                <button
-                    className="link my-3 w-full text-xl text-accent"
-                    type="button"
-                    onClick={() => setView(VIEWS.SIGN_UP)}
-                >
-                    {t('loginLinkToSignUp')}
-                </button>
+                <div className='flex mx-auto justify-center items-center'>
+                    <Link
+                        locale={router.locale}
+                        className="link my-3 w-full text-xl text-accent text-center"
+                        href={`/authCheck?view=sign_up`}
+                    >
+                        {t('loginLinkToSignUp')}
+                    </Link>
+                </div>
+
             </div>
         </div>
 

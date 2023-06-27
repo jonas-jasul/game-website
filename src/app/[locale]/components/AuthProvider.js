@@ -1,6 +1,7 @@
 'use client';
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import supabase from "../lib/supabase-browser";
+import { usePathname, useRouter } from "next/navigation";
 export const useAuth = () => useContext(AuthContext);
 export const EVENTS = {
     PASSWORD_RECOVERY: 'PASSWORD_RECOVERY',
@@ -25,7 +26,18 @@ export const AuthProvider = ({ children, ...props }) => {
     const [user, setUser] = useState(null);
     const [auth, setAuth] = useState(false);
     const [view, setView] = useState(VIEWS.SIGN_IN);
+    const router = useRouter();
+    const pathname = usePathname();
     const [initial, setInitial] = useState(true);
+
+
+    const handleViewChange = (newView) => {
+        setView(newView);
+        const url =new URLSearchParams();
+        url.set("view", newView);
+        const urlToStr= url.toString();
+        router.push(`${pathname}?${urlToStr}`);
+    }
 
     useEffect(() => {
         async function getActiveSession() {
@@ -66,6 +78,7 @@ export const AuthProvider = ({ children, ...props }) => {
         };
     }, []);
 
+    
     const value = useMemo(() => {
         return {
             initial,
@@ -74,8 +87,9 @@ export const AuthProvider = ({ children, ...props }) => {
             view,
             setView,
             signOut: () => supabase.auth.signOut(),
+            handleViewChange
         };
-    }, [initial, session, user, view]);
+    }, [initial, session, user, view, handleViewChange]);
 
     return <AuthContext.Provider value={value} {...props}>
         {children}

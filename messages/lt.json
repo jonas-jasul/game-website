@@ -19,7 +19,8 @@
         "pastelTheme": "Pastelinė",
         "nightTheme": "Naktinė",
         "draculaTheme": "Rožinė",
-        "avatarLoginSignup": "Prisijungti / Registruotis",
+        "avatarLogin": "Prisijungti",
+        "avatarSignup": "Registruotis",
         "navAvatarProfile": "Profilis",
         "navAvatarSignOut": "Atsijungti",
         "noOptionsMessage": "Nėra pasirinkimų"

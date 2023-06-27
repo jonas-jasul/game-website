@@ -21,7 +21,7 @@ export default function ShowHideFilterGameBar({ onFilterApply, onMinRatingFilter
 
     const [gameGenres, setGameGenres] = useState([]);
     const [gameGenreValue, setGameGenreValue] = useState("");
-
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [gameGenreDropdownItems, setGameGenreDropdownItems] = useState([]);
     const [gameMinRatings, setGameMinRatings] = useState(25);
     const [gameCategDropdownItems, setGameCategDropdownItems] = useState([]);
@@ -96,14 +96,17 @@ export default function ShowHideFilterGameBar({ onFilterApply, onMinRatingFilter
         router.push(`${pathname}?${urlStr}`);
     }
 
-    const handleDrawerOpen = () => {
-        setIsDrawerOpen(true);
-    };
+    // const handleDrawerOpen = () => {
+    //     setIsDrawerOpen(true);
+    // };
 
-    const handleDrawerClose = () => {
-        setIsDrawerOpen(false);
-    };
+    // const handleDrawerClose = () => {
+    //     setIsDrawerOpen(false);
+    // };
 
+    const toggleDrawer = () => {
+        setIsDrawerOpen(!isDrawerOpen);
+    }
 
     function clearFilters() {
         setGameGenreValue('');
@@ -151,7 +154,7 @@ export default function ShowHideFilterGameBar({ onFilterApply, onMinRatingFilter
 
     return (
         <div className="drawer">
-            <input id="my-drawer" type="checkbox" className="drawer-toggle" />
+            <input id="my-drawer" type="checkbox" className="drawer-toggle" onChange={toggleDrawer} checked={isDrawerOpen} />
             <div className="drawer-content flex mt-3">
                 <label htmlFor="my-drawer" className="btn btn-secondary drawer-button">{t('filterBtn')} <RxDropdownMenu size='1.4rem' className="m-1" /> </label>
             </div>
@@ -159,7 +162,7 @@ export default function ShowHideFilterGameBar({ onFilterApply, onMinRatingFilter
                 <label htmlFor="my-drawer" className="drawer-overlay"></label>
                 <ul className="menu p-4 w-84 lg:w-96 h-full bg-base-200 text-base-content">
                     <li className="flex justify-end items-end">
-                        <button><AiOutlineCloseSquare size="2rem" /></button>
+                        <button onClick={toggleDrawer}><AiOutlineCloseSquare size="2rem" /></button>
                     </li>
                     <li className="flex items-center text-lg font-semibold ">
                         {t('gameFilterOptTitle')}

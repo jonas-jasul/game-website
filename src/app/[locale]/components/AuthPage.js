@@ -13,7 +13,7 @@ export default function AuthPage() {
 
   if (user) {
     router.push("/profile");
-    return null; // Render nothing while redirecting
+    return null; 
   }
 
   return <Auth view={view} />;
