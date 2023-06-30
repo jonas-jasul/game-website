@@ -120,7 +120,7 @@ export default function GamePage({ params }) {
 
 
     const fetchGame = async () => {
-        const gameDataQuery = `fields id, name, total_rating, cover, genres, slug, summary, artworks, platforms, release_dates, screenshots;
+        const gameDataQuery = `fields id, name, cover, genres, slug, summary, artworks, platforms, release_dates, screenshots;
          where slug = "${gameSlug}";`;
         const gamesResponse = await fetch('/api/game_slug/games',
             {

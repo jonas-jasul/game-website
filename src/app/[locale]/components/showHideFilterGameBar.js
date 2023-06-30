@@ -96,14 +96,6 @@ export default function ShowHideFilterGameBar({ onFilterApply, onMinRatingFilter
         router.push(`${pathname}?${urlStr}`);
     }
 
-    // const handleDrawerOpen = () => {
-    //     setIsDrawerOpen(true);
-    // };
-
-    // const handleDrawerClose = () => {
-    //     setIsDrawerOpen(false);
-    // };
-
     const toggleDrawer = () => {
         setIsDrawerOpen(!isDrawerOpen);
     }
@@ -177,9 +169,9 @@ export default function ShowHideFilterGameBar({ onFilterApply, onMinRatingFilter
                     <li className="mb-2">
                         <input type="range" min={0} max={150} value={gameMinRatings} onChange={handleRatingSliderChange} className="range range-primary" />{gameMinRatings}
                     </li>
-
+                    
+                    <h5 className="font-semibold">{t('gameFilterCategoryTitle')}</h5>
                     <li className="mb-2">
-                        {t('gameFilterCategoryTitle')}
                         <GameCategoryDropdown items={gameCategDropdownItems} value={gameCategoryValue} onChange={setGameCategoryValue} />
                     </li>
 

@@ -29,17 +29,17 @@ const Navbar = ({ user }) => {
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
                         </label>
                         <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 z-50" >
-                            <li><Link href="/catalogue" locale={router.locale}>{t('catalogue')}</Link></li>
-                            <li>
+                            <li className="my-1"><Link href="/catalogue" locale={router.locale}>{t('catalogue')}</Link></li>
+                            {/* <li>
                                 <a>Parent</a>
                                 <ul className="p-2">
                                     <li><a>Submenu 1</a></li>
                                     <li><a>Submenu 2</a></li>
                                 </ul>
-                            </li>
-                            <li className="my-1"><LangToggler /></li>
-                            <li><ThemeSwitcher /></li>
-                            <li><a>Item</a></li>
+                            </li> */}
+                            <li className="my-1 w-12"><LangToggler /></li>
+                            <li className="my-1 w-16"><ThemeSwitcher /></li>
+                            {/* <li><a>Item</a></li> */}
                         </ul>
 
                     </div>
@@ -59,7 +59,7 @@ const Navbar = ({ user }) => {
                         <li tabIndex={0}>
 
                         </li>
-                        <li><Link href="" className="font-semibold text-primary-content hover:text-primary-content focus:text-primary-content">Item</Link></li>
+                        {/* <li><Link href="" className="font-semibold text-primary-content hover:text-primary-content focus:text-primary-content">Item</Link></li> */}
                     </ul>
                 </div>
 

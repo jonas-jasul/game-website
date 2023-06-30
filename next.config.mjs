@@ -1,13 +1,6 @@
 /** @type {import('next').NextConfig} */
+import withPlaiceholder from "@plaiceholder/next";
 
-// const withNextIntl = require('next-intl/plugin')(
-//     './i18n.js'
-//   )
-
-
-// module.exports =  withNextIntl({
-//   experimental: {appDir: true},
-// });
 const hostnames = [
   'images.igdb.com',
   'upload.wikimedia.org',
@@ -27,19 +20,21 @@ const hostnames = [
   'www.atari-computermuseum.de',
   'www.shareicon.net'
 ]
-module.exports = {
-  
-  experimental: { 
-    appDir: true 
+const config = {
+
+
+  experimental: {
+    appDir: true
   },
   swcMinify: true,
   optimizeFonts: true,
   images: {
-      remotePatterns: hostnames.map(hostname=>({
-        protocol:'https',
-        hostname
-      })),
-      minimumCacheTTL: 15000000,
+    unoptimized: true,
+    remotePatterns: hostnames.map(hostname => ({
+      protocol: 'https',
+      hostname
+    })),
+    minimumCacheTTL: 15000000,
   },
 
   async rewrites() {
@@ -53,7 +48,7 @@ module.exports = {
 
   pageExtensions: ['jsx', 'js'],
 
-  
+
 
   async headers() {
     return [
@@ -72,3 +67,5 @@ module.exports = {
     ]
   }
 };
+
+export default withPlaiceholder(config);

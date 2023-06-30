@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-
 export async function POST(req) {
   try {
     const url ="https://api.igdb.com/v4/covers";

@@ -32,7 +32,7 @@ const GameGenreDropdown = ({items, value, onChange }) => {
             <div className="dropdown-content bg-base-200 border border-primary top-14 max-h-96 overflow-auto flex-col rounded-md" style={{ zIndex: 1 }}>
 
                 <ul
-                    className="menu menu-compact "
+                    className="menu menu-compact"
                     style={{ width: ref.current?.clientWidth }}
                 >
 
@@ -44,7 +44,7 @@ const GameGenreDropdown = ({items, value, onChange }) => {
                                     onChange(item);
                                     setOpen(false);
                                 }}
-                                className="border w-full m-1 p-1"
+                                className="border w-full ml-0 m-1 p-1"
                             >
                                 <button className="pl-2">{item}</button>
                             </li>
