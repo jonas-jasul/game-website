@@ -29,5 +29,6 @@ This is a website for checking out video games
 - ReactQuery (a.k.a. TanStack Query) for fetching
 - Moment.js for time formatting
 - Formik and Yup for forms and form validation
+- Next-Intl for internationalization (i18n)
 
 
