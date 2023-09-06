@@ -89,7 +89,7 @@ export default function GameInfo({ searchParams }) {
         const response = await fetch('/api/getBase64', {
           method: 'POST',
           body: JSON.stringify({
-            url: `https://images.igdb.com/igdb/image/upload/t_cover_big/${cover.image_id}.jpg`,
+            url: `https://images.igdb.com/igdb/image/upload/t_cover_big/${cover?.image_id}.jpg`,
           }),
         });
         console.log("base 64 response", response)
