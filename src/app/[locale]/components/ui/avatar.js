@@ -1,8 +1,8 @@
 
 "use client";
 import { RxAvatar } from "react-icons/rx";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import Link from "next-intl/link";
+import { useSearchParams } from "next/navigation";
+import {createSharedPathnamesNavigation} from 'next-intl/navigation';
 import SignOut from "../auth/signOut";
 import { useAuth } from "../AuthProvider";
 import { useTranslations } from "next-intl";
@@ -16,6 +16,8 @@ import { supabase } from "@supabase/auth-ui-shared";
 import { da } from "date-fns/locale";
 
 export default function Avatar({ user }) {
+    const {Link, usePathname, useRouter} = createSharedPathnamesNavigation();
+
     const supabase = createClientComponentClient()
     const { user: authUser } = useAuth();
     const { handleViewChange } = useAuth();

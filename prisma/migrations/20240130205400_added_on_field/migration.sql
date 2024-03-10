@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "token"."ApiToken" ADD COLUMN     "addedOn" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP;

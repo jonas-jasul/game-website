@@ -4,7 +4,9 @@ import { useState } from 'react';
 import cn from 'classnames';
 import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
-import Link from "next-intl/link"
+// import Link from "next-intl/link"
+import {createSharedPathnamesNavigation} from 'next-intl/navigation';
+
 import { useAuth, VIEWS } from '../AuthProvider';
 import supabase from '../../lib/supabase-browser';
 import { useTranslations } from 'next-intl';
@@ -20,7 +22,7 @@ const ResetPassword = () => {
     const [successMsg, setSuccessMsg] = useState(null);
     const t = useTranslations('Auth');
     const router = useRouter();
-
+    const {Link} = createSharedPathnamesNavigation();
     async function resetPassword(formData) {
         const { error } = await supabase.auth.resetPasswordForEmail(formData?.email, {
             redirectTo: `${process.env.NEXT_PUBLIC_SUPABASE_BASE_URL}`,

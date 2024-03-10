@@ -1,16 +1,20 @@
 import { NextResponse } from "next/server";
+import { headers, cookies } from "next/headers";
 
 export async function POST(req) {
+  // const auth = headers().get("Authorization") || "";
+  const cookieStore = cookies();
+  const auth = cookieStore.get("tokenCookie").value;
   try {
-    const url ="https://api.igdb.com/v4/involved_companies";
-    const {gameId} = await req.json();
+    const url = "https://api.igdb.com/v4/involved_companies";
+    const { gameId } = await req.json();
     const response = await fetch(url, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Client-ID': process.env.CLIENT_ID,
-        'Authorization': process.env.AUTHORIZATION,
-        'Accept': 'application/json',
-        "Content-Type": 'application/json',
+        "Client-ID": process.env.NEXT_PUBLIC_CLIENT_ID,
+        Authorization: auth,
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
       body: `fields company, developer, game, porting, publisher, supporting, company.name; where game=${gameId};`,
     });
@@ -18,6 +22,6 @@ export async function POST(req) {
     const data = await response.json();
     return NextResponse.json(data);
   } catch (error) {
-    console.error('Error fetching data:', error);
+    console.error("Error fetching data:", error);
   }
 }

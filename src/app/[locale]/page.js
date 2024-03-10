@@ -2,7 +2,7 @@
 import { redirect, useRouter } from "next/navigation";
 import Footer from "./components/common/footer";
 import { useTranslations } from "next-intl";
-import Link from "next-intl/link";
+import {createSharedPathnamesNavigation} from 'next-intl/navigation';
 import { useEffect } from "react";
 import Auth from "./components/auth";
 import { useAuth, VIEWS } from "./components/AuthProvider";
@@ -11,6 +11,8 @@ import { useAuth, VIEWS } from "./components/AuthProvider";
 export default function Home() {
   const t = useTranslations('Index');
   const router =useRouter();
+  const {Link, usePathname} = createSharedPathnamesNavigation();
+
   return (
     <>
       <div className="hero min-h-screen" style={{ backgroundImage: "url(https://whatifgaming.com/wp-content/uploads/2022/05/Night-City-Wallpaper-scaled.jpg)" }}>

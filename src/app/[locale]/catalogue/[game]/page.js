@@ -224,7 +224,7 @@ export default function GamePage({ params }) {
                 });
                 return platformDetails
             }
-            const platformsForGame = otherGameData[0].platforms;
+            const platformsForGame = otherGameData[0]?.platforms;
             const platformNames = platformsForGame?.map((platform) => platform.name);
             const mappedPlatformsForGame = platformNames?.flatMap((platform) => platformMapper(platform));
             setMappedPlatformsForGame(mappedPlatformsForGame);
@@ -240,14 +240,14 @@ export default function GamePage({ params }) {
     }
 
 
-    const currGamePlatforms = otherGameData[0].platforms;
+    const currGamePlatforms = otherGameData[0]?.platforms;
     console.log("specific game platforms", currGamePlatforms);
 
 
-    const gameName = otherGameData[0].name;
-    const gameCover = otherGameData[0].cover?.image_id;
+    const gameName = otherGameData[0]?.name;
+    const gameCover = otherGameData[0]?.cover?.image_id;
     console.log("game cover", gameCover)
-    const gameRating = otherGameData[0].total_rating;
+    const gameRating = otherGameData[0]?.total_rating;
     console.log('game rating', gameRating);
     const gameRatingRounded = Math.round(gameRating * 100) / 100;
 
@@ -266,8 +266,8 @@ export default function GamePage({ params }) {
             );
         }
     }
-    const gameDescription = otherGameData[0].summary;
-    const gameGenres = otherGameData[0].genres?.map((genre) => ({ id: genre.id, name: genre.name, slug: genre.slug }));
+    const gameDescription = otherGameData[0]?.summary;
+    const gameGenres = otherGameData[0]?.genres?.map((genre) => ({ id: genre.id, name: genre.name, slug: genre.slug }));
     console.log("game genres", gameGenres);
     console.log("other game data", otherGameData);
     // const translatedGenres = gameGenres.map((genre) => t_g[genre.slug] || genre.name);
@@ -309,7 +309,7 @@ export default function GamePage({ params }) {
     }
 
 
-    const gameReleaseDateUnix = otherGameData[0].first_release_date * 1000;
+    const gameReleaseDateUnix = otherGameData[0]?.first_release_date * 1000;
     moment.locale(currentLocale);
     const gameReleaseDate = moment(new Date(gameReleaseDateUnix)).format("MMMM Do, YYYY");
     const relativeReleaseDate = moment(gameReleaseDateUnix).fromNow();
@@ -317,7 +317,7 @@ export default function GamePage({ params }) {
     console.log("translated genres", translatedGenres);
 
 
-    const gameDeveloperData = companyData?.find((data) => data.developer);
+    const gameDeveloperData = Array.isArray(companyData) ? companyData.find((data) => data.developer) : null;
     console.log("game dev data", gameDeveloperData);
     const gameDevName = gameDeveloperData?.company.name;
     console.log("game developer name", gameDevName);

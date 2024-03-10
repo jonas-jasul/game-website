@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
-// import Link from "next/link";
-import Link from "next-intl/link";
+import {createSharedPathnamesNavigation} from 'next-intl/navigation';
 import { useRouter } from "next/navigation";
 import { Rubik } from "next/font/google";
 import ThemeSwitcher from "../ui/themeSwitcher";
@@ -14,6 +13,7 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { createClient } from "@supabase/supabase-js";
 import { createPagesBrowserClient } from "@supabase/auth-helpers-nextjs";
 const rubik = Rubik({ subsets: ['latin'] })
+const {Link, usePathname} = createSharedPathnamesNavigation();
 const Navbar = ({ user }) => {
 
     const router = useRouter();

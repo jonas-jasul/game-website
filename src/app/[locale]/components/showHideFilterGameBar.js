@@ -13,6 +13,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import GameCategoryDropdown from "./ui/gameCategoryDropdown";
 import ca from "date-fns/locale/ca/index";
+
 export default function ShowHideFilterGameBar({ onFilterApply, onMinRatingFilterApply, searchParams }) {
 
     const t = useTranslations('FilterBar');
@@ -25,7 +26,6 @@ export default function ShowHideFilterGameBar({ onFilterApply, onMinRatingFilter
     const [gameGenreDropdownItems, setGameGenreDropdownItems] = useState([]);
     const [gameMinRatings, setGameMinRatings] = useState(25);
     const [gameCategDropdownItems, setGameCategDropdownItems] = useState([]);
-
 
     const categoryEnums = [
         { id: 0, name: 'Main Game', slug: 'main_game' },

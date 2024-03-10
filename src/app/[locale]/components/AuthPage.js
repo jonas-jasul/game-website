@@ -1,4 +1,4 @@
-import Link from "next/link";
+import {createSharedPathnamesNavigation} from 'next-intl/navigation';
 import Auth from "./auth";
 import { useRouter } from "next/router";
 import { useAuth, VIEWS } from "./AuthProvider";

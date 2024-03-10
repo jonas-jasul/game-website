@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 import withPlaiceholder from "@plaiceholder/next";
+import createNextIntlPlugin from 'next-intl/plugin';
+const withNextIntl = createNextIntlPlugin();
 
 const hostnames = [
   'images.igdb.com',
@@ -43,10 +45,14 @@ const config = {
         source: '/api/:path*',
         destination: '/:path*',
       },
+      // {
+      //   source: '/',
+      //   destination: '/en',
+      // },
     ];
   },
 
-  pageExtensions: ['jsx', 'js'],
+  pageExtensions: ['jsx', 'js', 'ts', 'tsx'],
 
 
 
@@ -68,4 +74,4 @@ const config = {
   }
 };
 
-export default withPlaiceholder(config);
+export default withPlaiceholder(withNextIntl(config));

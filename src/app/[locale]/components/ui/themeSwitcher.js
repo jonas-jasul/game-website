@@ -1,4 +1,4 @@
-import { useTranslations } from "next-intl"
+import { useTranslations } from "next-intl";
 import Select from 'react-select';
 import { useTheme } from "next-themes";
 import { useState } from "react";

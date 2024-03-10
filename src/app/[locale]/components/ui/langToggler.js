@@ -1,6 +1,7 @@
 "use client";
-import { usePathname, useRouter } from "next-intl/client";
-import Link from "next-intl/link";
+import {createSharedPathnamesNavigation} from 'next-intl/navigation';
+const {Link, usePathname, useRouter} = createSharedPathnamesNavigation();
+
 const LangToggler = () => {
     const pathname = usePathname();
 

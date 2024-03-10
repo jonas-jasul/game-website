@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import StarRating from "./ui/starRating";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import Link from "next-intl/link";
+import {createSharedPathnamesNavigation} from 'next-intl/navigation';
 import Image from "next/image";
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
@@ -15,6 +15,8 @@ import Loading from "../catalogue/loading";
 export default function GameInfo({ searchParams }) {
   const t = useTranslations('GameInfo');
   const router = useRouter();
+  const {Link} = createSharedPathnamesNavigation();
+
 
   async function fetchGameData() {
     const pageSize = 20;

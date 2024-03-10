@@ -12,7 +12,7 @@ import Cookies from 'universal-cookie';
 import { id } from 'date-fns/locale';
 import { useFormik } from 'formik';
 import { SlLogin } from "react-icons/sl";
-import Link from "next-intl/link";
+import {createSharedPathnamesNavigation} from 'next-intl/navigation';
 import { useRouter } from 'next/navigation';
 const SignInSchema = Yup.object().shape({
     email: Yup.string().email('invalidEmailError').required('requiredError'),
@@ -26,6 +26,7 @@ const SignIn = () => {
     const [errorMsg, setErrorMsg] = useState(null);
     const [rememberMe, setRememberMe] = useState(false);
     const router = useRouter();
+    const {Link} = createSharedPathnamesNavigation();
 
     const [email, setEmail] = useState('');
     async function signIn(formData) {
